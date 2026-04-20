@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)",
+      "Read(//tmp/**)",
+      "Read(//tmp/ui-ux-pro-max-skill/**)",
+      "Bash(npm install:*)"
+    ]
+  }
+}

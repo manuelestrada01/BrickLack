@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Para producción: reemplazar el link de Google Fonts en index.html
+  y descomentar estas declaraciones con los archivos woff2 locales:
+
+  @font-face {
+    font-family: 'Outfit';
+    src: url('../assets/fonts/Outfit-Variable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'JetBrains Mono';
+    src: url('../assets/fonts/JetBrainsMono-Variable.woff2') format('woff2');
+    font-weight: 100 800;
+    font-style: normal;
+    font-display: swap;
+  }
+*/
+
+@layer base {
+  html {
+    @apply bg-navy text-cream;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply font-body min-h-screen;
+  }
+
+  ::selection {
+    background-color: theme('colors.lego.yellow');
+    color: theme('colors.navy.DEFAULT');
+  }
+
+  /* Scrollbar personalizado */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: theme('colors.navy.50');
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.cream.300');
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.cream.200');
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Usado para texto de datos técnicos (part numbers, cantidades) */
+  .font-data {
+    font-family: theme('fontFamily.mono');
+    font-feature-settings: 'tnum' on, 'lnum' on;
+  }
+}

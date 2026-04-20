@@ -1,0 +1,35 @@
+import { createBrowserRouter } from 'react-router'
+import { RootLayout } from '@/components/layout/RootLayout'
+import { ProtectedRoute } from './ProtectedRoute'
+import { ROUTES } from './routePaths'
+import HomePage from '@/pages/HomePage'
+import SearchPage from '@/pages/SearchPage'
+import SetDetailPage from '@/pages/SetDetailPage'
+import PieceDetailPage from '@/pages/PieceDetailPage'
+import DashboardPage from '@/pages/DashboardPage'
+import ProjectDetailPage from '@/pages/ProjectDetailPage'
+import NewProjectPage from '@/pages/NewProjectPage'
+import IdentifyPage from '@/pages/IdentifyPage'
+import NotFoundPage from '@/pages/NotFoundPage'
+
+export const router = createBrowserRouter([
+  {
+    element: <RootLayout />,
+    children: [
+      { path: ROUTES.HOME, element: <HomePage /> },
+      { path: ROUTES.SEARCH, element: <SearchPage /> },
+      { path: ROUTES.SET_DETAIL, element: <SetDetailPage /> },
+      { path: ROUTES.PIECE_DETAIL, element: <PieceDetailPage /> },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          { path: ROUTES.DASHBOARD, element: <DashboardPage /> },
+          { path: ROUTES.NEW_PROJECT, element: <NewProjectPage /> },
+          { path: ROUTES.PROJECT_DETAIL, element: <ProjectDetailPage /> },
+          { path: ROUTES.IDENTIFY, element: <IdentifyPage /> },
+        ],
+      },
+      { path: '*', element: <NotFoundPage /> },
+    ],
+  },
+])

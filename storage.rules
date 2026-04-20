@@ -1,0 +1,13 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Imágenes de identificación: solo el propio usuario puede leer/escribir
+    // Máximo 5MB, solo imágenes
+    match /identify/{userId}/{fileName} {
+      allow read, write: if request.auth != null
+        && request.auth.uid == userId
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+  }
+}

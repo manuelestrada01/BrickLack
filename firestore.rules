@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Usuarios: solo el propio usuario puede leer/escribir su doc
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // Proyectos: solo el owner
+      match /projects/{projectId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+
+        // Piezas del proyecto: solo el owner
+        match /pieces/{pieceId} {
+          allow read, write: if request.auth != null && request.auth.uid == userId;
+        }
+      }
+    }
+
+    // Caché de inventarios de sets: cualquier usuario auth puede leer y crear (primera vez)
+    // El caché es inmutable — no se puede actualizar ni eliminar
+    match /sets/{setId}/pieces/{pieceId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null;
+      allow update, delete: if false;
+    }
+  }
+}
