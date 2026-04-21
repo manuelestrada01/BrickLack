@@ -5,7 +5,8 @@
       "Bash(npm run:*)",
       "Read(//tmp/**)",
       "Read(//tmp/ui-ux-pro-max-skill/**)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npx vite:*)"
     ]
   }
 }

@@ -50,7 +50,7 @@ export function HeroSection() {
 
       {/* CTA */}
       {!isLoading && !user && (
-        <div data-hero className="flex items-center justify-center gap-4 flex-wrap">
+        <div data-hero className="hidden items-center justify-center gap-4 flex-wrap">
           <GoogleSignInButton size="md" />
           <p className="text-xs text-navy font-body">
             Free. Google only.

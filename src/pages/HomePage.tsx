@@ -18,7 +18,7 @@ export default function HomePage() {
       {heroMode === 'video' ? (
         <video
           key="video"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover object-[20%_center] md:object-center"
           autoPlay
           muted
           playsInline
@@ -31,14 +31,14 @@ export default function HomePage() {
           key="image"
           src="/video/hero-image.jpg"
           alt="Hero"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover object-[20%_center] md:object-center"
           aria-hidden="true"
         />
       )}
 
       {/* Contenido del hero — centrado verticalmente */}
       <div className="relative z-10 flex-1 flex items-center justify-center w-full px-4">
-        <div className="w-full max-w-3xl mx-auto py-16">
+        <div className="w-full max-w-3xl mx-auto py-16 -translate-y-[15%]">
           <HeroSection />
         </div>
       </div>
