@@ -12,8 +12,8 @@ const FEATURES = [
         <path d="m21 21-4.35-4.35" />
       </svg>
     ),
-    title: 'Busca cualquier set',
-    description: 'Accede a más de 20.000 sets y 50.000 piezas del catálogo completo de LEGO vía Rebrickable.',
+    title: 'Find any set',
+    description: 'Access over 20,000 sets and 50,000 parts from the complete LEGO catalog via Rebrickable.',
   },
   {
     icon: (
@@ -22,8 +22,8 @@ const FEATURES = [
         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
       </svg>
     ),
-    title: 'Rastrea tu progreso',
-    description: 'Marca cada pieza encontrada. La barra de progreso se actualiza en tiempo real con animaciones fluidas.',
+    title: 'Track your progress',
+    description: 'Check off each piece you find. The progress bar updates in real time with smooth animations.',
   },
   {
     icon: (
@@ -32,9 +32,9 @@ const FEATURES = [
         <circle cx="12" cy="13" r="4" />
       </svg>
     ),
-    title: 'Identifica con IA',
-    description: 'Saca una foto de una pieza suelta y la IA la identifica: tipo, color, dimensiones y número de parte.',
-    badge: '3 escaneos / mes',
+    title: 'Identify with AI',
+    description: 'Take a photo of a loose piece and AI identifies it: type, color, dimensions, and part number.',
+    badge: '3 scans / month',
   },
   {
     icon: (
@@ -43,8 +43,8 @@ const FEATURES = [
         <path d="M8 21h8M12 17v4" />
       </svg>
     ),
-    title: 'Siempre sincronizado',
-    description: 'Tu colección en la nube. Accede desde cualquier dispositivo — próximamente disponible en mobile.',
+    title: 'Always in sync',
+    description: 'Your collection in the cloud. Access from any device — mobile app coming soon.',
   },
 ]
 
@@ -88,10 +88,10 @@ export function FeatureCards() {
       {/* Section header */}
       <div className="text-center mb-10">
         <h2 className="font-display text-2xl sm:text-3xl font-semibold text-cream">
-          Todo lo que necesitas
+          Everything you need
         </h2>
         <p className="text-cream/40 font-body text-sm mt-2">
-          Para volver a armar cualquier set, pieza por pieza.
+          To rebuild any set, piece by piece.
         </p>
       </div>
 

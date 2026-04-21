@@ -21,7 +21,7 @@ const variantClasses: Record<ButtonVariant, string> = {
     'border border-lego-yellow/50 text-lego-yellow bg-transparent ' +
     'hover:border-lego-yellow hover:bg-lego-yellow/5',
   ghost:
-    'text-cream/70 bg-transparent hover:text-cream hover:bg-navy-50',
+    'text-navy/60 bg-transparent hover:text-navy hover:bg-navy/5',
   danger:
     'bg-status-error text-cream font-semibold ' +
     'shadow-[0_3px_0_0_rgba(0,0,0,0.4)] active:shadow-none active:translate-y-[3px]',
@@ -64,7 +64,7 @@ export function Button({
       className={cn(
         'inline-flex items-center justify-center rounded-brick font-body',
         'transition-colors outline-none',
-        'focus-visible:ring-2 focus-visible:ring-lego-yellow/60 focus-visible:ring-offset-2 focus-visible:ring-offset-navy',
+        'focus-visible:ring-2 focus-visible:ring-lego-yellow/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F5F0E8]',
         'disabled:opacity-40 disabled:cursor-not-allowed disabled:scale-100',
         variantClasses[variant],
         sizeClasses[size],

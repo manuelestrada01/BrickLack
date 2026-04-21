@@ -12,21 +12,21 @@ export function ProjectProgress({ project }: ProjectProgressProps) {
   const remaining = project.totalPieces - project.foundPieces
 
   return (
-    <div className="p-5 rounded-brick bg-navy-50 border border-cream/8 space-y-4">
+    <div className="p-5 rounded-brick bg-white border border-navy/8 space-y-4">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-xs text-cream/40 font-body uppercase tracking-wider">Progreso</p>
+          <p className="text-xs text-navy/40 font-body uppercase tracking-wider">Progress</p>
           <p className="font-mono text-3xl font-bold text-lego-yellow mt-0.5">
             {Math.round(progress)}%
           </p>
         </div>
         <div className="text-right">
-          <p className="font-mono text-lg font-semibold text-cream">
+          <p className="font-mono text-lg font-semibold text-navy">
             {project.foundPieces.toLocaleString()}
-            <span className="text-cream/30 font-normal text-sm"> / {project.totalPieces.toLocaleString()}</span>
+            <span className="text-navy/30 font-normal text-sm"> / {project.totalPieces.toLocaleString()}</span>
           </p>
-          <p className="text-xs text-cream/40 font-body mt-0.5">
-            {remaining > 0 ? `${remaining.toLocaleString()} restantes` : '¡Completo!'}
+          <p className="text-xs text-navy/40 font-body mt-0.5">
+            {remaining > 0 ? `${remaining.toLocaleString()} remaining` : 'Complete!'}
           </p>
         </div>
       </div>

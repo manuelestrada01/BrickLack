@@ -17,8 +17,8 @@ export default function SetDetailPage() {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16">
         <ErrorState
-          title="Set no encontrado"
-          message="No pudimos cargar este set. Verificá el número e intentá de nuevo."
+          title="Set not found"
+          message="We couldn't load this set. Check the number and try again."
         />
       </div>
     )
@@ -48,12 +48,12 @@ export default function SetDetailPage() {
       )}
 
       {/* Divider */}
-      <div className="border-t border-cream/8" />
+      <div className="border-t border-navy/8" />
 
       {/* Parts list */}
       <div>
-        <h2 className="font-display text-lg font-semibold text-cream mb-4">
-          Inventario de piezas
+        <h2 className="font-display text-lg font-semibold text-navy mb-4">
+          Piece inventory
         </h2>
         <SetPartsList
           parts={parts ?? []}

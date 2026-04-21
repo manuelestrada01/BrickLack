@@ -11,7 +11,7 @@ export default function PieceDetailPage() {
   if (isError) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-16">
-        <ErrorState title="Pieza no encontrada" message="No pudimos cargar esta pieza." />
+        <ErrorState title="Piece not found" message="We couldn't load this piece." />
       </div>
     )
   }
@@ -30,11 +30,11 @@ export default function PieceDetailPage() {
       ) : part ? (
         <div className="flex flex-col sm:flex-row gap-6 items-start">
           {/* Image */}
-          <div className="flex-shrink-0 w-36 h-36 rounded-brick overflow-hidden bg-navy-50 border border-cream/10 flex items-center justify-center">
+          <div className="flex-shrink-0 w-36 h-36 rounded-brick overflow-hidden bg-white border border-navy/10 flex items-center justify-center">
             {part.part_img_url ? (
               <img src={part.part_img_url} alt={part.name} className="w-full h-full object-contain p-3" />
             ) : (
-              <svg className="w-12 h-12 text-cream/10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+              <svg className="w-12 h-12 text-navy/10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
                 <rect x="3" y="8" width="18" height="12" rx="2" />
                 <rect x="7" y="5" width="4" height="4" rx="1" />
               </svg>
@@ -46,27 +46,27 @@ export default function PieceDetailPage() {
             <div className="flex items-center gap-2 flex-wrap">
               <Badge variant="default">{part.part_num}</Badge>
               {part.year_from > 0 && (
-                <span className="font-mono text-xs text-cream/30">
+                <span className="font-mono text-xs text-navy/30">
                   {part.year_from}–{part.year_to}
                 </span>
               )}
             </div>
 
-            <h1 className="font-display text-2xl font-bold text-cream">{part.name}</h1>
+            <h1 className="font-display text-2xl font-bold text-navy">{part.name}</h1>
 
             {part.print_of && (
-              <p className="text-sm text-cream/40 font-body">
-                Impresión de <span className="font-mono text-cream/60">{part.print_of}</span>
+              <p className="text-sm text-navy/40 font-body">
+                Print of <span className="font-mono text-navy/60">{part.print_of}</span>
               </p>
             )}
 
             {/* External IDs */}
             {Object.keys(part.external_ids).length > 0 && (
               <div className="space-y-1.5">
-                <p className="text-xs text-cream/30 font-body uppercase tracking-wider">Referencias externas</p>
+                <p className="text-xs text-navy/30 font-body uppercase tracking-wider">External references</p>
                 <div className="flex flex-wrap gap-2">
                   {Object.entries(part.external_ids).map(([source, ids]) => (
-                    <span key={source} className="text-xs font-mono text-cream/40 bg-navy-50 border border-cream/8 px-2 py-0.5 rounded">
+                    <span key={source} className="text-xs font-mono text-navy/40 bg-white border border-navy/8 px-2 py-0.5 rounded">
                       {source}: {(ids as string[]).join(', ')}
                     </span>
                   ))}

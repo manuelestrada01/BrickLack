@@ -9,8 +9,8 @@ interface ErrorStateProps {
 }
 
 export function ErrorState({
-  title = 'Algo salió mal',
-  message = 'Ocurrió un error inesperado. Intentá de nuevo.',
+  title = 'Something went wrong',
+  message = 'An unexpected error occurred. Please try again.',
   onRetry,
   className,
 }: ErrorStateProps) {
@@ -36,12 +36,12 @@ export function ErrorState({
         </svg>
       </div>
       <div className="space-y-1.5 max-w-xs">
-        <h3 className="font-display font-semibold text-cream/80">{title}</h3>
-        <p className="text-sm text-cream/40 font-body leading-relaxed">{message}</p>
+        <h3 className="font-display font-semibold text-navy/80">{title}</h3>
+        <p className="text-sm text-navy/40 font-body leading-relaxed">{message}</p>
       </div>
       {onRetry && (
         <Button variant="secondary" size="sm" onClick={onRetry} className="mt-2">
-          Reintentar
+          Retry
         </Button>
       )}
     </div>

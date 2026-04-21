@@ -5,7 +5,7 @@ import gsap from 'gsap'
 import { StatusBadge } from '@/components/ui/Badge'
 import { ProgressBar } from '@/components/ui/ProgressBar'
 import { buildProjectPath } from '@/router/routePaths'
-import { CARD_HOVER_VARS, CARD_UNHOVER_VARS } from '@/styles/animations'
+import { DURATION, EASE } from '@/styles/animations'
 import type { Project } from '@/types'
 
 interface ProjectCardProps {
@@ -14,14 +14,45 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const cardRef = useRef<HTMLAnchorElement>(null)
+  const imgRef = useRef<HTMLImageElement>(null)
+
   const progress = project.totalPieces > 0
     ? Math.round((project.foundPieces / project.totalPieces) * 100)
     : 0
 
   const { contextSafe } = useGSAP({ scope: cardRef })
 
-  const onEnter = contextSafe(() => gsap.to(cardRef.current, CARD_HOVER_VARS))
-  const onLeave = contextSafe(() => gsap.to(cardRef.current, CARD_UNHOVER_VARS))
+  const onEnter = contextSafe(() => {
+    gsap.to(cardRef.current, {
+      y: -4,
+      boxShadow: '0 6px 0 0 rgba(0,0,0,0.25), 0 12px 32px -4px rgba(0,0,0,0.35)',
+      duration: DURATION.FAST,
+      ease: EASE.ENTER,
+    })
+    if (imgRef.current) {
+      gsap.to(imgRef.current, {
+        scale: 1.07,
+        duration: 0.5,
+        ease: EASE.ENTER,
+      })
+    }
+  })
+
+  const onLeave = contextSafe(() => {
+    gsap.to(cardRef.current, {
+      y: 0,
+      boxShadow: '0 4px 0 0 rgba(0,0,0,0.25), 0 8px 24px -4px rgba(0,0,0,0.3)',
+      duration: DURATION.FAST,
+      ease: EASE.ENTER,
+    })
+    if (imgRef.current) {
+      gsap.to(imgRef.current, {
+        scale: 1,
+        duration: 0.5,
+        ease: EASE.ENTER,
+      })
+    }
+  })
 
   return (
     <Link
@@ -29,47 +60,70 @@ export function ProjectCard({ project }: ProjectCardProps) {
       to={buildProjectPath(project.id)}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      className="flex flex-col gap-4 p-5 rounded-brick bg-navy-50 border border-cream/8 shadow-brick hover:border-cream/15 transition-[border-color] duration-200"
+      className="flex flex-col rounded-brick overflow-hidden bg-white border border-navy/8 shadow-brick"
     >
-      {/* Set image + status */}
-      <div className="flex items-start justify-between gap-3">
-        <div className="w-16 h-16 rounded-brick overflow-hidden bg-navy-100 border border-cream/8 flex items-center justify-center flex-shrink-0">
-          {project.setImageUrl ? (
-            <img
-              src={project.setImageUrl}
-              alt={project.setName ?? project.name}
-              className="w-full h-full object-contain p-1"
-              loading="lazy"
-            />
-          ) : (
-            <svg className="w-7 h-7 text-cream/15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+      {/* Cover image — protagonismo total */}
+      <div className="relative h-48 bg-navy/5 overflow-hidden flex-shrink-0">
+        {project.setImageUrl ? (
+          <img
+            ref={imgRef}
+            src={project.setImageUrl}
+            alt={project.setName ?? project.name}
+            className="w-full h-full object-contain p-6"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <svg
+              className="w-20 h-20 text-cream/8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={0.75}
+            >
               <rect x="3" y="8" width="18" height="12" rx="2" />
               <rect x="7" y="5" width="4" height="4" rx="1" />
+              <rect x="13" y="5" width="4" height="4" rx="1" />
             </svg>
+          </div>
+        )}
+
+        {/* Status badge — flotando sobre la imagen */}
+        <div className="absolute top-3 right-3">
+          <StatusBadge status={project.status} />
+        </div>
+
+        {/* Gradiente inferior: imagen → contenido */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-8 pointer-events-none"
+          style={{ background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.6))' }}
+        />
+      </div>
+
+      {/* Contenido */}
+      <div className="flex flex-col gap-3 px-4 py-3">
+        {/* Nombre + número de set */}
+        <div className="space-y-0.5">
+          <h3 className="font-display text-sm font-semibold text-navy leading-tight line-clamp-2">
+            {project.name}
+          </h3>
+          {project.setId && (
+            <p className="font-mono text-xs text-navy/30">{project.setId}</p>
           )}
         </div>
-        <StatusBadge status={project.status} />
-      </div>
 
-      {/* Name + set number */}
-      <div className="space-y-0.5">
-        <h3 className="font-display text-sm font-semibold text-cream line-clamp-2 leading-tight">
-          {project.name}
-        </h3>
-        {project.setId && (
-          <p className="font-mono text-xs text-cream/30">{project.setId}</p>
-        )}
-      </div>
-
-      {/* Progress */}
-      <div className="space-y-1.5">
-        <div className="flex items-center justify-between text-xs font-mono text-cream/40">
-          <span>{project.foundPieces} / {project.totalPieces} piezas</span>
-          <span className={progress === 100 ? 'text-status-success' : 'text-lego-yellow/70'}>
-            {progress}%
-          </span>
+        {/* Progreso */}
+        <div className="space-y-1.5 pb-1">
+          <div className="flex items-center justify-between text-xs font-mono">
+            <span className="text-navy/40">
+              {project.foundPieces} / {project.totalPieces} pieces
+            </span>
+            <span className={progress === 100 ? 'text-status-success' : 'text-lego-yellow/70'}>
+              {progress}%
+            </span>
+          </div>
+          <ProgressBar value={progress} size="sm" variant="light" />
         </div>
-        <ProgressBar value={progress} size="sm" />
       </div>
     </Link>
   )

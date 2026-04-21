@@ -1,57 +1,47 @@
-import { FloatingBricks } from '@/components/home/FloatingBricks'
+import { useEffect } from 'react'
 import { HeroSection } from '@/components/home/HeroSection'
-import { FeatureCards } from '@/components/home/FeatureCards'
+import { useUIStore } from '@/stores/uiStore'
 
 export default function HomePage() {
+  const heroMode = useUIStore((s) => s.heroMode)
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
   return (
-    <>
-      {/* Hero — fondo navy con piezas flotantes */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-navy px-4">
-        {/* Gradiente radial sutil desde el centro */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(255,215,0,0.04) 0%, transparent 70%)',
-          }}
+    <section
+      className="flex-1 flex flex-col overflow-hidden relative"
+      style={{ backgroundColor: '#F5F0E8' }}
+    >
+      {heroMode === 'video' ? (
+        <video
+          key="video"
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          playsInline
+          aria-hidden="true"
+        >
+          <source src="/video/hero.mp4" type="video/mp4" />
+        </video>
+      ) : (
+        <img
+          key="image"
+          src="/video/hero-image.jpg"
+          alt="Hero"
+          className="absolute inset-0 w-full h-full object-cover"
           aria-hidden="true"
         />
+      )}
 
-        {/* Piezas animadas en el fondo */}
-        <FloatingBricks />
-
-        {/* Contenido del hero */}
-        <div className="relative z-10 w-full max-w-3xl mx-auto py-20">
+      {/* Contenido del hero — centrado verticalmente */}
+      <div className="relative z-10 flex-1 flex items-center justify-center w-full px-4">
+        <div className="w-full max-w-3xl mx-auto py-16">
           <HeroSection />
         </div>
-
-        {/* Degradado inferior para transición suave a la siguiente sección */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to bottom, transparent, #0A1628)',
-          }}
-          aria-hidden="true"
-        />
-      </section>
-
-      {/* Features */}
-      <section className="relative bg-navy px-4 pb-24">
-        <div className="max-w-6xl mx-auto">
-          {/* Separador decorativo con studs */}
-          <div className="flex items-center justify-center gap-2 mb-16" aria-hidden="true">
-            {[...Array(6)].map((_, i) => (
-              <div
-                key={i}
-                className="w-2 h-2 rounded-full bg-cream/10"
-                style={{ opacity: 1 - Math.abs(i - 2.5) * 0.2 }}
-              />
-            ))}
-          </div>
-
-          <FeatureCards />
-        </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }

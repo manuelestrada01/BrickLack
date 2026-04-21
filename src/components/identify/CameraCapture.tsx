@@ -25,7 +25,7 @@ export function CameraCapture({ onCapture, isLoading }: CameraCaptureProps) {
   })
 
   const onDragLeave = contextSafe(() => {
-    gsap.to(dropzoneRef.current, { scale: 1, borderColor: 'rgba(245,240,232,0.1)', duration: 0.15 })
+    gsap.to(dropzoneRef.current, { scale: 1, borderColor: 'rgba(10,22,40,0.1)', duration: 0.15 })
   })
 
   const handleFile = async (file: File) => {
@@ -36,7 +36,6 @@ export function CameraCapture({ onCapture, isLoading }: CameraCaptureProps) {
     reader.onload = (e) => setPreview(e.target?.result as string)
     reader.readAsDataURL(file)
 
-    // Animate preview in
     setTimeout(() => {
       if (previewRef.current) {
         gsap.fromTo(previewRef.current, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.5)' })
@@ -79,7 +78,7 @@ export function CameraCapture({ onCapture, isLoading }: CameraCaptureProps) {
         onClick={() => !isLoading && fileInputRef.current?.click()}
         className={cn(
           'relative w-full aspect-square max-w-sm mx-auto rounded-brick overflow-hidden',
-          'border-2 border-dashed border-cream/10',
+          'border-2 border-dashed border-navy/10',
           'flex flex-col items-center justify-center gap-4',
           'cursor-pointer transition-colors',
           !isLoading && 'hover:border-lego-yellow/30 hover:bg-lego-yellow/2',
@@ -98,26 +97,26 @@ export function CameraCapture({ onCapture, isLoading }: CameraCaptureProps) {
 
         {/* Overlay when loading */}
         {isLoading && (
-          <div className="absolute inset-0 bg-navy/80 flex flex-col items-center justify-center gap-3 z-10">
+          <div className="absolute inset-0 bg-[#F5F0E8]/80 flex flex-col items-center justify-center gap-3 z-10">
             <Spinner size="lg" />
-            <p className="text-sm font-body text-cream/60">Analizando pieza…</p>
+            <p className="text-sm font-body text-navy/60">Analyzing piece…</p>
           </div>
         )}
 
         {/* Empty state */}
         {!preview && !isLoading && (
           <>
-            <div className="w-14 h-14 rounded-full bg-navy-100 border border-cream/10 flex items-center justify-center text-cream/30">
+            <div className="w-14 h-14 rounded-full bg-navy/5 border border-navy/10 flex items-center justify-center text-navy/30">
               <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
                 <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                 <circle cx="12" cy="13" r="4" />
               </svg>
             </div>
             <div className="text-center px-4">
-              <p className="text-sm font-body text-cream/50">
-                Arrastrá una foto o <span className="text-lego-yellow underline">elegí un archivo</span>
+              <p className="text-sm font-body text-navy/50">
+                Drag a photo or <span className="text-lego-yellow underline">choose a file</span>
               </p>
-              <p className="text-xs text-cream/25 font-body mt-1">JPG, PNG, WEBP · máx. 10MB</p>
+              <p className="text-xs text-navy/25 font-body mt-1">JPG, PNG, WEBP · max. 10MB</p>
             </div>
           </>
         )}
@@ -132,7 +131,6 @@ export function CameraCapture({ onCapture, isLoading }: CameraCaptureProps) {
         className="sr-only"
       />
 
-      {/* Mobile camera button */}
       <Button
         variant="secondary"
         size="sm"
@@ -144,7 +142,7 @@ export function CameraCapture({ onCapture, isLoading }: CameraCaptureProps) {
           <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
           <circle cx="12" cy="13" r="4" />
         </svg>
-        {preview ? 'Cambiar foto' : 'Tomar foto'}
+        {preview ? 'Change photo' : 'Take photo'}
       </Button>
     </div>
   )

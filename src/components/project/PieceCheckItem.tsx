@@ -13,68 +13,90 @@ interface PieceCheckItemProps {
 export function PieceCheckItem({ piece, userId, projectId }: PieceCheckItemProps) {
   const togglePiece = useTogglePiece()
   const checkRef = useRef<HTMLDivElement>(null)
-  const rowRef = useRef<HTMLDivElement>(null)
+  const cardRef = useRef<HTMLDivElement>(null)
 
   const isComplete = piece.isComplete
   const colorHex = piece.colorCode ? `#${piece.colorCode}` : '#666'
+  const found = piece.quantityFound
+  const required = piece.quantityRequired
 
-  const { contextSafe } = useGSAP({ scope: rowRef })
+  const { contextSafe } = useGSAP({ scope: cardRef })
 
-  const handleToggle = contextSafe(() => {
-    const newQty = isComplete ? 0 : piece.quantityRequired
+  const mutate = (newQty: number) => {
+    togglePiece.mutate({
+      userId,
+      projectId,
+      pieceId: piece.id,
+      quantityFound: newQty,
+      quantityRequired: required,
+    })
+  }
 
-    // Animación del checkbox
-    if (!isComplete) {
+  const handleIncrement = contextSafe((e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (found >= required) return
+    const newQty = found + 1
+    if (newQty === required && checkRef.current) {
       gsap.fromTo(
         checkRef.current,
         { scale: 0, rotation: -20 },
         { scale: 1, rotation: 0, duration: 0.25, ease: 'back.out(2.5)' },
       )
     }
+    mutate(newQty)
+  })
 
-    togglePiece.mutate({
-      userId,
-      projectId,
-      pieceId: piece.id,
-      quantityFound: newQty,
-      quantityRequired: piece.quantityRequired,
-    })
+  const handleDecrement = contextSafe((e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (found <= 0) return
+    mutate(found - 1)
   })
 
   return (
     <div
-      ref={rowRef}
-      onClick={() => handleToggle()}
-      className="flex items-center gap-3 py-2.5 border-b border-cream/5 last:border-0 cursor-pointer group"
+      ref={cardRef}
+      className={`relative flex flex-col rounded-brick border overflow-hidden transition-colors select-none ${
+        isComplete
+          ? 'bg-status-success/5 border-status-success/25'
+          : 'bg-white border-navy/10'
+      }`}
     >
-      {/* Custom checkbox */}
+      {/* Completion checkbox (top-right) — marks/unmarks all at once */}
       <div
-        className={`flex-shrink-0 w-5 h-5 rounded border flex items-center justify-center transition-colors ${
+        onClick={(e) => {
+          e.stopPropagation()
+          const newQty = isComplete ? 0 : required
+          if (!isComplete && checkRef.current) {
+            gsap.fromTo(checkRef.current, { scale: 0, rotation: -20 }, { scale: 1, rotation: 0, duration: 0.25, ease: 'back.out(2.5)' })
+          }
+          mutate(newQty)
+        }}
+        className={`absolute top-2 right-2 w-5 h-5 rounded border flex items-center justify-center z-10 transition-colors cursor-pointer ${
           isComplete
             ? 'bg-status-success border-status-success'
-            : 'border-cream/20 group-hover:border-cream/40'
+            : 'border-navy/20 bg-white/80 hover:border-navy/50'
         }`}
       >
         {isComplete && (
           <div ref={checkRef}>
-            <svg className="w-3 h-3 text-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
               <path d="M20 6 9 17l-5-5" />
             </svg>
           </div>
         )}
       </div>
 
-      {/* Thumbnail */}
-      <div className="flex-shrink-0 w-9 h-9 rounded bg-navy-100 border border-cream/8 overflow-hidden flex items-center justify-center">
+      {/* Image */}
+      <div className="w-full aspect-square bg-navy/4 flex items-center justify-center overflow-hidden">
         {piece.imageUrl ? (
           <img
             src={piece.imageUrl}
             alt={piece.name}
-            className="w-full h-full object-contain p-1"
+            className={`w-full h-full object-contain p-3 transition-opacity ${isComplete ? 'opacity-40' : 'opacity-100'}`}
             loading="lazy"
           />
         ) : (
-          <svg className="w-4 h-4 text-cream/15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+          <svg className="w-8 h-8 text-navy/15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
             <rect x="3" y="8" width="18" height="12" rx="2" />
             <rect x="7" y="5" width="4" height="4" rx="1" />
           </svg>
@@ -82,25 +104,55 @@ export function PieceCheckItem({ piece, userId, projectId }: PieceCheckItemProps
       </div>
 
       {/* Info */}
-      <div className="flex-1 min-w-0">
-        <p className={`text-sm font-body truncate transition-colors ${isComplete ? 'text-cream/40 line-through' : 'text-cream/80'}`}>
+      <div className="px-2.5 pt-2.5 pb-2 space-y-1 flex-1">
+        <p className={`text-xs font-body leading-snug line-clamp-2 transition-colors ${
+          isComplete ? 'text-navy/35 line-through' : 'text-navy font-medium'
+        }`}>
           {piece.name}
         </p>
-        <div className="flex items-center gap-2 mt-0.5">
-          <span className="font-mono text-xs text-cream/25">{piece.partNum}</span>
-          <span className="flex items-center gap-1 text-xs text-cream/25 font-body">
-            <span
-              className="w-2 h-2 rounded-full border border-cream/10 flex-shrink-0"
-              style={{ backgroundColor: colorHex }}
-            />
-            {piece.color}
-          </span>
+        <div className="flex items-center gap-1.5">
+          <span
+            className="w-2.5 h-2.5 rounded-full border border-navy/15 flex-shrink-0"
+            style={{ backgroundColor: colorHex }}
+          />
+          <span className="font-body text-[10px] text-navy/50 truncate">{piece.color}</span>
         </div>
+        <p className="font-mono text-[10px] text-navy/40">{piece.partNum}</p>
       </div>
 
-      {/* Quantity */}
-      <div className="flex-shrink-0 text-right font-mono text-xs text-cream/30">
-        ×{piece.quantityRequired}
+      {/* Counter */}
+      <div className="flex items-center border-t border-navy/8">
+        {/* Decrement */}
+        <button
+          onClick={handleDecrement}
+          disabled={found <= 0}
+          className="flex-1 py-2 flex items-center justify-center text-navy/40 hover:text-navy hover:bg-navy/5 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+          aria-label="Remove one"
+        >
+          <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
+            <path d="M5 12h14" />
+          </svg>
+        </button>
+
+        {/* Count display */}
+        <div className="px-2 py-2 flex items-baseline gap-0.5 border-x border-navy/8">
+          <span className={`font-mono text-sm font-semibold leading-none ${isComplete ? 'text-status-success' : found > 0 ? 'text-navy' : 'text-navy/30'}`}>
+            {found}
+          </span>
+          <span className="font-mono text-[10px] text-navy/30 leading-none">/{required}</span>
+        </div>
+
+        {/* Increment */}
+        <button
+          onClick={handleIncrement}
+          disabled={found >= required}
+          className="flex-1 py-2 flex items-center justify-center text-navy/40 hover:text-navy hover:bg-navy/5 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+          aria-label="Add one"
+        >
+          <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+        </button>
       </div>
     </div>
   )

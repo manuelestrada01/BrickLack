@@ -42,14 +42,14 @@ export function ProjectActions({ project, userId }: ProjectActionsProps) {
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
                 <rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" />
               </svg>
-              Pausar
+              Pause
             </>
           ) : (
             <>
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
                 <polygon points="5 3 19 12 5 21 5 3" />
               </svg>
-              Reanudar
+              Resume
             </>
           )}
         </Button>
@@ -65,16 +65,16 @@ export function ProjectActions({ project, userId }: ProjectActionsProps) {
           <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
           <path d="M10 11v6M14 11v6" />
         </svg>
-        Eliminar
+        Delete
       </Button>
 
       <ConfirmDialog
         isOpen={showDelete}
         onClose={() => setShowDelete(false)}
         onConfirm={() => void handleDelete()}
-        title="Eliminar proyecto"
-        message={`¿Estás seguro de que querés eliminar "${project.name}"? Esta acción no se puede deshacer.`}
-        confirmLabel="Sí, eliminar"
+        title="Delete project"
+        message={`Are you sure you want to delete "${project.name}"? This action cannot be undone.`}
+        confirmLabel="Yes, delete"
         isLoading={deleteProject.isPending}
       />
     </div>

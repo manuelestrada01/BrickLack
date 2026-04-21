@@ -39,8 +39,8 @@ export function SearchResults({ tab, sets, parts, isLoading, isError, query }: S
   if (isError) {
     return (
       <ErrorState
-        title="Error al buscar"
-        message="No pudimos conectar con el servidor. Revisá tu conexión e intentá de nuevo."
+        title="Search error"
+        message="We couldn't connect to the server. Check your connection and try again."
       />
     )
   }
@@ -66,8 +66,8 @@ export function SearchResults({ tab, sets, parts, isLoading, isError, query }: S
     if (!sets?.length) {
       return (
         <EmptyState
-          title="Sin resultados"
-          description={`No encontramos sets para "${query}". Probá con el número de set (ej: 75192) o un nombre diferente.`}
+          title="No results"
+          description={`No sets found for "${query}". Try a set number (e.g. 75192) or a different name.`}
         />
       )
     }
@@ -84,8 +84,8 @@ export function SearchResults({ tab, sets, parts, isLoading, isError, query }: S
   if (!parts?.length) {
     return (
       <EmptyState
-        title="Sin resultados"
-        description={`No encontramos piezas para "${query}". Probá con el número de parte (ej: 3001) o una descripción diferente.`}
+        title="No results"
+        description={`No parts found for "${query}". Try a part number (e.g. 3001) or a different description.`}
       />
     )
   }

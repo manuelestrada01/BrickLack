@@ -69,23 +69,23 @@ export function NewProjectForm() {
     <form ref={formRef} onSubmit={(e) => void handleSubmit(e)} className="space-y-6 max-w-lg">
       {/* Set selection */}
       <div className="space-y-1.5">
-        <label className="text-sm font-body text-cream/60">
-          Set de LEGO <span className="text-cream/30">(opcional)</span>
+        <label className="text-sm font-body text-navy/60">
+          LEGO Set <span className="text-navy/30">(optional)</span>
         </label>
 
         {selectedSet ? (
-          <div className="flex items-center gap-3 p-3 rounded-brick bg-navy-50 border border-lego-yellow/30">
+          <div className="flex items-center gap-3 p-3 rounded-brick bg-white border border-lego-yellow/30">
             {selectedSet.setImgUrl && (
               <img src={selectedSet.setImgUrl} alt={selectedSet.name} className="w-10 h-10 object-contain rounded flex-shrink-0" />
             )}
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-cream truncate font-body">{selectedSet.name}</p>
-              <p className="text-xs font-mono text-lego-yellow/60">{selectedSet.setNum} · {selectedSet.numParts.toLocaleString()} piezas</p>
+              <p className="text-sm font-semibold text-navy truncate font-body">{selectedSet.name}</p>
+              <p className="text-xs font-mono text-lego-yellow/60">{selectedSet.setNum} · {selectedSet.numParts.toLocaleString()} pieces</p>
             </div>
             <button
               type="button"
               onClick={handleClearSet}
-              className="text-cream/30 hover:text-cream transition-colors flex-shrink-0"
+              className="text-navy/30 hover:text-navy transition-colors flex-shrink-0"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
                 <path d="M18 6 6 18M6 6l12 12" />
@@ -100,29 +100,28 @@ export function NewProjectForm() {
               onChange={(e) => { setSetQuery(e.target.value); setShowSuggestions(true) }}
               onFocus={() => setQuery.length >= 2 && setShowSuggestions(true)}
               onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
-              placeholder="Buscar set por nombre o número…"
-              className="w-full h-10 pl-9 pr-3 rounded-brick bg-navy-50 border border-cream/10 text-sm text-cream placeholder:text-cream/25 font-body outline-none focus:border-lego-yellow/40 transition-colors"
+              placeholder="Search set by name or number…"
+              className="w-full h-10 pl-9 pr-3 rounded-brick bg-white border border-navy/10 text-sm text-navy placeholder:text-navy/25 font-body outline-none focus:border-lego-yellow/40 transition-colors"
             />
-            <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-cream/25 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+            <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/25 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
               <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
             </svg>
 
-            {/* Suggestions dropdown */}
             {suggestions && suggestions.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1 z-20 bg-navy-50 border border-cream/10 rounded-brick shadow-brick-hover overflow-hidden">
+              <div className="absolute top-full left-0 right-0 mt-1 z-20 bg-[#F5F0E8] border border-navy/10 rounded-brick shadow-sidebar overflow-hidden">
                 {suggestions.map((set) => (
                   <button
                     key={set.setNum}
                     type="button"
                     onMouseDown={() => handleSelectSet(set)}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-navy-100 transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-navy/5 transition-colors text-left"
                   >
                     {set.setImgUrl && (
                       <img src={set.setImgUrl} alt="" className="w-8 h-8 object-contain flex-shrink-0 rounded" />
                     )}
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-cream truncate font-body">{set.name}</p>
-                      <p className="text-xs font-mono text-cream/30">{set.setNum} · {set.numParts.toLocaleString()}p</p>
+                      <p className="text-sm text-navy truncate font-body">{set.name}</p>
+                      <p className="text-xs font-mono text-navy/30">{set.setNum} · {set.numParts.toLocaleString()}p</p>
                     </div>
                   </button>
                 ))}
@@ -130,23 +129,23 @@ export function NewProjectForm() {
             )}
           </div>
         )}
-        <p className="text-xs text-cream/30 font-body">
-          Si elegís un set, importaremos su inventario completo de piezas.
+        <p className="text-xs text-navy/30 font-body">
+          If you select a set, we'll import its complete piece inventory.
         </p>
       </div>
 
       {/* Project name */}
       <div className="space-y-1.5">
-        <label className="text-sm font-body text-cream/60">
-          Nombre del proyecto <span className="text-status-error">*</span>
+        <label className="text-sm font-body text-navy/60">
+          Project name <span className="text-status-error">*</span>
         </label>
         <input
           type="text"
           value={projectName}
           onChange={(e) => setProjectName(e.target.value)}
-          placeholder="Mi colección…"
+          placeholder="My collection…"
           required
-          className="w-full h-10 px-3 rounded-brick bg-navy-50 border border-cream/10 text-sm text-cream font-body outline-none focus:border-lego-yellow/40 transition-colors"
+          className="w-full h-10 px-3 rounded-brick bg-white border border-navy/10 text-sm text-navy font-body outline-none focus:border-lego-yellow/40 transition-colors"
         />
       </div>
 
@@ -159,12 +158,12 @@ export function NewProjectForm() {
         disabled={!projectName.trim()}
         className="w-full sm:w-auto"
       >
-        {selectedSet ? 'Crear proyecto e importar piezas' : 'Crear proyecto'}
+        {selectedSet ? 'Create project and import pieces' : 'Create project'}
       </Button>
 
       {createProject.isError && (
         <p className="text-sm text-status-error font-body">
-          Error al crear el proyecto. Intentá de nuevo.
+          Failed to create the project. Please try again.
         </p>
       )}
     </form>

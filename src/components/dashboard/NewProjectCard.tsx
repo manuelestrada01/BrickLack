@@ -27,17 +27,17 @@ export function NewProjectCard() {
       to={ROUTES.NEW_PROJECT}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      className="flex flex-col items-center justify-center gap-3 p-5 rounded-brick border border-dashed border-cream/15 hover:border-lego-yellow/30 hover:bg-lego-yellow/3 transition-[border-color,background] duration-200 min-h-[180px]"
+      className="flex flex-col items-center justify-center gap-3 p-5 rounded-brick border border-dashed border-navy/15 hover:border-lego-yellow/40 hover:bg-lego-yellow/3 transition-[border-color,background] duration-200 min-h-[180px]"
     >
       <div
         data-icon
-        className="w-10 h-10 rounded-full border border-cream/20 flex items-center justify-center text-cream/30"
+        className="w-10 h-10 rounded-full border border-navy/20 flex items-center justify-center text-navy/30"
       >
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
           <path d="M12 5v14M5 12h14" />
         </svg>
       </div>
-      <p className="text-sm font-body text-cream/40">Nuevo proyecto</p>
+      <p className="text-sm font-body text-navy/40">New project</p>
     </Link>
   )
 }

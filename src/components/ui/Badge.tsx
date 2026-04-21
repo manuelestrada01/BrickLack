@@ -12,17 +12,17 @@ interface BadgeProps {
 const variantClasses: Record<BadgeVariant, string> = {
   in_progress: 'bg-lego-yellow/15 text-lego-yellow border-lego-yellow/30',
   completed:   'bg-status-success/15 text-status-success border-status-success/30',
-  paused:      'bg-cream/10 text-cream/50 border-cream/20',
+  paused:      'bg-navy/8 text-navy/50 border-navy/15',
   high:        'bg-status-success/15 text-status-success border-status-success/30',
   medium:      'bg-status-warning/15 text-status-warning border-status-warning/30',
   low:         'bg-status-error/15 text-status-error border-status-error/30',
-  default:     'bg-cream/10 text-cream/60 border-cream/20',
+  default:     'bg-navy/8 text-navy/60 border-navy/15',
 }
 
 const variantLabels: Partial<Record<BadgeVariant, string>> = {
-  in_progress: 'En progreso',
-  completed: 'Completado',
-  paused: 'Pausado',
+  in_progress: 'In progress',
+  completed: 'Completed',
+  paused: 'Paused',
 }
 
 export function Badge({ variant = 'default', children, className }: BadgeProps) {

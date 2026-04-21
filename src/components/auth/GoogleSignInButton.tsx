@@ -16,7 +16,7 @@ export function GoogleSignInButton({ className, size = 'md' }: GoogleSignInButto
     try {
       await signIn()
     } catch {
-      // El usuario cerró el popup o hubo un error — no mostramos nada
+      // User closed the popup or an error occurred — nothing to show
     } finally {
       setIsLoading(false)
     }
@@ -55,7 +55,7 @@ export function GoogleSignInButton({ className, size = 'md' }: GoogleSignInButto
           fill="#EA4335"
         />
       </svg>
-      {isLoading ? 'Cargando...' : 'Continuar con Google'}
+      {isLoading ? 'Loading...' : 'Continue with Google'}
     </button>
   )
 }

@@ -33,11 +33,11 @@ export default function IdentifyPage() {
     <div className="max-w-lg mx-auto px-4 py-8 space-y-8">
       {/* Header */}
       <div>
-        <h1 className="font-display text-2xl sm:text-3xl font-bold text-cream">
-          Identificar pieza
+        <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy">
+          Identify piece
         </h1>
-        <p className="text-sm text-cream/40 font-body mt-2">
-          Sacá una foto de una pieza suelta y la IA la identifica.
+        <p className="text-sm text-navy/40 font-body mt-2">
+          Take a photo of a loose piece and AI will identify it.
         </p>
       </div>
 
@@ -48,13 +48,11 @@ export default function IdentifyPage() {
       {limitReached ? (
         <ScanLimitReached />
       ) : hasResult && identifyMutation.data?.data ? (
-        /* Result */
         <IdentifyResult
           result={identifyMutation.data.data}
           onReset={handleReset}
         />
       ) : (
-        /* Camera */
         <div className="space-y-4">
           <CameraCapture
             onCapture={(base64) => void handleCapture(base64)}
@@ -63,13 +61,13 @@ export default function IdentifyPage() {
 
           {identifyMutation.isError && (
             <p className="text-sm text-status-error font-body text-center">
-              {identifyMutation.error?.message ?? 'Error al identificar la pieza. Intentá de nuevo.'}
+              {identifyMutation.error?.message ?? 'Failed to identify the piece. Please try again.'}
             </p>
           )}
 
           {identifyMutation.data && !identifyMutation.data.success && (
             <p className="text-sm text-status-warning font-body text-center">
-              {identifyMutation.data.error ?? 'No se pudo identificar la pieza. Intentá con una foto más clara.'}
+              {identifyMutation.data.error ?? 'Could not identify the piece. Try a clearer photo.'}
             </p>
           )}
         </div>

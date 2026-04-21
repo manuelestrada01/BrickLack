@@ -8,9 +8,9 @@ export function SetPartItem({ part }: SetPartItemProps) {
   const colorHex = `#${part.color.rgb}`
 
   return (
-    <div className="flex items-center gap-3 py-2.5 border-b border-cream/5 last:border-0">
+    <div className="flex items-center gap-3 py-2.5 border-b border-navy/5 last:border-0">
       {/* Thumbnail */}
-      <div className="flex-shrink-0 w-10 h-10 rounded bg-navy-100 border border-cream/8 flex items-center justify-center overflow-hidden">
+      <div className="flex-shrink-0 w-10 h-10 rounded bg-navy/5 border border-navy/8 flex items-center justify-center overflow-hidden">
         {part.part.part_img_url ? (
           <img
             src={part.part.part_img_url}
@@ -19,7 +19,7 @@ export function SetPartItem({ part }: SetPartItemProps) {
             loading="lazy"
           />
         ) : (
-          <svg className="w-5 h-5 text-cream/15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+          <svg className="w-5 h-5 text-navy/15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
             <rect x="3" y="8" width="18" height="12" rx="2" />
             <rect x="7" y="5" width="4" height="4" rx="1" />
           </svg>
@@ -28,12 +28,12 @@ export function SetPartItem({ part }: SetPartItemProps) {
 
       {/* Info */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm text-cream/80 font-body truncate">{part.part.name}</p>
+        <p className="text-sm text-navy/80 font-body truncate">{part.part.name}</p>
         <div className="flex items-center gap-2 mt-0.5">
-          <span className="font-mono text-xs text-cream/30">{part.part.part_num}</span>
-          <span className="flex items-center gap-1 text-xs text-cream/30 font-body">
+          <span className="font-mono text-xs text-navy/30">{part.part.part_num}</span>
+          <span className="flex items-center gap-1 text-xs text-navy/30 font-body">
             <span
-              className="w-2.5 h-2.5 rounded-full border border-cream/10 flex-shrink-0"
+              className="w-2.5 h-2.5 rounded-full border border-navy/10 flex-shrink-0"
               style={{ backgroundColor: colorHex }}
             />
             {part.color.name}

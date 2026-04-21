@@ -6,10 +6,10 @@ import { buildSearchPath } from '@/router/routePaths'
 import { cn } from '@/utils/cn'
 
 const PLACEHOLDERS = [
-  'Buscar set 75192 Millennium Falcon…',
-  'Buscar pieza 3001 brick 2x4…',
-  'Buscar set 10305 Lion Knights Castle…',
-  'Buscar pieza 6141 round plate 1x1…',
+  'Search set 75192 Millennium Falcon…',
+  'Search part 3001 brick 2x4…',
+  'Search set 10305 Lion Knights Castle…',
+  'Search part 6141 round plate 1x1…',
 ]
 
 export function SearchBar() {
@@ -64,15 +64,15 @@ export function SearchBar() {
         ref={wrapperRef}
         className={cn(
           'relative flex items-center gap-0',
-          'bg-navy-50 border rounded-brick overflow-hidden',
+          'bg-white/60 backdrop-blur-sm border rounded-full overflow-hidden',
           'transition-[border-color,box-shadow] duration-200',
           focused
-            ? 'border-lego-yellow/60 shadow-[0_0_0_3px_rgba(255,215,0,0.12)]'
-            : 'border-cream/10',
+            ? 'border-lego-yellow/70 shadow-[0_0_0_3px_rgba(255,215,0,0.15)]'
+            : 'border-navy/15',
         )}
       >
         {/* Search icon */}
-        <div className="pl-4 pr-2 flex-shrink-0 text-cream/30">
+        <div className="pl-4 pr-2 flex-shrink-0 text-navy/35">
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.35-4.35" />
@@ -90,7 +90,7 @@ export function SearchBar() {
           placeholder={PLACEHOLDERS[placeholderIdx]}
           className={cn(
             'flex-1 h-14 bg-transparent outline-none',
-            'text-cream placeholder:text-cream/25 font-body text-base',
+            'text-navy placeholder:text-navy/30 font-body text-base',
             'min-w-0 pr-2',
           )}
           autoComplete="off"
@@ -101,23 +101,22 @@ export function SearchBar() {
           ref={buttonRef}
           type="submit"
           className={cn(
-            'flex-shrink-0 h-10 px-5 mx-2 rounded-brick',
-            'bg-lego-yellow text-navy font-semibold font-body text-sm',
-            'shadow-[0_3px_0_0_rgba(0,0,0,0.4)] active:shadow-none active:translate-y-[3px]',
-            'hover:brightness-105 transition-[filter] duration-150',
-            'flex items-center gap-2',
+            'flex-shrink-0 h-9 w-9 mx-2 rounded-full',
+            'bg-navy/10 text-navy hover:bg-navy/20',
+            'transition-colors duration-150',
+            'flex items-center justify-center',
           )}
         >
-          <span>Buscar</span>
-          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7" />
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
           </svg>
         </button>
       </div>
 
       {/* Hint */}
-      <p className="text-center text-xs text-cream/25 font-mono mt-3">
-        Busca por número de set, nombre o número de pieza
+      <p className="text-center text-xs text-navy font-mono mt-3">
+        Search by set number, name, or part number
       </p>
     </form>
   )

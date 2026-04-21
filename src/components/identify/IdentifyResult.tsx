@@ -18,9 +18,9 @@ const confidenceVariant = {
 }
 
 const confidenceLabel = {
-  high: 'Alta confianza',
-  medium: 'Confianza media',
-  low: 'Baja confianza',
+  high: 'High confidence',
+  medium: 'Medium confidence',
+  low: 'Low confidence',
 }
 
 export function IdentifyResult({ result, onReset }: IdentifyResultProps) {
@@ -49,7 +49,7 @@ export function IdentifyResult({ result, onReset }: IdentifyResultProps) {
     <div ref={containerRef} className="space-y-5">
       {/* Header */}
       <div data-item className="flex items-center justify-between">
-        <h3 className="font-display text-lg font-semibold text-cream">Resultado</h3>
+        <h3 className="font-display text-lg font-semibold text-navy">Result</h3>
         <Badge variant={confidenceVariant[result.confidence]}>
           {confidenceLabel[result.confidence]}
         </Badge>
@@ -58,14 +58,14 @@ export function IdentifyResult({ result, onReset }: IdentifyResultProps) {
       {/* Main info */}
       <div data-item className="grid grid-cols-2 gap-3">
         {[
-          { label: 'Tipo', value: result.type },
+          { label: 'Type', value: result.type },
           { label: 'Color', value: result.color },
-          { label: 'Dimensiones', value: result.dimensions },
-          { label: 'Número de parte', value: result.partNum ?? 'Desconocido' },
+          { label: 'Dimensions', value: result.dimensions },
+          { label: 'Part number', value: result.partNum ?? 'Unknown' },
         ].map(({ label, value }) => (
-          <div key={label} className="p-3 rounded-brick bg-navy-50 border border-cream/8">
-            <p className="text-xs text-cream/30 font-body">{label}</p>
-            <p className="font-mono text-sm text-cream mt-0.5">{value}</p>
+          <div key={label} className="p-3 rounded-brick bg-white border border-navy/8">
+            <p className="text-xs text-navy/30 font-body">{label}</p>
+            <p className="font-mono text-sm text-navy mt-0.5">{value}</p>
           </div>
         ))}
       </div>
@@ -77,7 +77,7 @@ export function IdentifyResult({ result, onReset }: IdentifyResultProps) {
             to={buildPiecePath(result.partNum)}
             className="inline-flex items-center gap-2 text-sm text-lego-yellow hover:text-lego-yellow/80 font-body transition-colors"
           >
-            Ver pieza en catálogo
+            View piece in catalog
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
               <path d="m9 18 6-6-6-6" />
             </svg>
@@ -88,13 +88,13 @@ export function IdentifyResult({ result, onReset }: IdentifyResultProps) {
       {/* Known sets */}
       {result.knownSets.length > 0 && (
         <div data-item className="space-y-2">
-          <p className="text-xs text-cream/40 font-body uppercase tracking-wider">Aparece en sets</p>
+          <p className="text-xs text-navy/40 font-body uppercase tracking-wider">Appears in sets</p>
           <div className="flex flex-wrap gap-2">
             {result.knownSets.map((setNum) => (
               <Link
                 key={setNum}
                 to={buildSearchPath(setNum)}
-                className="font-mono text-xs text-cream/60 hover:text-cream bg-navy-50 border border-cream/10 hover:border-cream/20 px-2.5 py-1 rounded-full transition-colors"
+                className="font-mono text-xs text-navy/60 hover:text-navy bg-white border border-navy/10 hover:border-navy/20 px-2.5 py-1 rounded-full transition-colors"
               >
                 {setNum}
               </Link>
@@ -107,9 +107,9 @@ export function IdentifyResult({ result, onReset }: IdentifyResultProps) {
       <div data-item>
         <button
           onClick={onReset}
-          className="text-sm text-cream/40 hover:text-cream font-body transition-colors underline underline-offset-2"
+          className="text-sm text-navy/40 hover:text-navy font-body transition-colors underline underline-offset-2"
         >
-          Escanear otra pieza
+          Scan another piece
         </button>
       </div>
     </div>

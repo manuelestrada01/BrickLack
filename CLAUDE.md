@@ -112,22 +112,37 @@ users/{userId}/projects/{projectId}/pieces/{pieceId}
 ## Diseño Visual
 
 ### Estética
-- **Tema**: Dark, geométrico, "taller/inventario nocturno". Identidad propia, no genérica.
-- **Color de fondo**: Azul marino profundo — `#0A1628` como referencia base
-- **Acento principal**: Cream/blanco roto `#F5F0E8` — trazos, bordes, texto secundario
-- **Acento interactivo**: Naranja LEGO `#E3000B` o Amarillo LEGO `#FFD700` — elegir uno y ser consistente en todo el proyecto (CTAs, highlights, estados activos)
-- **Tipografía**: No usar Inter, Roboto, Arial, Space Grotesk ni ninguna fuente genérica. Elegir una combinación distintiva: una display geométrica para títulos + una mono o sans de datos para números de piezas y cantidades técnicas.
+- **Tema**: Light, limpio, "inventario/catálogo profesional". Identidad propia, no genérica.
+- **Color de fondo de página**: Blanco roto o gris muy claro — `#F8F7F4` o `white`
+- **Color de superficie (cards, modales)**: Blanco puro `#FFFFFF` con borde `navy/8` y sombra `shadow-brick`
+- **Color de texto principal**: Navy `#0A1628` — headings y texto de datos
+- **Color de texto secundario**: `navy/30` a `navy/40` — set numbers, labels, metadata
+- **Acento interactivo**: Amarillo LEGO `#FFD700` — CTAs, highlights, estados activos, barras de progreso. Usar este, no el rojo.
+- **Estados de status**: success `#22C55E`, warning `#F59E0B`, error `#EF4444`
+- **Tipografía**: `Outfit` (display + body) + `JetBrains Mono` (números de piezas, IDs, cantidades técnicas)
+
+### Paleta de tokens Tailwind (referencia rápida)
+```
+bg-white            → superficie de cards y paneles
+bg-navy/5           → fondo de imágenes dentro de cards (gris suave)
+border-navy/8       → bordes sutiles de cards
+text-navy           → títulos y texto principal
+text-navy/30–40     → texto secundario / metadata
+text-lego-yellow    → acento activo, porcentajes, highlights
+shadow-brick        → sombra estándar de cards
+bg-lego-yellow      → fills de progreso, botones primarios
+```
 
 ### Home
-- Fondo azul marino con piezas de LEGO dibujadas en estilo minimalista (solo trazo, sin relleno) en color cream/blanco
+- Fondo azul marino oscuro (`#0A1628`) **solo en la sección hero** — es la excepción, no la regla
+- Piezas de LEGO dibujadas en estilo minimalista (solo trazo, sin relleno) en color cream/blanco sobre ese fondo
 - Las piezas se animan con GSAP: aparecen, rotan suavemente, se desvanecen en loop
-- Navbar centrada con buscador principal (buscar por número de set o nombre/número de pieza)
-- CTA de login con Google si el usuario no está autenticado
-- Si está autenticado: acceso directo al dashboard
+- El resto de la página (secciones de features, search, etc.) usa el tema claro
 
 ### Componentes
-- Cards con sombras definidas y bordes sutiles — deben sentirse como objetos físicos
-- Hover states con micro-animaciones GSAP (escala + sombra), no CSS puro
+- Cards: `bg-white`, borde `navy/8`, `shadow-brick` — deben sentirse como objetos físicos sobre fondo claro
+- Imágenes dentro de cards: área `bg-navy/5` (gris muy suave) para que la imagen contraste sin fondo blanco puro
+- Hover states con micro-animaciones GSAP (lift + sombra), no CSS puro
 - Loading states con animaciones GSAP, no spinners genéricos
 - Todos los componentes deben ser responsive mobile-first
 

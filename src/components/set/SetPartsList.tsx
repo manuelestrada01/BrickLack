@@ -65,22 +65,22 @@ export function SetPartsList({ parts, isLoading }: SetPartsListProps) {
           type="search"
           value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1) }}
-          placeholder="Filtrar por nombre, número o color…"
-          className="w-full h-9 pl-9 pr-3 rounded-brick bg-navy-50 border border-cream/10 text-sm text-cream placeholder:text-cream/25 font-body outline-none focus:border-lego-yellow/40 transition-colors"
+          placeholder="Filter by name, number, or color…"
+          className="w-full h-9 pl-9 pr-3 rounded-brick bg-white border border-navy/10 text-sm text-navy placeholder:text-navy/25 font-body outline-none focus:border-lego-yellow/40 transition-colors"
         />
-        <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-cream/25 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+        <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/25 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
           <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
         </svg>
       </div>
 
       {/* Count */}
-      <p className="text-xs font-mono text-cream/30">
-        {filtered.length.toLocaleString()} piezas
-        {search && ` (filtrado de ${parts.length.toLocaleString()})`}
+      <p className="text-xs font-mono text-navy/30">
+        {filtered.length.toLocaleString()} pieces
+        {search && ` (filtered from ${parts.length.toLocaleString()})`}
       </p>
 
       {/* List */}
-      <div ref={listRef} className="rounded-brick bg-navy-50 border border-cream/8 px-4">
+      <div ref={listRef} className="rounded-brick bg-white border border-navy/8 px-4">
         {paginated.map((part) => (
           <SetPartItem key={`${part.part.part_num}-${part.color.id}`} part={part} />
         ))}
@@ -90,9 +90,9 @@ export function SetPartsList({ parts, isLoading }: SetPartsListProps) {
       {page < totalPages && (
         <button
           onClick={() => setPage((p) => p + 1)}
-          className="w-full py-2.5 rounded-brick border border-cream/10 text-sm text-cream/50 hover:text-cream hover:border-cream/20 font-body transition-colors"
+          className="w-full py-2.5 rounded-brick border border-navy/10 text-sm text-navy/50 hover:text-navy hover:border-navy/20 font-body transition-colors"
         >
-          Cargar más ({filtered.length - paginated.length} restantes)
+          Load more ({filtered.length - paginated.length} remaining)
         </button>
       )}
     </div>

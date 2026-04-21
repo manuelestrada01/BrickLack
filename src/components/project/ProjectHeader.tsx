@@ -9,10 +9,10 @@ interface ProjectHeaderProps {
 
 export function ProjectHeader({ project, userId }: ProjectHeaderProps) {
   return (
-    <div className="flex flex-col sm:flex-row gap-4 items-start">
+    <div className="flex flex-col sm:flex-row gap-4 items-center">
       {/* Set image */}
       {project.setImageUrl && (
-        <div className="flex-shrink-0 w-24 h-24 rounded-brick overflow-hidden bg-navy-50 border border-cream/10 flex items-center justify-center">
+        <div className="flex-shrink-0 w-24 h-24 rounded-brick overflow-hidden bg-white border border-navy/10 flex items-center justify-center">
           <img
             src={project.setImageUrl}
             alt={project.setName ?? project.name}
@@ -26,16 +26,16 @@ export function ProjectHeader({ project, userId }: ProjectHeaderProps) {
         <div className="flex items-center gap-2 flex-wrap">
           <StatusBadge status={project.status} />
           {project.setId && (
-            <span className="font-mono text-xs text-cream/30">{project.setId}</span>
+            <span className="font-mono text-xs text-navy/30">{project.setId}</span>
           )}
         </div>
 
-        <h1 className="font-display text-2xl sm:text-3xl font-bold text-cream leading-tight">
+        <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
           {project.name}
         </h1>
 
         {project.setName && project.setName !== project.name && (
-          <p className="text-sm text-cream/40 font-body">{project.setName}</p>
+          <p className="text-sm text-navy/40 font-body">{project.setName}</p>
         )}
       </div>
 

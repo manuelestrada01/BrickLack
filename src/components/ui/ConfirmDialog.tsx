@@ -19,15 +19,15 @@ export function ConfirmDialog({
   onConfirm,
   title,
   message,
-  confirmLabel = 'Confirmar',
-  cancelLabel = 'Cancelar',
+  confirmLabel = 'Confirm',
+  cancelLabel = 'Cancel',
   isLoading = false,
   variant = 'danger',
 }: ConfirmDialogProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} maxWidth="sm">
       <div className="space-y-5">
-        <p className="text-sm text-cream/60 font-body leading-relaxed">{message}</p>
+        <p className="text-sm text-navy/60 font-body leading-relaxed">{message}</p>
         <div className="flex gap-3 justify-end">
           <Button variant="ghost" size="sm" onClick={onClose} disabled={isLoading}>
             {cancelLabel}

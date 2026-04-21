@@ -12,10 +12,10 @@ export function DashboardStats({ projects }: DashboardStatsProps) {
   const foundPieces = projects.reduce((sum, p) => sum + p.foundPieces, 0)
 
   const stats = [
-    { label: 'Proyectos', value: total },
-    { label: 'En progreso', value: inProgress },
-    { label: 'Completados', value: completed },
-    { label: 'Piezas encontradas', value: foundPieces },
+    { label: 'Projects', value: total },
+    { label: 'In progress', value: inProgress },
+    { label: 'Completed', value: completed },
+    { label: 'Pieces found', value: foundPieces },
   ]
 
   if (total === 0) return null
@@ -25,13 +25,13 @@ export function DashboardStats({ projects }: DashboardStatsProps) {
       {stats.map(({ label, value }) => (
         <div
           key={label}
-          className="p-4 rounded-brick bg-navy-50 border border-cream/8 text-center"
+          className="p-4 rounded-brick bg-white border border-navy/8 text-center"
         >
           <Counter
             value={value}
             className="font-mono text-2xl font-bold text-lego-yellow block"
           />
-          <p className="text-xs text-cream/40 font-body mt-1">{label}</p>
+          <p className="text-xs text-navy/40 font-body mt-1">{label}</p>
         </div>
       ))}
     </div>

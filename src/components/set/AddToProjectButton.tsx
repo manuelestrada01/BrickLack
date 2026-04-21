@@ -36,8 +36,8 @@ export function AddToProjectButton({ set }: AddToProjectButtonProps) {
 
   if (!user) {
     return (
-      <p className="text-sm text-cream/40 font-body text-center">
-        Iniciá sesión para agregar este set a tus proyectos.
+      <p className="text-sm text-navy/40 font-body text-center">
+        Sign in to add this set to your projects.
       </p>
     )
   }
@@ -48,27 +48,27 @@ export function AddToProjectButton({ set }: AddToProjectButtonProps) {
         <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 5v14M5 12h14" />
         </svg>
-        Agregar a proyectos
+        Add to projects
       </Button>
 
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        title="Nuevo proyecto"
+        title="New project"
       >
         <div className="space-y-4">
-          <p className="text-sm text-cream/50 font-body">
-            Se importarán las <span className="text-cream font-mono">{set.numParts.toLocaleString()}</span> piezas del set automáticamente.
+          <p className="text-sm text-navy/50 font-body">
+            The <span className="text-navy font-mono">{set.numParts.toLocaleString()}</span> pieces from the set will be imported automatically.
           </p>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-body text-cream/50">Nombre del proyecto</label>
+            <label className="text-xs font-body text-navy/50">Project name</label>
             <input
               type="text"
               value={projectName}
               onChange={(e) => setProjectName(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && void handleCreate()}
-              className="w-full h-10 px-3 rounded-brick bg-navy-100 border border-cream/10 text-sm text-cream font-body outline-none focus:border-lego-yellow/40 transition-colors"
+              className="w-full h-10 px-3 rounded-brick bg-white border border-navy/10 text-sm text-navy font-body outline-none focus:border-lego-yellow/40 transition-colors"
               autoFocus
             />
           </div>
@@ -80,7 +80,7 @@ export function AddToProjectButton({ set }: AddToProjectButtonProps) {
               onClick={() => setIsOpen(false)}
               disabled={createProject.isPending}
             >
-              Cancelar
+              Cancel
             </Button>
             <Button
               variant="primary"
@@ -89,13 +89,13 @@ export function AddToProjectButton({ set }: AddToProjectButtonProps) {
               isLoading={createProject.isPending}
               disabled={!projectName.trim()}
             >
-              Crear proyecto
+              Create project
             </Button>
           </div>
 
           {createProject.isError && (
             <p className="text-xs text-status-error font-body">
-              Error al crear el proyecto. Intentá de nuevo.
+              Failed to create the project. Please try again.
             </p>
           )}
         </div>

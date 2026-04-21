@@ -31,7 +31,6 @@ export function Modal({
   const backdropRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
-  // Montar antes de animar
   useEffect(() => {
     if (isOpen) setShouldRender(true)
   }, [isOpen])
@@ -58,7 +57,6 @@ export function Modal({
     { dependencies: [isOpen, shouldRender] },
   )
 
-  // Cerrar con Escape
   useEffect(() => {
     if (!isOpen) return
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
@@ -71,7 +69,7 @@ export function Modal({
   return createPortal(
     <div
       ref={backdropRef}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/80 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/40 backdrop-blur-sm"
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
       <div
@@ -80,20 +78,20 @@ export function Modal({
         aria-modal="true"
         aria-labelledby={title ? 'modal-title' : undefined}
         className={cn(
-          'w-full bg-navy-50 border border-cream/10 rounded-brick shadow-brick-hover',
+          'w-full bg-[#F5F0E8] border border-navy/10 rounded-brick shadow-sidebar',
           maxWidthClasses[maxWidth],
           className,
         )}
       >
         {title && (
-          <div className="flex items-center justify-between px-5 py-4 border-b border-cream/10">
-            <h2 id="modal-title" className="font-display font-semibold text-cream">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-navy/10">
+            <h2 id="modal-title" className="font-display font-semibold text-navy">
               {title}
             </h2>
             <button
               onClick={onClose}
-              className="text-cream/40 hover:text-cream transition-colors"
-              aria-label="Cerrar"
+              className="text-navy/40 hover:text-navy transition-colors"
+              aria-label="Close"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
                 <path d="M18 6 6 18M6 6l12 12" />

@@ -8,9 +8,10 @@ interface ProgressBarProps {
   className?: string
   showLabel?: boolean
   size?: 'sm' | 'md'
+  variant?: 'light' | 'dark'   // light = track navy/10 (sobre blanco), dark = track cream/15 (sobre navy)
 }
 
-export function ProgressBar({ value, className, showLabel = false, size = 'sm' }: ProgressBarProps) {
+export function ProgressBar({ value, className, showLabel = false, size = 'sm', variant = 'light' }: ProgressBarProps) {
   const fillRef = useRef<HTMLDivElement>(null)
   const clampedValue = Math.min(100, Math.max(0, value))
 
@@ -29,7 +30,8 @@ export function ProgressBar({ value, className, showLabel = false, size = 'sm' }
     <div className={cn('flex items-center gap-3', className)}>
       <div
         className={cn(
-          'flex-1 bg-navy-100 rounded-full overflow-hidden',
+          'flex-1 rounded-full overflow-hidden',
+          variant === 'dark' ? 'bg-cream/10' : 'bg-navy/10',
           size === 'sm' ? 'h-1.5' : 'h-2.5',
         )}
       >
@@ -43,7 +45,7 @@ export function ProgressBar({ value, className, showLabel = false, size = 'sm' }
         />
       </div>
       {showLabel && (
-        <span className="text-xs font-mono text-cream/60 w-9 text-right flex-shrink-0">
+        <span className="text-xs font-mono text-navy/60 w-9 text-right flex-shrink-0">
           {Math.round(clampedValue)}%
         </span>
       )}

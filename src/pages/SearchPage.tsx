@@ -17,7 +17,6 @@ export default function SearchPage() {
   const setsQuery = useSetSearch(debouncedQuery)
   const partsQuery = usePieceSearch(debouncedQuery)
 
-  // Auto-switch to sets if sets have results, otherwise pieces
   useEffect(() => {
     if (setsQuery.data?.results.length) return
     if (partsQuery.data?.results.length) setTab('pieces')
@@ -30,20 +29,20 @@ export default function SearchPage() {
     <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="font-display text-2xl font-semibold text-cream">
+        <h1 className="font-display text-2xl font-semibold text-navy">
           {queryParam ? (
             <>
-              Resultados para{' '}
+              Results for{' '}
               <span className="text-lego-yellow">"{queryParam}"</span>
             </>
           ) : (
-            'Buscar'
+            'Search'
           )}
         </h1>
         {(setsQuery.data || partsQuery.data) && queryParam && (
-          <p className="text-sm text-cream/40 font-body mt-1">
+          <p className="text-sm text-navy/40 font-body mt-1">
             {(setsQuery.data?.count ?? 0).toLocaleString()} sets ·{' '}
-            {(partsQuery.data?.count ?? 0).toLocaleString()} piezas
+            {(partsQuery.data?.count ?? 0).toLocaleString()} pieces
           </p>
         )}
       </div>
@@ -72,8 +71,8 @@ export default function SearchPage() {
           query={queryParam}
         />
       ) : (
-        <p className="text-center text-cream/30 font-body text-sm py-16">
-          Ingresá el número de set o nombre de pieza para buscar.
+        <p className="text-center text-navy/30 font-body text-sm py-16">
+          Enter a set number or piece name to search.
         </p>
       )}
     </div>

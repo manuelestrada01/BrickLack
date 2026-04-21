@@ -9,13 +9,13 @@ import { Avatar } from '@/components/ui/Avatar'
 import { ROUTES } from '@/router/routePaths'
 
 const NAV_LINKS = [
-  { to: ROUTES.HOME, label: 'Inicio' },
-  { to: ROUTES.SEARCH, label: 'Buscar sets' },
+  { to: ROUTES.HOME, label: 'Home' },
+  { to: ROUTES.SEARCH, label: 'Search sets' },
 ]
 
 const AUTH_LINKS = [
-  { to: ROUTES.DASHBOARD, label: 'Mis proyectos' },
-  { to: ROUTES.IDENTIFY, label: 'Identificar pieza' },
+  { to: ROUTES.DASHBOARD, label: 'My projects' },
+  { to: ROUTES.IDENTIFY, label: 'Identify piece' },
 ]
 
 export function MobileMenu() {
@@ -75,7 +75,7 @@ export function MobileMenu() {
         ref={overlayRef}
         style={{ display: 'none' }}
         onClick={closeMobileMenu}
-        className="fixed inset-0 z-40 bg-navy/80 backdrop-blur-sm"
+        className="fixed inset-0 z-40 bg-navy/30 backdrop-blur-sm"
         aria-hidden="true"
       />
 
@@ -83,20 +83,20 @@ export function MobileMenu() {
       <div
         ref={panelRef}
         style={{ display: 'none' }}
-        className="fixed top-0 right-0 h-full w-72 z-50 bg-navy-50 border-l border-cream/10 shadow-brick-hover flex flex-col"
+        className="fixed top-0 right-0 h-full w-72 z-50 bg-[#F5F0E8] border-l border-navy/10 shadow-sidebar flex flex-col"
         role="dialog"
         aria-modal="true"
-        aria-label="Menú de navegación"
+        aria-label="Navigation menu"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-cream/10">
-          <span className="font-display text-xl font-bold text-cream">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-navy/10">
+          <span className="font-display text-xl font-bold text-navy">
             Brick<span className="text-lego-yellow">lack</span>
           </span>
           <button
             onClick={closeMobileMenu}
-            className="w-8 h-8 flex items-center justify-center rounded-brick text-cream/50 hover:text-cream hover:bg-navy-100 transition-colors"
-            aria-label="Cerrar menú"
+            className="w-8 h-8 flex items-center justify-center rounded-brick text-navy/40 hover:text-navy hover:bg-navy/5 transition-colors"
+            aria-label="Close menu"
           >
             <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
               <path d="M18 6 6 18M6 6l12 12" />
@@ -110,7 +110,7 @@ export function MobileMenu() {
             <Link
               key={to}
               to={to}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-brick text-cream/70 hover:text-cream hover:bg-navy-100 font-body text-sm transition-colors"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-brick text-navy/60 hover:text-navy hover:bg-navy/5 font-body text-sm transition-colors"
             >
               {label}
             </Link>
@@ -119,13 +119,13 @@ export function MobileMenu() {
           {user && (
             <>
               <div className="pt-3 pb-1 px-3">
-                <p className="text-xs font-mono text-cream/30 uppercase tracking-widest">Mi cuenta</p>
+                <p className="text-xs font-mono text-navy/30 uppercase tracking-widest">My account</p>
               </div>
               {AUTH_LINKS.map(({ to, label }) => (
                 <Link
                   key={to}
                   to={to}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-brick text-cream/70 hover:text-cream hover:bg-navy-100 font-body text-sm transition-colors"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-brick text-navy/60 hover:text-navy hover:bg-navy/5 font-body text-sm transition-colors"
                 >
                   {label}
                 </Link>
@@ -135,21 +135,21 @@ export function MobileMenu() {
         </div>
 
         {/* Footer: user info or sign in */}
-        <div className="p-4 border-t border-cream/10">
+        <div className="p-4 border-t border-navy/10">
           {user ? (
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <Avatar src={user.photoURL} name={user.displayName} size="sm" />
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-cream truncate font-body">{user.displayName}</p>
-                  <p className="text-xs text-cream/40 truncate font-body">{user.email}</p>
+                  <p className="text-sm font-semibold text-navy truncate font-body">{user.displayName}</p>
+                  <p className="text-xs text-navy/40 truncate font-body">{user.email}</p>
                 </div>
               </div>
               <button
                 onClick={() => { closeMobileMenu(); void signOut() }}
-                className="w-full text-left px-3 py-2 rounded-brick text-sm text-status-error hover:bg-navy-100 font-body transition-colors"
+                className="w-full text-left px-3 py-2 rounded-brick text-sm text-status-error hover:bg-navy/5 font-body transition-colors"
               >
-                Cerrar sesión
+                Sign out
               </button>
             </div>
           ) : (

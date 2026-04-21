@@ -1,8 +1,8 @@
 export function ScanLimitReached() {
-  // Calcular el primer día del próximo mes
+  // Calculate the first day of next month
   const now = new Date()
   const resetDate = new Date(now.getFullYear(), now.getMonth() + 1, 1)
-  const formatter = new Intl.DateTimeFormat('es', { day: 'numeric', month: 'long' })
+  const formatter = new Intl.DateTimeFormat('en', { day: 'numeric', month: 'long' })
   const resetDateStr = formatter.format(resetDate)
 
   return (
@@ -15,18 +15,18 @@ export function ScanLimitReached() {
       </div>
 
       <div className="space-y-2 max-w-xs">
-        <h3 className="font-display text-lg font-semibold text-cream">
-          Límite mensual alcanzado
+        <h3 className="font-display text-lg font-semibold text-navy">
+          Monthly limit reached
         </h3>
-        <p className="text-sm text-cream/50 font-body leading-relaxed">
-          Usaste tus 3 escaneos gratuitos de este mes. Se renuevan el{' '}
-          <span className="text-cream/80 font-semibold">{resetDateStr}</span>.
+        <p className="text-sm text-navy/50 font-body leading-relaxed">
+          You've used your 3 free scans for this month. They renew on{' '}
+          <span className="text-navy/80 font-semibold">{resetDateStr}</span>.
         </p>
       </div>
 
       <div className="flex gap-2">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="w-2.5 h-2.5 rounded-full bg-cream/15" />
+          <div key={i} className="w-2.5 h-2.5 rounded-full bg-navy/15" />
         ))}
       </div>
     </div>

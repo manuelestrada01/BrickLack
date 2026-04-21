@@ -6,11 +6,11 @@ import { ToastContainer } from '@/components/ui/Toast'
 
 export function RootLayout() {
   return (
-    <div className="min-h-screen bg-navy flex flex-col">
+    <div className="min-h-screen bg-[#F5F0E8] flex flex-col">
       <Navbar />
       <MobileMenu />
 
-      <main className="flex-1">
+      <main className="flex-1 flex flex-col pt-14">
         <PageTransition />
       </main>
 

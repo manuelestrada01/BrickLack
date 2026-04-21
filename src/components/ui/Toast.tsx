@@ -79,7 +79,7 @@ function ToastItem({ toast }: { toast: ToastType }) {
       ref={ref}
       className={cn(
         'relative flex items-start gap-3 w-80 max-w-full',
-        'bg-navy-50 border border-cream/10 rounded-brick shadow-brick-hover',
+        'bg-white border border-navy/10 rounded-brick shadow-brick-hover',
         'px-4 py-3 overflow-hidden',
       )}
     >
@@ -88,14 +88,14 @@ function ToastItem({ toast }: { toast: ToastType }) {
 
       {config.icon}
 
-      <p className="flex-1 text-sm text-cream/90 font-body leading-snug pt-px">
+      <p className="flex-1 text-sm text-navy/90 font-body leading-snug pt-px">
         {toast.message}
       </p>
 
       <button
         onClick={dismiss}
-        className="text-cream/30 hover:text-cream/70 transition-colors mt-px"
-        aria-label="Cerrar"
+        className="text-navy/30 hover:text-navy/70 transition-colors mt-px"
+        aria-label="Close"
       >
         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
           <path d="M18 6 6 18M6 6l12 12" />

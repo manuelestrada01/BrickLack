@@ -11,7 +11,7 @@ interface EmptyStateProps {
 
 const DefaultIcon = () => (
   <svg
-    className="w-10 h-10 text-cream/20"
+    className="w-10 h-10 text-navy/20"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -40,13 +40,13 @@ export function EmptyState({
         className,
       )}
     >
-      <div className="rounded-full bg-navy-100 border border-cream/10 w-20 h-20 flex items-center justify-center">
+      <div className="rounded-full bg-navy/5 border border-navy/10 w-20 h-20 flex items-center justify-center">
         {icon ?? <DefaultIcon />}
       </div>
       <div className="space-y-1.5 max-w-xs">
-        <h3 className="font-display font-semibold text-cream/80">{title}</h3>
+        <h3 className="font-display font-semibold text-navy/80">{title}</h3>
         {description && (
-          <p className="text-sm text-cream/40 font-body leading-relaxed">{description}</p>
+          <p className="text-sm text-navy/40 font-body leading-relaxed">{description}</p>
         )}
       </div>
       {action && <div className="mt-2">{action}</div>}

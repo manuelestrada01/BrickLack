@@ -19,7 +19,7 @@ export function PageTransition() {
   )
 
   return (
-    <div ref={ref}>
+    <div ref={ref} className="flex-1 flex flex-col">
       <Outlet />
     </div>
   )

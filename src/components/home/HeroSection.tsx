@@ -35,12 +35,11 @@ export function HeroSection() {
 
       {/* Heading */}
       <div data-hero className="space-y-3">
-        <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-cream leading-tight tracking-tight">
-          Brick<span className="text-lego-yellow">lack</span>
+        <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-navy leading-tight tracking-tight">
+          Brick<span className="text-lego-yellow" style={{ textShadow: '0 0 24px rgba(255,215,0,0.4)' }}>lack</span>
         </h1>
-        <p className="font-body text-lg sm:text-xl text-cream/50 max-w-lg mx-auto leading-relaxed">
-          Elige tu set, importa las piezas y marca cada una que encuentres.
-          Tu inventario, siempre al día.
+        <p className="font-body text-lg sm:text-xl text-navy max-w-lg mx-auto leading-relaxed">
+          Rebuild what's lost.
         </p>
       </div>
 
@@ -53,8 +52,8 @@ export function HeroSection() {
       {!isLoading && !user && (
         <div data-hero className="flex items-center justify-center gap-4 flex-wrap">
           <GoogleSignInButton size="md" />
-          <p className="text-xs text-cream/30 font-body">
-            Gratis. Solo con Google.
+          <p className="text-xs text-navy font-body">
+            Free. Google only.
           </p>
         </div>
       )}
