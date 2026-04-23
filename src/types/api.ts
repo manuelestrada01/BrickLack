@@ -4,7 +4,6 @@ export interface IdentifyPieceResponse {
   success: boolean
   data?: PieceIdentification
   error?: string
-  remainingScans?: number
 }
 
 export interface SuggestSetsResponse {

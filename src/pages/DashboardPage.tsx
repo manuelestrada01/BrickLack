@@ -1,12 +1,9 @@
 import { useRef, useEffect } from 'react'
-import { Link } from 'react-router'
 import gsap from 'gsap'
 import { useAuth } from '@/hooks/useAuth'
 import { useProjects } from '@/hooks/queries/useProjects'
 import { ProjectGrid } from '@/components/dashboard/ProjectGrid'
 import { DashboardStats } from '@/components/dashboard/DashboardStats'
-import { Button } from '@/components/ui/Button'
-import { ROUTES } from '@/router/routePaths'
 
 export default function DashboardPage() {
   const { user } = useAuth()
@@ -31,23 +28,13 @@ export default function DashboardPage() {
     <div className="w-full max-w-[90rem] mx-auto px-4 py-8 space-y-8">
 
       {/* Header — always visible */}
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy">My projects</h1>
-          {user && (
-            <p className="text-sm text-navy/40 font-body mt-1">
-              Welcome, {user.displayName?.split(' ')[0]}
-            </p>
-          )}
-        </div>
-        <Link to={ROUTES.NEW_PROJECT}>
-          <Button variant="primary" size="sm">
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
-              <path d="M12 5v14M5 12h14" />
-            </svg>
-            New
-          </Button>
-        </Link>
+      <div className="text-center">
+        <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy">My projects</h1>
+        {user && (
+          <p className="text-sm text-navy/40 font-body mt-1">
+            Welcome, {user.displayName?.split(' ')[0]}
+          </p>
+        )}
       </div>
 
       {/* Stats — animates in when data arrives */}

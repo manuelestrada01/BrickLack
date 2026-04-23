@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
@@ -7,6 +7,7 @@ import { useCreateProject } from '@/hooks/mutations/useCreateProject'
 import { useSetSearch } from '@/hooks/queries/useSetSearch'
 import { useDebounce } from '@/utils/debounce'
 import { Button } from '@/components/ui/Button'
+import { Spinner } from '@/components/ui/Spinner'
 import { buildProjectPath } from '@/router/routePaths'
 import type { LegoSet } from '@/types/set'
 
@@ -24,6 +25,17 @@ export function NewProjectForm() {
   const { data: searchResults } = useSetSearch(debouncedQuery)
 
   const formRef = useRef<HTMLFormElement>(null)
+  const overlayRef = useRef<HTMLDivElement>(null)
+
+  // Animate overlay in/out
+  useEffect(() => {
+    if (!overlayRef.current) return
+    if (createProject.isPending) {
+      gsap.fromTo(overlayRef.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.2, ease: 'none' })
+    } else {
+      gsap.to(overlayRef.current, { autoAlpha: 0, duration: 0.15, ease: 'none' })
+    }
+  }, [createProject.isPending])
 
   useGSAP(
     () => {
@@ -66,7 +78,27 @@ export function NewProjectForm() {
   const suggestions = showSuggestions ? searchResults?.results.slice(0, 6) : []
 
   return (
-    <form ref={formRef} onSubmit={(e) => void handleSubmit(e)} className="space-y-6 max-w-lg">
+    <form ref={formRef} onSubmit={(e) => void handleSubmit(e)} className="relative space-y-6 max-w-lg">
+
+      {/* Loading overlay */}
+      <div
+        ref={overlayRef}
+        className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 rounded-brick bg-[#F5F0E8]/80 backdrop-blur-[2px]"
+        style={{ visibility: 'hidden', opacity: 0 }}
+      >
+        <Spinner size="lg" />
+        <div className="text-center space-y-1">
+          <p className="text-sm font-semibold text-navy font-body">
+            {selectedSet ? 'Importing piece inventory…' : 'Creating project…'}
+          </p>
+          {selectedSet && (
+            <p className="text-xs text-navy/40 font-body">
+              {selectedSet.numParts.toLocaleString()} pieces · this may take a moment
+            </p>
+          )}
+        </div>
+      </div>
+
       {/* Set selection */}
       <div className="space-y-1.5">
         <label className="text-sm font-body text-navy/60">
@@ -150,16 +182,18 @@ export function NewProjectForm() {
       </div>
 
       {/* Submit */}
-      <Button
-        type="submit"
-        variant="primary"
-        size="md"
-        isLoading={createProject.isPending}
-        disabled={!projectName.trim()}
-        className="w-full sm:w-auto"
-      >
-        {selectedSet ? 'Create project and import pieces' : 'Create project'}
-      </Button>
+      <div className="flex justify-center">
+        <Button
+          type="submit"
+          variant="primary"
+          size="md"
+          isLoading={createProject.isPending}
+          disabled={!projectName.trim()}
+          className="w-full sm:w-auto"
+        >
+          {selectedSet ? 'Create project and import pieces' : 'Create project'}
+        </Button>
+      </div>
 
       {createProject.isError && (
         <p className="text-sm text-status-error font-body">

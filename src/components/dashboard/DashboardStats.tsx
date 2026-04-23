@@ -31,7 +31,7 @@ export function DashboardStats({ projects }: DashboardStatsProps) {
             value={value}
             className="font-mono text-2xl font-bold text-lego-yellow block"
           />
-          <p className="text-xs text-navy/40 font-body mt-1">{label}</p>
+          <p className="text-xs text-navy/60 font-body mt-1">{label}</p>
         </div>
       ))}
     </div>

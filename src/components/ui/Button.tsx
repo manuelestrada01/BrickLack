@@ -18,8 +18,8 @@ const variantClasses: Record<ButtonVariant, string> = {
     'bg-lego-yellow text-navy font-semibold hover:brightness-105 ' +
     'shadow-[0_3px_0_0_rgba(0,0,0,0.4)] active:shadow-none active:translate-y-[3px]',
   secondary:
-    'border border-lego-yellow/50 text-lego-yellow bg-transparent ' +
-    'hover:border-lego-yellow hover:bg-lego-yellow/5',
+    'border border-navy/20 text-navy bg-transparent ' +
+    'hover:border-navy/40 hover:bg-navy/5',
   ghost:
     'text-navy/60 bg-transparent hover:text-navy hover:bg-navy/5',
   danger:

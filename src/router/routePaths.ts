@@ -1,5 +1,6 @@
 export const ROUTES = {
   HOME: '/',
+  LOGIN: '/login',
   SEARCH: '/search',
   SET_DETAIL: '/set/:setId',
   PIECE_DETAIL: '/piece/:partNum',

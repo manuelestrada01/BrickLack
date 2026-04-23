@@ -125,8 +125,7 @@ export function PieceCheckItem({ piece, userId, projectId }: PieceCheckItemProps
         {/* Decrement */}
         <button
           onClick={handleDecrement}
-          disabled={found <= 0}
-          className="flex-1 py-2 flex items-center justify-center text-navy/40 hover:text-navy hover:bg-navy/5 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+          className="flex-1 py-2 flex items-center justify-center text-navy/80 hover:bg-navy/5 transition-colors"
           aria-label="Remove one"
         >
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
@@ -135,18 +134,17 @@ export function PieceCheckItem({ piece, userId, projectId }: PieceCheckItemProps
         </button>
 
         {/* Count display */}
-        <div className="px-2 py-2 flex items-baseline gap-0.5 border-x border-navy/8">
-          <span className={`font-mono text-sm font-semibold leading-none ${isComplete ? 'text-status-success' : found > 0 ? 'text-navy' : 'text-navy/30'}`}>
-            {found}
+        <div className="px-2 py-2 border-x border-navy/8">
+          <span className={`font-mono text-sm leading-none ${isComplete ? 'text-status-success' : 'text-navy/80'}`}>
+            <span className="font-bold">{found}</span>
+            <span className="font-bold">/{required}</span>
           </span>
-          <span className="font-mono text-[10px] text-navy/30 leading-none">/{required}</span>
         </div>
 
         {/* Increment */}
         <button
           onClick={handleIncrement}
-          disabled={found >= required}
-          className="flex-1 py-2 flex items-center justify-center text-navy/40 hover:text-navy hover:bg-navy/5 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+          className="flex-1 py-2 flex items-center justify-center text-navy/80 hover:bg-navy/5 transition-colors"
           aria-label="Add one"
         >
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">

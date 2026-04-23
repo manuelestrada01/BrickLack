@@ -18,7 +18,7 @@ export default function HomePage() {
       {heroMode === 'video' ? (
         <video
           key="video"
-          className="absolute inset-0 w-full h-full object-cover object-[20%_center] md:object-center"
+          className="absolute inset-0 w-full h-full object-cover object-[20%_72%] md:object-[center_72%]"
           autoPlay
           muted
           playsInline

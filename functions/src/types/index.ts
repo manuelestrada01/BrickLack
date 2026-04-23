@@ -5,18 +5,15 @@ export interface IdentifyPieceRequest {
 }
 
 export interface PieceIdentification {
-  type: string
-  color: string
-  dimensions: string
-  partNum: string | null
-  confidence: 'high' | 'medium' | 'low'
-  knownSets: string[]
+  partNum: string
+  name: string
+  imgUrl: string
+  score: number
 }
 
 export interface IdentifyPieceResponse {
   success: boolean
   data: PieceIdentification | null
-  remainingScans: number
   error?: string
 }
 

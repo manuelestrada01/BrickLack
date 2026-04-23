@@ -120,13 +120,17 @@ export function Navbar() {
 
   return (
     <nav ref={navRef} className="fixed top-0 left-0 right-0 z-30 px-6 h-14 flex items-center bg-[#F5F0E8] border-b border-navy/10">
-      <div className="max-w-[90rem] mx-auto w-full grid grid-cols-3 items-center">
+      <div className="max-w-[90rem] mx-auto w-full flex justify-between items-center md:grid md:grid-cols-3">
         {/* Col 1 — Logo */}
         <Link
           to={ROUTES.HOME}
           className="font-display text-xl font-bold text-navy tracking-tight justify-self-start"
         >
-          Brick<span className="text-lego-yellow">lack</span>
+          Brick
+          <span style={{ color: '#E3000B' }}>l</span>
+          <span style={{ color: '#006CB7' }}>a</span>
+          <span style={{ color: '#FFD700' }}>c</span>
+          <span style={{ color: '#00A650' }}>k</span>
         </Link>
 
         {/* Col 2 — Links (centered) */}
@@ -148,6 +152,12 @@ export function Navbar() {
             className={cn('text-sm font-body font-medium transition-colors', location.pathname.startsWith('/search') ? 'text-navy' : 'text-navy/60 hover:text-navy')}
           >
             Search
+          </Link>
+          <Link
+            to={ROUTES.IDENTIFY}
+            className={cn('text-sm font-body font-medium transition-colors', isActive(ROUTES.IDENTIFY) ? 'text-navy' : 'text-navy/60 hover:text-navy')}
+          >
+            Scan
           </Link>
         </div>
 
@@ -180,6 +190,7 @@ export function Navbar() {
               )}
             </button>
           )}
+
           <div className="hidden md:block">
             {isLoading ? null : user ? <UserMenu /> : <GoogleSignInButton size="sm" />}
           </div>

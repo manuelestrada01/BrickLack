@@ -119,7 +119,11 @@ export function MobileMenu() {
         {/* Header */}
         <div className="flex items-center justify-between px-5 h-14 border-b border-navy/10 flex-shrink-0">
           <span className="font-display text-xl font-bold text-navy">
-            Brick<span className="text-lego-yellow">lack</span>
+            Brick
+            <span style={{ color: '#E3000B' }}>l</span>
+            <span style={{ color: '#006CB7' }}>a</span>
+            <span style={{ color: '#FFD700' }}>c</span>
+            <span style={{ color: '#00A650' }}>k</span>
           </span>
           <button
             onClick={closeMobileMenu}

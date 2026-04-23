@@ -10,7 +10,7 @@ interface BadgeProps {
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
-  in_progress: 'bg-lego-yellow/15 text-lego-yellow border-lego-yellow/30',
+  in_progress: 'bg-navy/85 text-lego-yellow border-transparent',
   completed:   'bg-status-success/15 text-status-success border-status-success/30',
   paused:      'bg-navy/8 text-navy/50 border-navy/15',
   high:        'bg-status-success/15 text-status-success border-status-success/30',

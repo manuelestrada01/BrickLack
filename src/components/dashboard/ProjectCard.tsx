@@ -1,11 +1,14 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { StatusBadge } from '@/components/ui/Badge'
 import { ProgressBar } from '@/components/ui/ProgressBar'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { buildProjectPath } from '@/router/routePaths'
 import { DURATION, EASE } from '@/styles/animations'
+import { useAuth } from '@/hooks/useAuth'
+import { useDeleteProject } from '@/hooks/mutations/useDeleteProject'
 import type { Project } from '@/types'
 
 interface ProjectCardProps {
@@ -15,6 +18,9 @@ interface ProjectCardProps {
 export function ProjectCard({ project }: ProjectCardProps) {
   const cardRef = useRef<HTMLAnchorElement>(null)
   const imgRef = useRef<HTMLImageElement>(null)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const { user } = useAuth()
+  const deleteProject = useDeleteProject()
 
   const progress = project.totalPieces > 0
     ? Math.round((project.foundPieces / project.totalPieces) * 100)
@@ -55,6 +61,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   })
 
   return (
+    <>
     <Link
       ref={cardRef}
       to={buildProjectPath(project.id)}
@@ -88,6 +95,23 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
         )}
 
+        {/* Delete button — top-left */}
+        <button
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            setShowConfirm(true)
+          }}
+          className="absolute top-3 left-3 text-navy/30 hover:text-status-error transition-colors"
+          aria-label="Delete project"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+            <path d="M10 11v6M14 11v6" />
+          </svg>
+        </button>
+
         {/* Status badge — flotando sobre la imagen */}
         <div className="absolute top-3 right-3">
           <StatusBadge status={project.status} />
@@ -108,17 +132,17 @@ export function ProjectCard({ project }: ProjectCardProps) {
             {project.name}
           </h3>
           {project.setId && (
-            <p className="font-mono text-xs text-navy/30">{project.setId}</p>
+            <p className="font-mono text-xs text-navy/60">{project.setId}</p>
           )}
         </div>
 
         {/* Progreso */}
         <div className="space-y-1.5 pb-1">
           <div className="flex items-center justify-between text-xs font-mono">
-            <span className="text-navy/40">
+            <span className="text-navy/60">
               {project.foundPieces} / {project.totalPieces} pieces
             </span>
-            <span className={progress === 100 ? 'text-status-success' : 'text-lego-yellow/70'}>
+            <span className={progress === 100 ? 'text-status-success font-semibold' : 'text-navy font-semibold'}>
               {progress}%
             </span>
           </div>
@@ -126,5 +150,19 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </div>
     </Link>
+
+    <ConfirmDialog
+      isOpen={showConfirm}
+      onClose={() => setShowConfirm(false)}
+      onConfirm={() => {
+        deleteProject.mutate({ userId: user!.uid, projectId: project.id })
+        setShowConfirm(false)
+      }}
+      title="Delete project"
+      message={`Are you sure you want to delete "${project.name}"? This action cannot be undone.`}
+      confirmLabel="Yes, delete"
+      isLoading={deleteProject.isPending}
+    />
+    </>
   )
 }

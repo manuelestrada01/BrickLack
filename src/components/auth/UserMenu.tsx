@@ -72,21 +72,21 @@ export function UserMenu() {
       <div
         ref={panelRef}
         style={{ display: 'none' }}
-        className="absolute left-0 top-full mt-2 w-full z-40 bg-white/95 backdrop-blur-md border border-navy/10 rounded-2xl shadow-sidebar overflow-hidden"
+        className="absolute left-0 top-full mt-2 min-w-[175px] z-40 bg-white/95 backdrop-blur-md border border-navy/10 rounded-2xl shadow-sidebar overflow-hidden"
       >
         {/* Header with user info */}
-        <div className="px-4 py-3 border-b border-navy/[0.08]">
-          <p className="text-sm font-semibold text-navy truncate font-body">
+        <div className="px-4 py-3 border-b border-navy/[0.08] text-center">
+          <p className="text-sm font-semibold text-navy font-body">
             {user.displayName}
           </p>
-          <p className="text-xs text-navy/45 truncate font-body mt-0.5">{user.email}</p>
+          <p className="text-xs text-navy/45 font-body mt-0.5 break-all">{user.email}</p>
         </div>
 
         <div className="py-1">
           <Link
             to={ROUTES.DASHBOARD}
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-2.5 w-full px-4 py-2 text-sm text-navy/65 hover:text-navy hover:bg-navy/[0.05] transition-colors font-body"
+            className="flex items-center justify-center gap-2.5 w-full px-4 py-2 text-sm text-navy/65 hover:text-navy hover:bg-navy/[0.05] transition-colors font-body"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
@@ -96,7 +96,7 @@ export function UserMenu() {
 
           <button
             onClick={() => { setIsOpen(false); void signOut() }}
-            className="flex items-center gap-2.5 w-full px-4 py-2 text-sm text-navy/65 hover:text-status-error hover:bg-navy/[0.05] transition-colors font-body"
+            className="flex items-center justify-center gap-2.5 w-full px-4 py-2 text-sm text-navy/65 hover:text-status-error hover:bg-navy/[0.05] transition-colors font-body"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>

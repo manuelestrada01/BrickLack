@@ -114,7 +114,7 @@ export function CameraCapture({ onCapture, isLoading }: CameraCaptureProps) {
             </div>
             <div className="text-center px-4">
               <p className="text-sm font-body text-navy/50">
-                Drag a photo or <span className="text-lego-yellow underline">choose a file</span>
+                Drag a photo or <span className="text-navy underline">choose a file</span>
               </p>
               <p className="text-xs text-navy/25 font-body mt-1">JPG, PNG, WEBP · max. 10MB</p>
             </div>

@@ -3,6 +3,7 @@ import { RootLayout } from '@/components/layout/RootLayout'
 import { ProtectedRoute } from './ProtectedRoute'
 import { ROUTES } from './routePaths'
 import HomePage from '@/pages/HomePage'
+import LoginPage from '@/pages/LoginPage'
 import SearchPage from '@/pages/SearchPage'
 import SetDetailPage from '@/pages/SetDetailPage'
 import PieceDetailPage from '@/pages/PieceDetailPage'
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { path: ROUTES.HOME, element: <HomePage /> },
+      { path: ROUTES.LOGIN, element: <LoginPage /> },
       { path: ROUTES.SEARCH, element: <SearchPage /> },
       { path: ROUTES.SET_DETAIL, element: <SetDetailPage /> },
       { path: ROUTES.PIECE_DETAIL, element: <PieceDetailPage /> },

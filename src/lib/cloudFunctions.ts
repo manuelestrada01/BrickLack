@@ -1,5 +1,5 @@
 import { auth } from '@/config/firebase'
-import type { IdentifyPieceResponse, SuggestSetsResponse } from '@/types'
+import type { SuggestSetsResponse } from '@/types'
 
 // En desarrollo con el emulador: http://localhost:5001/{projectId}/us-central1
 // En producción: https://us-central1-{projectId}.cloudfunctions.net
@@ -30,12 +30,6 @@ async function callFunction<TPayload, TResponse>(
   }
 
   return response.json() as Promise<TResponse>
-}
-
-export async function callIdentifyPiece(imageBase64: string): Promise<IdentifyPieceResponse> {
-  return callFunction<{ imageBase64: string }, IdentifyPieceResponse>('identifyPiece', {
-    imageBase64,
-  })
 }
 
 export async function callSuggestSets(

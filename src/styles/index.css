@@ -45,16 +45,22 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: theme('colors.navy.50');
+    background: #F0EEE9;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: theme('colors.cream.300');
+    background: rgba(10, 22, 40, 0.2);
     border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: theme('colors.cream.200');
+    background: rgba(10, 22, 40, 0.4);
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(10, 22, 40, 0.2) #F0EEE9;
   }
 }
 

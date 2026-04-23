@@ -14,10 +14,8 @@ export interface ProjectPiece extends PieceDoc {
 }
 
 export interface PieceIdentification {
-  type: string
-  color: string
-  dimensions: string
-  partNum: string | null
-  confidence: 'high' | 'medium' | 'low'
-  knownSets: string[]
+  partNum: string
+  name: string
+  imgUrl: string
+  score: number
 }

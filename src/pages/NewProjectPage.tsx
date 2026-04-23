@@ -17,7 +17,7 @@ export default function NewProjectPage() {
       </nav>
 
       {/* Header */}
-      <div>
+      <div className="text-center">
         <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy">
           New project
         </h1>

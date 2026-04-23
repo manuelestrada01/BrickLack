@@ -36,7 +36,11 @@ export function HeroSection() {
       {/* Heading */}
       <div data-hero className="space-y-3">
         <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-navy leading-tight tracking-tight">
-          Brick<span className="text-lego-yellow" style={{ textShadow: '0 0 24px rgba(255,215,0,0.4)' }}>lack</span>
+          Brick
+              <span style={{ color: '#E3000B' }}>l</span>
+              <span style={{ color: '#006CB7' }}>a</span>
+              <span style={{ color: '#FFD700' }}>c</span>
+              <span style={{ color: '#00A650' }}>k</span>
         </h1>
         <p className="font-body text-lg sm:text-xl text-navy max-w-lg mx-auto leading-relaxed">
           Rebuild what's lost.

@@ -6,7 +6,16 @@
       "Read(//tmp/**)",
       "Read(//tmp/ui-ux-pro-max-skill/**)",
       "Bash(npm install:*)",
-      "Bash(npx vite:*)"
+      "Bash(npx vite:*)",
+      "Bash(curl -s \"https://rebrickable.com/api/v3/lego/sets/10218-1/\" -H \"Authorization: key f4b51af129540df6d3c170005a6065a0\")",
+      "Bash(python -m json.tool)",
+      "Bash(curl:*)",
+      "Bash(gh repo:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(claude plugin:*)",
+      "WebFetch(domain:brickognize.com)",
+      "WebFetch(domain:api.brickognize.com)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }
