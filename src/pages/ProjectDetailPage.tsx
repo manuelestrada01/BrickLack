@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router'
-import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { useAuth } from '@/hooks/useAuth'
 import { useProject } from '@/hooks/queries/useProject'

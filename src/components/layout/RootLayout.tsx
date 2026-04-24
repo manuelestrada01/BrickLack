@@ -3,10 +3,13 @@ import { Footer } from './Footer'
 import { MobileMenu } from './MobileMenu'
 import { PageTransition } from './PageTransition'
 import { ToastContainer } from '@/components/ui/Toast'
+import { usePageTracking } from '@/hooks/usePageTracking'
 
 export function RootLayout() {
+  usePageTracking()
+
   return (
-    <div className="min-h-screen bg-[#F5F0E8] flex flex-col">
+    <div className="min-h-screen bg-[#F5F0E8] flex flex-col overflow-x-hidden">
       <Navbar />
       <MobileMenu />
 

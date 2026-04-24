@@ -9,73 +9,11 @@ import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
 import { ROUTES } from '@/router/routePaths'
 import { cn } from '@/utils/cn'
 
-// ─── Icon helpers (inline SVG, 16×16, stroke-based) ───────────────────────────
-
-function HomeIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z" />
-      <path d="M9 21V12h6v9" />
-    </svg>
-  )
-}
-
-function GridIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-      <rect x="3" y="3" width="7" height="7" rx="1.5" />
-      <rect x="14" y="3" width="7" height="7" rx="1.5" />
-      <rect x="3" y="14" width="7" height="7" rx="1.5" />
-      <rect x="14" y="14" width="7" height="7" rx="1.5" />
-    </svg>
-  )
-}
-
-function SearchIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.35-4.35" />
-    </svg>
-  )
-}
-
 function HamburgerIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" className="w-5 h-5">
       <path d="M4 6h16M4 12h16M4 18h16" />
     </svg>
-  )
-}
-
-// ─── Internal NavLink ──────────────────────────────────────────────────────────
-
-function NavLink({
-  to,
-  active,
-  icon,
-  children,
-}: {
-  to: string
-  active: boolean
-  icon: React.ReactNode
-  children: React.ReactNode
-}) {
-  return (
-    <Link
-      to={to}
-      className={cn(
-        'flex items-center gap-3 px-3 py-2.5 rounded-xl font-body text-sm font-medium',
-        'transition-colors duration-150',
-        'border-l-[3px] pl-[9px]',
-        active
-          ? 'bg-navy/[0.07] text-navy border-lego-yellow'
-          : 'text-navy/50 hover:text-navy hover:bg-navy/[0.04] border-transparent',
-      )}
-    >
-      <span className="flex-shrink-0">{icon}</span>
-      {children}
-    </Link>
   )
 }
 
@@ -99,12 +37,18 @@ export function Navbar() {
       const currentY = window.scrollY
       const delta = currentY - lastScrollY.current
 
-      if (delta > 8 && currentY > 60 && !hidden.current) {
+      if (currentY <= 60) {
+        // Always show near top
+        if (hidden.current) {
+          gsap.to(navRef.current, { y: '0%', duration: 0.35, ease: 'power2.out' })
+          hidden.current = false
+        }
+      } else if (delta > 8 && !hidden.current) {
         // Scrolling down — hide
         gsap.to(navRef.current, { y: '-110%', duration: 0.3, ease: 'power2.in' })
         hidden.current = true
-      } else if (delta < -8 && hidden.current) {
-        // Scrolling up — show
+      } else if (delta < -3 && hidden.current) {
+        // Scrolling up — show (lower threshold so it responds faster)
         gsap.to(navRef.current, { y: '0%', duration: 0.35, ease: 'power2.out' })
         hidden.current = false
       }
@@ -143,7 +87,7 @@ export function Navbar() {
           </Link>
           <Link
             to={ROUTES.DASHBOARD}
-            className={cn('text-sm font-body font-medium transition-colors', isActive(ROUTES.DASHBOARD) ? 'text-navy' : 'text-navy/60 hover:text-navy')}
+            className={cn('text-sm font-body font-medium transition-colors', location.pathname === ROUTES.DASHBOARD ? 'text-navy' : 'text-navy/60 hover:text-navy')}
           >
             Projects
           </Link>
@@ -158,6 +102,12 @@ export function Navbar() {
             className={cn('text-sm font-body font-medium transition-colors', isActive(ROUTES.IDENTIFY) ? 'text-navy' : 'text-navy/60 hover:text-navy')}
           >
             Scan
+          </Link>
+          <Link
+            to={ROUTES.COMMUNITY}
+            className={cn('text-sm font-body font-medium transition-colors', location.pathname.startsWith('/community') ? 'text-navy' : 'text-navy/60 hover:text-navy')}
+          >
+            Community
           </Link>
         </div>
 

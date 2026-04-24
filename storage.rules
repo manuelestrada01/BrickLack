@@ -9,5 +9,15 @@ service firebase.storage {
         && request.resource.size < 5 * 1024 * 1024
         && request.resource.contentType.matches('image/.*');
     }
+
+    // Covers de MOCs: cualquiera puede leer, solo auth puede subir su cover
+    // La ruta mocs/{mocId}/cover.{ext} — no podemos validar autoría aquí sin Firestore lookup,
+    // así que validamos que esté auth y que el archivo sea imagen < 8MB
+    match /mocs/{mocId}/{fileName} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && request.resource.size < 8 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
   }
 }

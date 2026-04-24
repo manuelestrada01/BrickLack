@@ -24,5 +24,42 @@ service cloud.firestore {
       allow create: if request.auth != null;
       allow update, delete: if false;
     }
+
+    // MOCs de comunidad: cualquiera puede leer (es contenido público), solo auth puede crear
+    match /community_projects/{mocId} {
+      allow read: if true;
+      allow create: if request.auth != null
+                    && request.resource.data.authorId == request.auth.uid
+                    && request.resource.data.name is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.name.size() <= 80;
+      // El autor puede actualizar solo imageUrl (el upload se hace después del create)
+      // Cualquier auth puede incrementar cloneCount
+      // Solo el autor puede borrar su MOC
+      allow update: if request.auth != null
+                    && (request.auth.uid == resource.data.authorId
+                        || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['cloneCount', 'likeCount', 'status']));
+      allow delete: if request.auth != null && request.auth.uid == resource.data.authorId;
+
+      // Piezas del MOC: cualquiera puede leer, solo el autor puede escribir
+      match /pieces/{pieceId} {
+        allow read: if true;
+        allow write: if request.auth != null
+                     && request.auth.uid == get(/databases/$(database)/documents/community_projects/$(mocId)).data.authorId;
+      }
+
+      // Likes: cualquier usuario auth puede crear/borrar su propio like
+      match /likes/{userId} {
+        allow read: if true;
+        allow create, delete: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Reportes: solo el usuario auth puede crear el suyo, nadie puede leer/editar
+    match /reports/{reportId} {
+      allow create: if request.auth != null
+                    && request.resource.data.reporterId == request.auth.uid;
+      allow read, update, delete: if false;
+    }
   }
 }

@@ -12,8 +12,12 @@ const PLACEHOLDERS = [
   'Search part 6141 round plate 1x1…',
 ]
 
-export function SearchBar() {
-  const [query, setQuery] = useState('')
+interface SearchBarProps {
+  defaultValue?: string
+}
+
+export function SearchBar({ defaultValue = '' }: SearchBarProps) {
+  const [query, setQuery] = useState(defaultValue)
   const [focused, setFocused] = useState(false)
   const [placeholderIdx] = useState(() => Math.floor(Math.random() * PLACEHOLDERS.length))
   const navigate = useNavigate()
@@ -82,7 +86,7 @@ export function SearchBar() {
         {/* Input */}
         <input
           ref={inputRef}
-          type="search"
+          type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => { setFocused(true); onFocus() }}
@@ -91,10 +95,25 @@ export function SearchBar() {
           className={cn(
             'flex-1 h-14 bg-transparent outline-none',
             'text-navy placeholder:text-navy/30 font-body text-base',
-            'min-w-0 pr-2',
+            'min-w-0',
           )}
           autoComplete="off"
         />
+
+        {/* Clear button — always reserves space, visible only when there's text */}
+        <button
+          type="button"
+          onClick={() => { setQuery(''); inputRef.current?.focus() }}
+          aria-label="Clear search"
+          className={cn(
+            'flex-shrink-0 w-8 flex items-center justify-center text-navy/35 hover:text-navy/70 transition-colors',
+            query ? 'visible' : 'invisible',
+          )}
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        </button>
 
         {/* Submit button */}
         <button

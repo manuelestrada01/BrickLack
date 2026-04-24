@@ -15,7 +15,11 @@
       "Bash(claude plugin:*)",
       "WebFetch(domain:brickognize.com)",
       "WebFetch(domain:api.brickognize.com)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:rebrickable.com)",
+      "Bash(firebase deploy:*)",
+      "Bash(firebase use:*)",
+      "Bash(node -e ':*)"
     ]
   }
 }

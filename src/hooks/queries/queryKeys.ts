@@ -17,4 +17,10 @@ export const queryKeys = {
   users: {
     profile: (userId: string) => ['users', userId] as const,
   },
+  community: {
+    all: () => ['community'] as const,
+    detail: (mocId: string) => ['community', mocId] as const,
+    pieces: (mocId: string) => ['community', mocId, 'pieces'] as const,
+    like: (mocId: string, userId: string) => ['community', mocId, 'likes', userId] as const,
+  },
 } as const

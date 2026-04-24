@@ -12,3 +12,15 @@ export async function deleteIdentifyImage(url: string): Promise<void> {
   const storageRef = ref(storage, url)
   await deleteObject(storageRef)
 }
+
+export async function uploadMocCoverImage(mocId: string, file: File): Promise<string> {
+  const ext = file.name.split('.').pop() ?? 'jpg'
+  const storageRef = ref(storage, `mocs/${mocId}/cover.${ext}`)
+  await uploadBytes(storageRef, file)
+  return getDownloadURL(storageRef)
+}
+
+export async function deleteMocCoverImage(url: string): Promise<void> {
+  const storageRef = ref(storage, url)
+  await deleteObject(storageRef)
+}

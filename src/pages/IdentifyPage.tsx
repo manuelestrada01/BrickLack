@@ -21,7 +21,7 @@ export default function IdentifyPage() {
 
   return (
     <div className="max-w-lg mx-auto px-4 py-8 space-y-8">
-      <div>
+      <div className="text-center">
         <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy">
           Identify piece
         </h1>

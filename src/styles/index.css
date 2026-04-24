@@ -25,9 +25,10 @@
 
 @layer base {
   html {
-    @apply bg-navy text-cream;
+    @apply bg-[#F5F0E8] text-cream;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-y: scroll;
   }
 
   body {

@@ -29,7 +29,7 @@ export default function SearchPage() {
     <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="font-display text-2xl font-semibold text-navy">
+        <h1 className="font-display text-2xl font-semibold text-navy text-center">
           {queryParam ? (
             <>
               Results for{' '}
@@ -40,15 +40,15 @@ export default function SearchPage() {
           )}
         </h1>
         {(setsQuery.data || partsQuery.data) && queryParam && (
-          <p className="text-sm text-navy/40 font-body mt-1">
+          <p className="text-sm text-navy/40 font-body mt-1 text-center">
             {(setsQuery.data?.count ?? 0).toLocaleString()} sets ·{' '}
             {(partsQuery.data?.count ?? 0).toLocaleString()} pieces
           </p>
         )}
       </div>
 
-      {/* Refined search bar */}
-      <SearchBar />
+      {/* Refined search bar — key resets internal state when query changes */}
+      <SearchBar key={queryParam} defaultValue={queryParam} />
 
       {/* Tab filters */}
       {queryParam && (
@@ -70,11 +70,7 @@ export default function SearchPage() {
           isError={isError}
           query={queryParam}
         />
-      ) : (
-        <p className="text-center text-navy/30 font-body text-sm py-16">
-          Enter a set number or piece name to search.
-        </p>
-      )}
+      ) : null}
     </div>
   )
 }

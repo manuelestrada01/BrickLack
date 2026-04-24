@@ -128,12 +128,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <div className="flex flex-col gap-3 px-4 py-3">
         {/* Nombre + número de set */}
         <div className="space-y-0.5">
-          <h3 className="font-display text-sm font-semibold text-navy leading-tight line-clamp-2">
+          <h3 className="font-display text-sm font-semibold text-navy leading-tight truncate">
             {project.name}
           </h3>
-          {project.setId && (
-            <p className="font-mono text-xs text-navy/60">{project.setId}</p>
-          )}
+          {/* Always rendered to preserve consistent card height */}
+          <p className={`font-mono text-xs truncate ${project.setId ? 'text-navy/60' : 'invisible'}`}>
+            {project.setId ?? '—'}
+          </p>
         </div>
 
         {/* Progreso */}

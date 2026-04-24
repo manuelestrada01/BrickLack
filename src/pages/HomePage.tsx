@@ -1,24 +1,19 @@
-import { useEffect } from 'react'
 import { HeroSection } from '@/components/home/HeroSection'
 import { useUIStore } from '@/stores/uiStore'
 
 export default function HomePage() {
   const heroMode = useUIStore((s) => s.heroMode)
 
-  useEffect(() => {
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = '' }
-  }, [])
-
   return (
     <section
-      className="flex-1 flex flex-col overflow-hidden relative"
+      className="flex-1 flex flex-col relative w-full overflow-hidden"
       style={{ backgroundColor: '#F5F0E8' }}
     >
       {heroMode === 'video' ? (
         <video
           key="video"
-          className="absolute inset-0 w-full h-full object-cover object-[20%_72%] md:object-[center_72%]"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: '20% 72%' }}
           autoPlay
           muted
           playsInline
@@ -31,7 +26,8 @@ export default function HomePage() {
           key="image"
           src="/video/hero-image.jpg"
           alt="Hero"
-          className="absolute inset-0 w-full h-full object-cover object-[20%_center] md:object-center"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: '20% center' }}
           aria-hidden="true"
         />
       )}

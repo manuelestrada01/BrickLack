@@ -33,6 +33,7 @@ VITE_FIREBASE_MESSAGING_SENDER_ID
 VITE_FIREBASE_APP_ID
 VITE_REBRICKABLE_API_KEY
 VITE_ANTHROPIC_API_KEY  # solo en desarrollo local, en prod va en Cloud Function
+VITE_RECAPTCHA_SITE_KEY # Google reCAPTCHA v3 site key (requerido para publicar MOCs)
 ```
 
 ---
@@ -48,6 +49,9 @@ VITE_ANTHROPIC_API_KEY  # solo en desarrollo local, en prod va en Cloud Function
 /project/:projectId      → Vista detallada de un proyecto en progreso
 /project/new             → Crear nuevo proyecto (con o sin set)
 /identify                → Identificar pieza por foto (requiere auth)
+/community               → Proyectos MOC publicados por la comunidad
+/community/:projectId    → Detalle de un MOC de la comunidad
+/moc/new                 → Crear y publicar un MOC propio (requiere auth)
 ```
 
 ---
@@ -62,6 +66,7 @@ users/{userId}
   - createdAt: timestamp
   - scanCount: number          // escaneos de IA usados en el mes actual
   - scanResetDate: timestamp   // fecha del último reset mensual del contador
+  - mocCount: number           // MOCs publicados por el usuario (máx 5)
 
 users/{userId}/projects/{projectId}
   - name: string
@@ -83,6 +88,27 @@ users/{userId}/projects/{projectId}/pieces/{pieceId}
   - quantityRequired: number
   - quantityFound: number
   - isComplete: boolean
+
+community_projects/{projectId}
+  - authorId: string
+  - authorName: string
+  - authorPhotoURL: string
+  - name: string
+  - description: string
+  - imageUrl: string           // foto del MOC construido (obligatoria)
+  - totalPieces: number
+  - cloneCount: number         // cuántos usuarios lo clonaron como proyecto propio
+  - status: 'active' | 'flagged' | 'removed'
+  - createdAt: timestamp
+  - updatedAt: timestamp
+
+community_projects/{projectId}/pieces/{pieceId}
+  - partNum: string
+  - name: string
+  - color: string
+  - colorCode: string
+  - imageUrl: string
+  - quantityRequired: number
 ```
 
 ---
@@ -101,6 +127,18 @@ users/{userId}/projects/{projectId}/pieces/{pieceId}
 - Cuando un usuario agrega un set por primera vez, guardar el inventario completo en Firestore bajo `sets/{setId}/pieces`
 - Los siguientes usuarios que agreguen el mismo set usan el caché, no llaman a Rebrickable de nuevo
 - Esto evita quemar el rate limit de la API gratuita
+
+### MOCs de comunidad
+- Publicar un MOC **requiere auth obligatorio** (Google Sign-In)
+- Cada usuario tiene un límite de **5 MOCs publicados** — controlado por `mocCount` en el documento del usuario
+- La **imagen del MOC es obligatoria** al publicar — sube a Firebase Storage bajo `mocs/{projectId}/cover`
+- El formulario de creación incluye **Google reCAPTCHA v3** para prevenir spam automatizado
+- Botón "Reportar" visible en cada MOC público — guarda el reporte en `reports/{reportId}` con `projectId`, `reporterId` y `reason`
+- Los proyectos reportados pasan a `status: 'flagged'` y se ocultan de la sección community hasta revisión manual
+- Los `flagged` no se borran de Firestore — soft delete para poder revisarlos
+- Al clonar un MOC, se crea una copia en `users/{userId}/projects/` con `clonedFrom: projectId`
+- Incrementar `cloneCount` en el documento del MOC original al clonar (con Firestore transaction)
+- Las piezas del MOC se agregan buscando por nombre o número de parte via Rebrickable API
 
 ### Compatibilidad con mobile (Flutter)
 - Respetar la estructura de Firestore desde el día 1, no cambiarla después
@@ -236,7 +274,7 @@ Responde en JSON con esta estructura:
 7. Caché de sets en Firestore
 8. Cloud Function proxy para Claude API
 9. Feature: identificación de pieza por foto + límite de 3 escaneos/mes
-10. Feature: sugerencia de sets armables con IA
+10. Feature: comunidad MOCs — publicar, explorar, clonar + moderación
 11. Pulido visual, responsive, optimizaciones, deploy en Vercel
 
 ---

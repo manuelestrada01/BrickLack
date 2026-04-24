@@ -1,0 +1,181 @@
+export interface LegoColor {
+  id: number
+  name: string
+  hex: string
+  isTrans: boolean
+}
+
+// Source: Rebrickable color list (https://rebrickable.com/api/v3/lego/colors/)
+// Covers all official LEGO colors with BrickLink/Rebrickable IDs and RGB hex values
+export const LEGO_COLORS: LegoColor[] = [
+  // ── Solid / Basic ──────────────────────────────────────────────────────────
+  { id: 0,   name: 'Black',                  hex: '05131D', isTrans: false },
+  { id: 1,   name: 'Blue',                   hex: '0055BF', isTrans: false },
+  { id: 2,   name: 'Green',                  hex: '237841', isTrans: false },
+  { id: 3,   name: 'Dark Turquoise',         hex: '008F9B', isTrans: false },
+  { id: 4,   name: 'Red',                    hex: 'C91A09', isTrans: false },
+  { id: 5,   name: 'Dark Pink',              hex: 'C870A0', isTrans: false },
+  { id: 6,   name: 'Brown',                  hex: '583927', isTrans: false },
+  { id: 7,   name: 'Light Gray',             hex: '9BA19D', isTrans: false },
+  { id: 8,   name: 'Dark Gray',              hex: '6D6E5C', isTrans: false },
+  { id: 9,   name: 'Light Blue',             hex: 'B4D2E3', isTrans: false },
+  { id: 10,  name: 'Bright Green',           hex: '4B9F4A', isTrans: false },
+  { id: 11,  name: 'Light Turquoise',        hex: '55A5AF', isTrans: false },
+  { id: 12,  name: 'Salmon',                 hex: 'F2705E', isTrans: false },
+  { id: 13,  name: 'Pink',                   hex: 'FC97AC', isTrans: false },
+  { id: 14,  name: 'Yellow',                 hex: 'F2CD37', isTrans: false },
+  { id: 15,  name: 'White',                  hex: 'FFFFFF', isTrans: false },
+  { id: 17,  name: 'Light Green',            hex: 'C2DAB8', isTrans: false },
+  { id: 18,  name: 'Light Yellow',           hex: 'FBE696', isTrans: false },
+  { id: 19,  name: 'Tan',                    hex: 'E4CD9E', isTrans: false },
+  { id: 20,  name: 'Light Violet',           hex: 'C9CAE2', isTrans: false },
+  { id: 22,  name: 'Purple',                 hex: '81007B', isTrans: false },
+  { id: 23,  name: 'Dark Blue-Violet',       hex: '2032B0', isTrans: false },
+  { id: 25,  name: 'Orange',                 hex: 'FE8A18', isTrans: false },
+  { id: 26,  name: 'Magenta',                hex: '923978', isTrans: false },
+  { id: 27,  name: 'Lime',                   hex: 'BBE90B', isTrans: false },
+  { id: 28,  name: 'Dark Tan',               hex: '958A73', isTrans: false },
+  { id: 29,  name: 'Bright Pink',            hex: 'E4ADC8', isTrans: false },
+  { id: 36,  name: 'Very Light Orange',      hex: 'F3CF9B', isTrans: false },
+  { id: 37,  name: 'Light Bluish Gray',      hex: 'AFB5C7', isTrans: false },
+  { id: 38,  name: 'Dark Bluish Gray',       hex: '595D60', isTrans: false },
+  { id: 39,  name: 'Medium Blue',            hex: '5A93DB', isTrans: false },
+  { id: 40,  name: 'Medium Green',           hex: '73DCA1', isTrans: false },
+  { id: 41,  name: 'Light Flesh',            hex: 'F6D7B3', isTrans: false },
+  { id: 43,  name: 'Dark Orange',            hex: 'A95500', isTrans: false },
+  { id: 44,  name: 'Light Bluish Gray (alt)',hex: 'A0A5A9', isTrans: false },
+  { id: 46,  name: 'Dark Red',               hex: '720E0F', isTrans: false },
+  { id: 47,  name: 'Dark Azure',             hex: '078BC9', isTrans: false },
+  { id: 52,  name: 'Medium Azure',           hex: '36AEBF', isTrans: false },
+  { id: 53,  name: 'Aqua',                   hex: 'ADC3C0', isTrans: false },
+  { id: 54,  name: 'Medium Lavender',        hex: 'AC78BA', isTrans: false },
+  { id: 55,  name: 'Lavender',               hex: 'E1D5ED', isTrans: false },
+  { id: 57,  name: 'Coral',                  hex: 'FF698F', isTrans: false },
+  { id: 58,  name: 'Nougat',                 hex: 'D09168', isTrans: false },
+  { id: 59,  name: 'Medium Nougat',          hex: 'AA7D55', isTrans: false },
+  { id: 60,  name: 'Sand Green',             hex: 'A0BCAC', isTrans: false },
+  { id: 61,  name: 'Dark Flesh',             hex: '7C503A', isTrans: false },
+  { id: 62,  name: 'Reddish Brown',          hex: '582A12', isTrans: false },
+  { id: 63,  name: 'Sand Red',               hex: 'D3908C', isTrans: false },
+  { id: 64,  name: 'Earth Orange',           hex: 'FA9C1C', isTrans: false },
+  { id: 65,  name: 'Sand Yellow',            hex: 'D7C599', isTrans: false },
+  { id: 66,  name: 'Sand Blue',              hex: '6074A1', isTrans: false },
+  { id: 67,  name: 'Sand Purple',            hex: '845E84', isTrans: false },
+  { id: 68,  name: 'Dark Yellow',            hex: 'D9A521', isTrans: false },
+  { id: 69,  name: 'Fabuland Brown',         hex: 'CF8A47', isTrans: false },
+  { id: 70,  name: 'Medium Dark Flesh',      hex: 'CC702A', isTrans: false },
+  { id: 71,  name: 'Maersk Blue',            hex: '54A9C8', isTrans: false },
+  { id: 72,  name: 'Dark Brown',             hex: '352100', isTrans: false },
+  { id: 73,  name: 'Fabuland Orange',        hex: 'F08020', isTrans: false },
+  { id: 78,  name: 'Dark Azure (alt)',       hex: '0A3463', isTrans: false },
+  { id: 84,  name: 'Medium Orange',          hex: 'FFA70B', isTrans: false },
+  { id: 85,  name: 'Sky Blue',               hex: '7DBFDD', isTrans: false },
+  { id: 86,  name: 'Olive Green',            hex: '9B9A5A', isTrans: false },
+  { id: 89,  name: 'Dark Green',             hex: '184632', isTrans: false },
+  { id: 92,  name: 'Bright Light Orange',    hex: 'F8BB3D', isTrans: false },
+  { id: 93,  name: 'Bright Light Yellow',    hex: 'FFF03A', isTrans: false },
+  { id: 97,  name: 'Bright Light Blue',      hex: '9FC3E9', isTrans: false },
+  { id: 100, name: 'Light Aqua',             hex: 'ADC3C0', isTrans: false },
+  { id: 110, name: 'Yellowish Green',        hex: 'DFEEA5', isTrans: false },
+  { id: 115, name: 'Flat Dark Gold',         hex: 'B48455', isTrans: false },
+  { id: 118, name: 'Neon Green',             hex: 'D9E4A7', isTrans: false },
+  { id: 119, name: 'Neon Orange',            hex: 'FF800D', isTrans: false },
+  { id: 125, name: 'Light Salmon',           hex: 'F9BA61', isTrans: false },
+  { id: 128, name: 'Dark Nougat',            hex: 'AD6140', isTrans: false },
+  { id: 132, name: 'Speckle Black-Silver',   hex: '000000', isTrans: false },
+  { id: 151, name: 'Vibrant Yellow',         hex: 'EBD800', isTrans: false },
+  { id: 154, name: 'Fern',                   hex: '7DC291', isTrans: false },
+  { id: 155, name: 'Turquoise',              hex: '00BCD4', isTrans: false },
+  { id: 158, name: 'Sienna',                 hex: '8B4513', isTrans: false },
+  { id: 176, name: 'Warm Tan',               hex: 'C19A6B', isTrans: false },
+  { id: 178, name: 'Warm Yellowish Orange',  hex: 'FCAC00', isTrans: false },
+  { id: 183, name: 'White Glow',             hex: 'F5F3F2', isTrans: false },
+  { id: 191, name: 'Bright Light Orange (2)',hex: 'F8A000', isTrans: false },
+  { id: 212, name: 'Light Bright Teal',      hex: '9DC3C1', isTrans: false },
+  { id: 216, name: 'Rust',                   hex: 'B31004', isTrans: false },
+  { id: 226, name: 'Cool Yellow',            hex: 'FFFF99', isTrans: false },
+  { id: 268, name: 'Medium Lilac',           hex: '3F3691', isTrans: false },
+  { id: 272, name: 'Dark Blue',              hex: '0A3463', isTrans: false },
+  { id: 288, name: 'Dark Green (alt)',        hex: '184632', isTrans: false },
+  { id: 294, name: 'Phosphor. White',        hex: 'E0FFB0', isTrans: false },
+  { id: 297, name: 'Pearl Gold',             hex: 'AA7F2E', isTrans: false },
+
+  // ── Transparent ────────────────────────────────────────────────────────────
+  { id: 16,  name: 'Trans-Black',            hex: '635F52', isTrans: true },
+  { id: 32,  name: 'Trans-Dark Blue',        hex: '0020A0', isTrans: true },
+  { id: 33,  name: 'Trans-Dark Pink',        hex: 'DF6695', isTrans: true },
+  { id: 34,  name: 'Trans-Green',            hex: '84B68D', isTrans: true },
+  { id: 35,  name: 'Trans-Light Blue',       hex: 'CDE6D0', isTrans: true },
+  { id: 42,  name: 'Trans-Clear',            hex: 'FCFCFC', isTrans: true },
+  { id: 44,  name: 'Trans-Yellow',           hex: 'F5CD2F', isTrans: true },
+  { id: 45,  name: 'Trans-Red',              hex: 'C91A09', isTrans: true },
+  { id: 50,  name: 'Trans-Orange',           hex: 'F08F1C', isTrans: true },
+  { id: 74,  name: 'Trans-Medium Blue',      hex: 'CFE2F7', isTrans: true },
+  { id: 79,  name: 'Trans-Fire Yellow',      hex: 'FBE890', isTrans: true },
+  { id: 99,  name: 'Trans-Purple',           hex: 'C870A0', isTrans: true },
+  { id: 105, name: 'Trans-Bright Green',     hex: '56E646', isTrans: true },
+  { id: 108, name: 'Trans-Light Green',      hex: '94E5AB', isTrans: true },
+  { id: 111, name: 'Trans-Neon Green',       hex: 'F8F184', isTrans: true },
+  { id: 113, name: 'Trans-Very Lt Blue',     hex: 'C1DFF0', isTrans: true },
+  { id: 114, name: 'Trans-Neon Orange',      hex: 'FF800D', isTrans: true },
+  { id: 116, name: 'Trans-Pink',             hex: 'DF6695', isTrans: true },
+  { id: 117, name: 'Trans-Light Purple',     hex: '96709F', isTrans: true },
+  { id: 121, name: 'Trans-Neon Yellow',      hex: 'DAB000', isTrans: true },
+  { id: 129, name: 'Trans-Light Orange',     hex: 'FCB76D', isTrans: true },
+  { id: 131, name: 'Trans-Black (2)',        hex: '2B2B2B', isTrans: true },
+  { id: 152, name: 'Trans-Aqua',             hex: '02BCD6', isTrans: true },
+  { id: 234, name: 'Trans-Flame Yellowish Orange', hex: 'E5C000', isTrans: true },
+  { id: 285, name: 'Trans-Light Green (2)',  hex: '9EE57B', isTrans: true },
+  { id: 295, name: 'Trans-Bright Lt Blue',   hex: 'B5D5FF', isTrans: true },
+  { id: 302, name: 'Trans-Bright Red',       hex: 'DA121A', isTrans: true },
+
+  // ── Pearl / Metallic ───────────────────────────────────────────────────────
+  { id: 80,  name: 'Metallic Silver',        hex: 'A5A9B4', isTrans: false },
+  { id: 81,  name: 'Metallic Green',         hex: '899B5F', isTrans: false },
+  { id: 82,  name: 'Metallic Gold',          hex: 'DBAC34', isTrans: false },
+  { id: 83,  name: 'Pearl White',            hex: 'F2F3F2', isTrans: false },
+  { id: 87,  name: 'Pearl Light Gray',       hex: '9CA3A8', isTrans: false },
+  { id: 95,  name: 'Flat Silver',            hex: '898788', isTrans: false },
+  { id: 96,  name: 'Pearl Very Light Gray',  hex: 'BBBDBC', isTrans: false },
+  { id: 150, name: 'Pearl Sand Blue',        hex: '7988A1', isTrans: false },
+  { id: 178, name: 'Flat Dark Gold',         hex: 'B48455', isTrans: false },
+  { id: 179, name: 'Flat Silver (alt)',      hex: '898788', isTrans: false },
+  { id: 183, name: 'Pearl White (alt)',      hex: 'F2F3F2', isTrans: false },
+  { id: 184, name: 'Pearl Light Gold',       hex: 'DCBE61', isTrans: false },
+  { id: 185, name: 'Pearl Gold (alt)',       hex: 'CC9C2B', isTrans: false },
+  { id: 187, name: 'Pearl Dark Gray',        hex: '575857', isTrans: false },
+
+  // ── Chrome ─────────────────────────────────────────────────────────────────
+  { id: 21,  name: 'Chrome Gold',            hex: 'BBA53D', isTrans: false },
+  { id: 22,  name: 'Chrome Silver',          hex: 'E0E0E0', isTrans: false },
+  { id: 120, name: 'Chrome Antique Brass',   hex: '645A4C', isTrans: false },
+  { id: 122, name: 'Chrome Black',           hex: '1B2A34', isTrans: false },
+  { id: 123, name: 'Chrome Blue',            hex: '6C96BF', isTrans: false },
+  { id: 124, name: 'Chrome Green',           hex: '3CB371', isTrans: false },
+  { id: 126, name: 'Chrome Pink',            hex: 'AA4D8E', isTrans: false },
+
+  // ── Milky / Glow ───────────────────────────────────────────────────────────
+  { id: 106, name: 'Glow In Dark Trans',     hex: 'BDC6AD', isTrans: true  },
+  { id: 157, name: 'Glow In Dark White',     hex: 'D9D9C9', isTrans: false },
+  { id: 159, name: 'Glow In Dark Opaque',    hex: 'D4DC9A', isTrans: false },
+  { id: 196, name: 'Phosph. White (alt)',    hex: 'E0FFB0', isTrans: false },
+
+  // ── Speckle ────────────────────────────────────────────────────────────────
+  { id: 132, name: 'Speckle Black-Silver',   hex: '000000', isTrans: false },
+  { id: 133, name: 'Speckle Black-Gold',     hex: '000000', isTrans: false },
+  { id: 134, name: 'Speckle Black-Copper',   hex: '000000', isTrans: false },
+  { id: 135, name: 'Speckle DBGray-Silver',  hex: '595D60', isTrans: false },
+]
+
+// Deduplicate by id (some entries were listed twice above for clarity)
+const seen = new Set<number>()
+export const LEGO_COLORS_UNIQUE: LegoColor[] = LEGO_COLORS.filter((c) => {
+  if (seen.has(c.id)) return false
+  seen.add(c.id)
+  return true
+})
+
+// Grouped for UI rendering
+export const SOLID_COLORS   = LEGO_COLORS_UNIQUE.filter((c) => !c.isTrans && !c.name.startsWith('Chrome') && !c.name.startsWith('Pearl') && !c.name.startsWith('Metallic') && !c.name.startsWith('Flat') && !c.name.startsWith('Speckle') && !c.name.startsWith('Glow') && !c.name.startsWith('Phosph.'))
+export const TRANS_COLORS   = LEGO_COLORS_UNIQUE.filter((c) => c.isTrans)
+export const SPECIAL_COLORS = LEGO_COLORS_UNIQUE.filter((c) => !c.isTrans && (c.name.startsWith('Chrome') || c.name.startsWith('Pearl') || c.name.startsWith('Metallic') || c.name.startsWith('Flat') || c.name.startsWith('Speckle') || c.name.startsWith('Glow') || c.name.startsWith('Phosph.')))

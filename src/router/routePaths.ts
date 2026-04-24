@@ -8,9 +8,13 @@ export const ROUTES = {
   PROJECT_DETAIL: '/project/:projectId',
   NEW_PROJECT: '/project/new',
   IDENTIFY: '/identify',
+  COMMUNITY: '/community',
+  COMMUNITY_DETAIL: '/community/:mocId',
+  NEW_MOC: '/moc/new',
 } as const
 
 export const buildSetPath = (setId: string) => `/set/${setId}`
 export const buildPiecePath = (partNum: string) => `/piece/${partNum}`
 export const buildProjectPath = (projectId: string) => `/project/${projectId}`
 export const buildSearchPath = (query: string) => `/search?q=${encodeURIComponent(query)}`
+export const buildCommunityDetailPath = (mocId: string) => `/community/${mocId}`
