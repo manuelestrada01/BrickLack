@@ -73,7 +73,7 @@ function StoryBlock() {
 
   return (
     <div ref={ref} className="max-w-2xl">
-      <p data-line className="font-mono text-xs text-lego-yellow tracking-widest uppercase mb-6">
+      <p data-line className="font-mono text-xs text-navy tracking-widest uppercase mb-6">
         The story
       </p>
       <div className="flex gap-5">
@@ -347,7 +347,7 @@ export function OriginSection() {
         <StoryBlock />
 
         <div>
-          <p className="font-mono text-xs text-lego-yellow tracking-widest uppercase mb-2">
+          <p className="font-mono text-xs text-navy tracking-widest uppercase mb-2">
             How it works
           </p>
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy mb-12">

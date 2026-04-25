@@ -19,7 +19,10 @@
       "WebFetch(domain:rebrickable.com)",
       "Bash(firebase deploy:*)",
       "Bash(firebase use:*)",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)"
     ]
   }
 }

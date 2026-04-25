@@ -116,10 +116,10 @@ export default function CommunityDetailPage() {
 
   return (
     <>
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-10">
+      <div className="w-full max-w-4xl mx-auto px-4 py-8 space-y-10">
 
         {/* ── HERO ─────────────────────────────────────────── */}
-        <div ref={heroRef} style={{ opacity: 0 }} className="relative rounded-2xl overflow-hidden h-[420px] bg-navy/5 shadow-[0_8px_0_0_rgba(0,0,0,0.18),0_16px_48px_-8px_rgba(0,0,0,0.28)]">
+        <div ref={heroRef} style={{ opacity: 0 }} className="w-full relative rounded-2xl overflow-hidden h-[420px] bg-navy/5 shadow-[0_8px_0_0_rgba(0,0,0,0.18),0_16px_48px_-8px_rgba(0,0,0,0.28)]">
           <img
             src={moc.imageUrl}
             alt={moc.name}
@@ -128,13 +128,13 @@ export default function CommunityDetailPage() {
         </div>
 
         {/* ── TITLE + DESCRIPTION ──────────────────────────── */}
-        <div ref={contentRef} className="space-y-2">
+        <div ref={contentRef} className="space-y-2 w-full">
           <h1 data-reveal className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight text-center">
             {moc.name}
           </h1>
           {moc.description && (
-            <p data-reveal className="text-sm text-navy/55 font-body leading-relaxed max-w-2xl line-clamp-2 text-center mx-auto">
-              {moc.description}
+            <p data-reveal className="text-sm text-navy/55 font-body leading-relaxed text-center break-words">
+              {moc.description.length > 150 ? `${moc.description.slice(0, 150).trim()}…` : moc.description}
             </p>
           )}
         </div>
