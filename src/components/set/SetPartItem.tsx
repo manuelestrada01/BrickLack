@@ -28,7 +28,7 @@ export function SetPartItem({ part }: SetPartItemProps) {
 
       {/* Info */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm text-navy/80 font-body truncate">{part.part.name}</p>
+        <p className="text-sm text-navy/80 font-body leading-snug break-words">{part.part.name}</p>
         <div className="flex items-center gap-2 mt-0.5">
           <span className="font-mono text-xs text-navy/30">{part.part.part_num}</span>
           <span className="flex items-center gap-1 text-xs text-navy/30 font-body">

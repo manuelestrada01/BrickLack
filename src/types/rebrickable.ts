@@ -60,3 +60,8 @@ export interface RebrickablePaginatedResponse<T> {
   previous: string | null
   results: T[]
 }
+
+export interface RebrickableSubSet {
+  set: RebrickableSet
+  quantity: number
+}

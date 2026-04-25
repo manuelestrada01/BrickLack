@@ -84,17 +84,17 @@ export default function SearchPage() {
             parts={allParts}
             isLoading={isLoading}
             isError={isError}
+            isFetchingNextPage={isFetchingNextPage}
             query={queryParam}
           />
 
-          {hasNextPage && !isLoading && (
+          {hasNextPage && !isLoading && !isFetchingNextPage && (
             <div className="flex justify-center pt-2">
               <button
                 onClick={() => fetchNextPage()}
-                disabled={isFetchingNextPage}
-                className="px-6 py-2.5 rounded-brick border border-navy/12 text-navy text-sm font-body font-medium bg-white shadow-brick hover:border-lego-yellow hover:text-lego-yellow transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2.5 rounded-brick border border-navy/12 text-navy text-sm font-body font-medium bg-white shadow-brick hover:border-lego-yellow hover:text-lego-yellow transition-colors"
               >
-                {isFetchingNextPage ? 'Loading…' : 'Load more'}
+                Load more
               </button>
             </div>
           )}

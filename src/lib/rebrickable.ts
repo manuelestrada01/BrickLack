@@ -2,6 +2,7 @@ import type {
   RebrickableSet,
   RebrickablePart,
   RebrickablePartDetail,
+  RebrickableSubSet,
   RebrickablePaginatedResponse,
   LegoSet,
   SetSearchResult,
@@ -42,7 +43,13 @@ function mapSet(raw: RebrickableSet): LegoSet {
 }
 
 export async function searchSets(query: string, page = 1): Promise<SetSearchResult> {
-  const params = new URLSearchParams({ search: query, page: String(page), page_size: '100' })
+  const params = new URLSearchParams({
+    search: query,
+    page: String(page),
+    page_size: '100',
+    min_parts: '1',   // exclude non-LEGO merchandise (video games, bags, etc.)
+    ordering: '-num_parts',
+  })
   const data = await fetchRebrickable<RebrickablePaginatedResponse<RebrickableSet>>(
     `/sets/?${params}`,
   )
@@ -73,6 +80,21 @@ export async function getAllSetParts(setId: string): Promise<RebrickablePart[]> 
   }
 
   return allParts
+}
+
+export async function getSetSubSets(setId: string): Promise<RebrickableSubSet[]> {
+  const allSubSets: RebrickableSubSet[] = []
+  let nextUrl: string | null =
+    `${BASE_URL}/sets/${normalizeSetNum(setId)}/sets/?page_size=100`
+
+  while (nextUrl) {
+    const pageData: RebrickablePaginatedResponse<RebrickableSubSet> =
+      await fetchRebrickable<RebrickablePaginatedResponse<RebrickableSubSet>>(nextUrl)
+    allSubSets.push(...pageData.results)
+    nextUrl = pageData.next
+  }
+
+  return allSubSets
 }
 
 export async function getPart(partNum: string): Promise<RebrickablePartDetail> {

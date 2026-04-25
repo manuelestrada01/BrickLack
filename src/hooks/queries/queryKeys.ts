@@ -3,6 +3,7 @@ export const queryKeys = {
     search: (query: string) => ['sets', 'search', query] as const,
     detail: (setId: string) => ['sets', 'detail', setId] as const,
     parts: (setId: string) => ['sets', 'parts', setId] as const,
+    subsets: (setId: string) => ['sets', 'subsets', setId] as const,
   },
   pieces: {
     search: (query: string) => ['pieces', 'search', query] as const,

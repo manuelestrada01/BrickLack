@@ -3,7 +3,7 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { SetPartItem } from './SetPartItem'
 import { Skeleton } from '@/components/ui/Skeleton'
-import { STAGGER, REVEAL_FROM_BOTTOM } from '@/styles/animations'
+import { REVEAL_FROM_BOTTOM } from '@/styles/animations'
 import type { RebrickablePart } from '@/types/rebrickable'
 
 interface SetPartsListProps {
@@ -11,11 +11,11 @@ interface SetPartsListProps {
   isLoading: boolean
 }
 
-const PAGE_SIZE = 50
+// Only animate when there are few enough items that stagger won't be painfully slow
+const GSAP_ANIMATE_THRESHOLD = 60
 
 export function SetPartsList({ parts, isLoading }: SetPartsListProps) {
   const [search, setSearch] = useState('')
-  const [page, setPage] = useState(1)
   const listRef = useRef<HTMLDivElement>(null)
 
   const filtered = parts.filter(
@@ -25,19 +25,17 @@ export function SetPartsList({ parts, isLoading }: SetPartsListProps) {
       p.color.name.toLowerCase().includes(search.toLowerCase()),
   )
 
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
-  const paginated = filtered.slice(0, page * PAGE_SIZE)
-
   useGSAP(
     () => {
-      if (!listRef.current?.children.length) return
+      const items = listRef.current?.children
+      if (!items?.length || items.length > GSAP_ANIMATE_THRESHOLD) return
       gsap.fromTo(
-        listRef.current.children,
+        items,
         REVEAL_FROM_BOTTOM.from,
-        { ...REVEAL_FROM_BOTTOM.to, stagger: STAGGER.LIST },
+        { ...REVEAL_FROM_BOTTOM.to, stagger: 0.03 },
       )
     },
-    { scope: listRef, dependencies: [parts, isLoading] },
+    { scope: listRef, dependencies: [parts, isLoading, search] },
   )
 
   if (isLoading) {
@@ -64,7 +62,7 @@ export function SetPartsList({ parts, isLoading }: SetPartsListProps) {
         <input
           type="search"
           value={search}
-          onChange={(e) => { setSearch(e.target.value); setPage(1) }}
+          onChange={(e) => setSearch(e.target.value)}
           placeholder="Filter by name, number, or color…"
           className="w-full h-9 pl-9 pr-3 rounded-brick bg-white border border-navy/10 text-sm text-navy placeholder:text-navy/25 font-body outline-none focus:border-lego-yellow/40 transition-colors"
         />
@@ -73,28 +71,19 @@ export function SetPartsList({ parts, isLoading }: SetPartsListProps) {
         </svg>
       </div>
 
-      {/* Count */}
-      <p className="text-xs font-mono text-navy/30">
-        {filtered.length.toLocaleString()} pieces
-        {search && ` (filtered from ${parts.length.toLocaleString()})`}
-      </p>
+      {/* Filtered count — only show when search is active */}
+      {search && (
+        <p className="text-xs font-mono text-navy/30">
+          {filtered.length.toLocaleString()} of {parts.length.toLocaleString()} piece types
+        </p>
+      )}
 
-      {/* List */}
+      {/* List — all pieces, no local pagination */}
       <div ref={listRef} className="rounded-brick bg-white border border-navy/8 px-4">
-        {paginated.map((part) => (
+        {filtered.map((part) => (
           <SetPartItem key={`${part.part.part_num}-${part.color.id}`} part={part} />
         ))}
       </div>
-
-      {/* Load more */}
-      {page < totalPages && (
-        <button
-          onClick={() => setPage((p) => p + 1)}
-          className="w-full py-2.5 rounded-brick border border-navy/10 text-sm text-navy/50 hover:text-navy hover:border-navy/20 font-body transition-colors"
-        >
-          Load more ({filtered.length - paginated.length} remaining)
-        </button>
-      )}
     </div>
   )
 }
