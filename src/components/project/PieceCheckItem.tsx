@@ -135,7 +135,10 @@ export function PieceCheckItem({ piece, userId, projectId }: PieceCheckItemProps
 
         {/* Count display */}
         <div className="px-2 py-2 border-x border-navy/8">
-          <span className={`font-mono text-sm leading-none ${isComplete ? 'text-status-success' : 'text-navy/80'}`}>
+          <span
+            className="font-mono text-sm leading-none"
+            style={{ color: isComplete ? '#22C55E' : '#000000' }}
+          >
             <span className="font-bold">{found}</span>
             <span className="font-bold">/{required}</span>
           </span>

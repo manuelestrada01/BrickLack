@@ -56,15 +56,17 @@ function PieceCard({ piece, userId, projectId }: { piece: ProjectPiece; userId: 
       {/* Counter */}
       <div className="flex items-center border-t border-navy/8">
         <button onClick={() => found > 0 && mutate(found - 1)} disabled={found <= 0}
-          className="flex-1 py-2 flex items-center justify-center text-navy/40 hover:text-navy hover:bg-navy/5 disabled:opacity-20 transition-colors">
+          className="flex-1 py-2 flex items-center justify-center hover:bg-navy/5 disabled:opacity-20 transition-colors"
+          style={{ color: '#000000' }}>
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round"><path d="M5 12h14" /></svg>
         </button>
         <div className="px-2 py-2 border-x border-navy/8 flex items-baseline gap-0.5">
-          <span className={`font-mono text-sm font-semibold leading-none ${done ? 'text-green-500' : found > 0 ? 'text-navy' : 'text-navy/30'}`}>{found}</span>
-          <span className="font-mono text-[10px] text-navy/30 leading-none">/{required}</span>
+          <span className="font-mono text-sm font-semibold leading-none" style={{ color: done ? '#22C55E' : '#000000' }}>{found}</span>
+          <span className="font-mono text-[10px] leading-none" style={{ color: '#000000' }}>/{required}</span>
         </div>
         <button onClick={() => found < required && mutate(found + 1)} disabled={found >= required}
-          className="flex-1 py-2 flex items-center justify-center text-navy/40 hover:text-navy hover:bg-navy/5 disabled:opacity-20 transition-colors">
+          className="flex-1 py-2 flex items-center justify-center hover:bg-navy/5 disabled:opacity-20 transition-colors"
+          style={{ color: '#000000' }}>
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
         </button>
       </div>

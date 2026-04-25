@@ -39,7 +39,7 @@ export function HeroSection() {
           Brick
               <span style={{ color: '#E3000B' }}>l</span>
               <span style={{ color: '#006CB7' }}>a</span>
-              <span style={{ color: '#FFD700' }}>c</span>
+              <span style={{ color: '#FBBC05' }}>c</span>
               <span style={{ color: '#00A650' }}>k</span>
         </h1>
         <p className="font-body text-lg sm:text-xl text-navy max-w-lg mx-auto leading-relaxed">

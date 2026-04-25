@@ -49,7 +49,7 @@ export function SearchResults({ tab, sets, parts, isLoading, isError, query }: S
     return (
       <div className="space-y-3">
         {[...Array(6)].map((_, i) => (
-          <div key={i} className="flex gap-4 p-4 rounded-brick bg-navy-50 border border-cream/8">
+          <div key={i} className="flex gap-4 p-4 rounded-brick bg-white border border-navy/8 shadow-brick">
             <Skeleton className="w-20 h-20 rounded-brick flex-shrink-0" />
             <div className="flex-1 space-y-2 pt-1">
               <Skeleton className="h-4 w-24 rounded" />

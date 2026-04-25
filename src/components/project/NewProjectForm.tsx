@@ -75,7 +75,9 @@ export function NewProjectForm() {
     void navigate(buildProjectPath(projectId))
   }
 
-  const suggestions = showSuggestions ? searchResults?.results.slice(0, 6) : []
+  const suggestions = showSuggestions
+    ? searchResults?.pages.flatMap((p) => p.results).slice(0, 6)
+    : []
 
   return (
     <form ref={formRef} onSubmit={(e) => void handleSubmit(e)} className="relative space-y-6 max-w-lg">

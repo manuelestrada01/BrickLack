@@ -74,10 +74,10 @@ export function PieceSearcher({ onAdd }: PieceSearcherProps) {
               {isFetching && (
                 <p className="text-xs text-navy/40 font-body px-3 py-2">Searching…</p>
               )}
-              {!isFetching && (!data?.results || data.results.length === 0) && (
+              {!isFetching && (!data?.pages[0]?.results?.length) && (
                 <p className="text-xs text-navy/40 font-body px-3 py-2">No results</p>
               )}
-              {data?.results.map((part) => (
+              {data?.pages.flatMap((p) => p.results).map((part) => (
                 <button
                   key={part.part_num}
                   type="button"

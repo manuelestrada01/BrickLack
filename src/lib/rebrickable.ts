@@ -42,7 +42,7 @@ function mapSet(raw: RebrickableSet): LegoSet {
 }
 
 export async function searchSets(query: string, page = 1): Promise<SetSearchResult> {
-  const params = new URLSearchParams({ search: query, page: String(page), page_size: '20' })
+  const params = new URLSearchParams({ search: query, page: String(page), page_size: '100' })
   const data = await fetchRebrickable<RebrickablePaginatedResponse<RebrickableSet>>(
     `/sets/?${params}`,
   )
@@ -86,7 +86,7 @@ export async function searchParts(
   const params = new URLSearchParams({
     search: searchQuery,
     page: String(page),
-    page_size: '20',
+    page_size: '100',
   })
   return fetchRebrickable<RebrickablePaginatedResponse<RebrickablePartDetail>>(
     `/parts/?${params}`,
