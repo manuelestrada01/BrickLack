@@ -1,6 +1,44 @@
+import { useRef } from 'react'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
 import { HeroSection } from '@/components/home/HeroSection'
 import { OriginSection } from '@/components/home/OriginSection'
 import { useUIStore } from '@/stores/uiStore'
+
+function ScrollHint() {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        ref.current,
+        { y: 0, opacity: 0.7 },
+        { y: 10, opacity: 1, duration: 0.9, ease: 'sine.inOut', repeat: -1, yoyo: true },
+      )
+    },
+    { scope: ref },
+  )
+
+  return (
+    <div
+      ref={ref}
+      className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
+      onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
+    >
+<svg
+        className="w-12 h-12 text-white drop-shadow-md"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </div>
+  )
+}
 
 export default function HomePage() {
   const heroMode = useUIStore((s) => s.heroMode)
@@ -42,11 +80,7 @@ export default function HomePage() {
         </div>
 
         {/* Scroll hint */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-navy/30 animate-bounce">
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </div>
+        <ScrollHint />
       </div>
 
       {/* ── Origin + How it works ── */}
