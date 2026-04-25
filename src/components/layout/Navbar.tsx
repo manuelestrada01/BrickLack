@@ -113,33 +113,6 @@ export function Navbar() {
 
         {/* Col 3 — Auth */}
         <div className="flex items-center justify-end gap-3">
-          {/* Testing toggle: video ↔ imagen — solo en Home */}
-          {location.pathname === ROUTES.HOME && (
-            <button
-              onClick={toggleHeroMode}
-              title={`Hero: ${heroMode} — click para alternar`}
-              className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-navy/15 text-navy/50 hover:text-navy hover:border-navy/30 transition-colors text-xs font-mono"
-            >
-              {heroMode === 'video' ? (
-                <>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} className="w-3.5 h-3.5">
-                    <rect x="2" y="7" width="15" height="10" rx="1.5" />
-                    <path d="m17 9 5-2v10l-5-2V9z" />
-                  </svg>
-                  video
-                </>
-              ) : (
-                <>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} className="w-3.5 h-3.5">
-                    <rect x="3" y="3" width="18" height="18" rx="2" />
-                    <circle cx="8.5" cy="8.5" r="1.5" />
-                    <path d="m21 15-5-5L5 21" />
-                  </svg>
-                  imagen
-                </>
-              )}
-            </button>
-          )}
 
           <div className="hidden md:block">
             {isLoading ? null : user ? <UserMenu /> : <GoogleSignInButton size="sm" />}
