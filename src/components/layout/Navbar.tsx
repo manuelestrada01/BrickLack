@@ -21,7 +21,7 @@ function HamburgerIcon() {
 
 export function Navbar() {
   const { user, isLoading } = useAuth()
-  const { toggleMobileMenu, heroMode, toggleHeroMode } = useUIStore()
+  const { toggleMobileMenu } = useUIStore()
   const location = useLocation()
   const navRef = useRef<HTMLElement>(null)
   const lastScrollY = useRef(0)
