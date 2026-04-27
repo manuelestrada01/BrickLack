@@ -39,6 +39,16 @@ export interface SuggestSetsResponse {
   error?: string
 }
 
+export interface ModerateMocRequest {
+  name: string
+  description?: string
+}
+
+export interface ModerateMocResponse {
+  allowed: boolean
+  reason?: string
+}
+
 // Firestore user document shape (matches client types/user.ts)
 export interface UserDoc {
   displayName: string

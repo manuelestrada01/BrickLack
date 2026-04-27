@@ -19,7 +19,7 @@ export default {
                     300: '#DBCEB8',
                 },
                 lego: {
-                    yellow: '#FFD700',
+                    yellow: '#FBBC05',
                     red: '#E3000B',
                 },
                 status: {
@@ -40,8 +40,8 @@ export default {
             boxShadow: {
                 brick: '0 4px 0 0 rgba(0, 0, 0, 0.25), 0 8px 24px -4px rgba(0, 0, 0, 0.3)',
                 'brick-hover': '0 6px 0 0 rgba(0, 0, 0, 0.25), 0 12px 32px -4px rgba(0, 0, 0, 0.35)',
-                'glow-yellow': '0 0 20px rgba(255, 215, 0, 0.3)',
-                'glow-yellow-sm': '0 0 10px rgba(255, 215, 0, 0.2)',
+                'glow-yellow': '0 0 20px rgba(251, 188, 5, 0.3)',
+                'glow-yellow-sm': '0 0 10px rgba(251, 188, 5, 0.2)',
             },
             borderRadius: {
                 brick: '6px',

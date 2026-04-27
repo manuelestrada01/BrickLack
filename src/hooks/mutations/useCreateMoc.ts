@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '../queries/queryKeys'
 import { createMoc, getUserMocCount } from '@/lib/firestore/mocs'
 import { uploadMocCoverImage } from '@/lib/storage'
+import { callModerateMoc } from '@/lib/cloudFunctions'
 import { doc } from 'firebase/firestore'
 import { db } from '@/config/firebase'
 import type { MocPieceDoc } from '@/types'
@@ -30,6 +31,17 @@ export function useCreateMoc() {
       const count = await getUserMocCount(userId)
       if (count >= MOC_LIMIT) {
         throw new Error(`Has alcanzado el límite de ${MOC_LIMIT} MOCs publicados.`)
+      }
+
+      // Moderate content — fail-open on network errors (emulator not running in dev)
+      try {
+        const moderation = await callModerateMoc(name, description)
+        if (!moderation.allowed) {
+          throw new Error(moderation.reason ?? 'El contenido no cumple con las normas de la comunidad.')
+        }
+      } catch (err) {
+        // Re-throw only explicit moderation rejections, not network failures
+        if (err instanceof Error && err.message.includes('normas')) throw err
       }
 
       const totalPieces = pieces.reduce((sum, p) => sum + p.quantityRequired, 0)

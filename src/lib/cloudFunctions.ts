@@ -1,6 +1,11 @@
 import { auth } from '@/config/firebase'
 import type { SuggestSetsResponse } from '@/types'
 
+interface ModerateMocResponse {
+  allowed: boolean
+  reason?: string
+}
+
 // En desarrollo con el emulador: http://localhost:5001/{projectId}/us-central1
 // En producción: https://us-central1-{projectId}.cloudfunctions.net
 const FUNCTIONS_BASE_URL =
@@ -30,6 +35,16 @@ async function callFunction<TPayload, TResponse>(
   }
 
   return response.json() as Promise<TResponse>
+}
+
+export async function callModerateMoc(
+  name: string,
+  description: string,
+): Promise<ModerateMocResponse> {
+  return callFunction<{ name: string; description: string }, ModerateMocResponse>(
+    'moderateMoc',
+    { name, description },
+  )
 }
 
 export async function callSuggestSets(
