@@ -34,6 +34,8 @@ export default function CommunityDetailPage() {
   const [showCloneConfirm, setShowCloneConfirm] = useState(false)
   const [showReportModal, setShowReportModal] = useState(false)
   const [reportReason, setReportReason] = useState(REPORT_REASONS[0])
+  const [descExpanded, setDescExpanded] = useState(false)
+  const descRef = useRef<HTMLParagraphElement>(null)
 
   const heartRef = useRef<SVGSVGElement>(null)
   const likeButtonRef = useRef<HTMLButtonElement>(null)
@@ -132,11 +134,37 @@ export default function CommunityDetailPage() {
           <h1 data-reveal className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight text-center">
             {moc.name}
           </h1>
-          {moc.description && (
-            <p data-reveal className="text-sm text-navy/55 font-body leading-relaxed text-center break-words">
-              {moc.description.length > 150 ? `${moc.description.slice(0, 150).trim()}…` : moc.description}
-            </p>
-          )}
+          {moc.description && (() => {
+            const isLong = moc.description.length > 150
+            return (
+              <div data-reveal className="text-center">
+                <p
+                  ref={descRef}
+                  className="text-sm text-navy/55 font-body leading-relaxed break-words overflow-hidden"
+                >
+                  {!isLong || descExpanded
+                    ? moc.description
+                    : `${moc.description.slice(0, 150).trim()}…`}
+                </p>
+                {isLong && (
+                  <button
+                    onClick={() => {
+                      const next = !descExpanded
+                      setDescExpanded(next)
+                      gsap.fromTo(
+                        descRef.current,
+                        { opacity: 0.6 },
+                        { opacity: 1, duration: 0.25, ease: 'power2.out' },
+                      )
+                    }}
+                    className="mt-1.5 text-xs font-display font-semibold text-lego-yellow hover:brightness-90 transition-all"
+                  >
+                    {descExpanded ? 'Show less' : 'Read more'}
+                  </button>
+                )}
+              </div>
+            )
+          })()}
         </div>
 
         {/* ── META BAR ─────────────────────────────────────── */}

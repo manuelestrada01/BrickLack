@@ -43,7 +43,7 @@ export function SetPartItem({ part }: SetPartItemProps) {
 
       {/* Quantity */}
       <div className="flex-shrink-0 text-right">
-        <span className="font-mono text-sm text-lego-yellow/80">×{part.quantity}</span>
+        <span className="font-mono text-sm text-navy">×{part.quantity}</span>
       </div>
     </div>
   )
