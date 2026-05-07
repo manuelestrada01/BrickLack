@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { SetResultCard } from './SetResultCard'
 import { PieceResultCard } from './PieceResultCard'
 import { Skeleton } from '@/components/ui/Skeleton'
@@ -22,6 +23,7 @@ interface SearchResultsProps {
 }
 
 export function SearchResults({ tab, sets, parts, isLoading, isError, isFetchingNextPage, query }: SearchResultsProps) {
+  const { t } = useTranslation()
   const listRef = useRef<HTMLDivElement>(null)
   const prevCountRef = useRef(0)
 
@@ -69,12 +71,7 @@ export function SearchResults({ tab, sets, parts, isLoading, isError, isFetching
   )
 
   if (isError) {
-    return (
-      <ErrorState
-        title="Search error"
-        message="We couldn't connect to the server. Check your connection and try again."
-      />
-    )
+    return <ErrorState />
   }
 
   if (isLoading) {
@@ -98,8 +95,8 @@ export function SearchResults({ tab, sets, parts, isLoading, isError, isFetching
     if (!sets?.length) {
       return (
         <EmptyState
-          title="No results"
-          description={`No sets found for "${query}". Try a set number (e.g. 75192) or a different name.`}
+          title={t('search.noResultsTitle')}
+          description={t('search.noSetsDesc', { query })}
         />
       )
     }
@@ -119,8 +116,8 @@ export function SearchResults({ tab, sets, parts, isLoading, isError, isFetching
   if (!parts?.length) {
     return (
       <EmptyState
-        title="No results"
-        description={`No parts found for "${query}". Try a part number (e.g. 3001) or a different description.`}
+        title={t('search.noResultsTitle')}
+        description={t('search.noPiecesDesc', { query })}
       />
     )
   }

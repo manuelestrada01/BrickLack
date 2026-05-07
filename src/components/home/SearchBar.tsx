@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { buildSearchPath } from '@/router/routePaths'
 import { cn } from '@/utils/cn'
 
@@ -17,6 +18,7 @@ interface SearchBarProps {
 }
 
 export function SearchBar({ defaultValue = '' }: SearchBarProps) {
+  const { t } = useTranslation()
   const [query, setQuery] = useState(defaultValue)
   const [focused, setFocused] = useState(false)
   const [placeholderIdx] = useState(() => Math.floor(Math.random() * PLACEHOLDERS.length))
@@ -135,7 +137,7 @@ export function SearchBar({ defaultValue = '' }: SearchBarProps) {
 
       {/* Hint */}
       <p className="text-center text-xs text-navy font-mono mt-3">
-        Search by set number, name, or part number
+        {t('search.hint')}
       </p>
     </form>
   )

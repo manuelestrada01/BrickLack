@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { useDeleteMoc } from '@/hooks/mutations/useDeleteMoc'
 import { buildCommunityDetailPath } from '@/router/routePaths'
@@ -13,6 +14,7 @@ interface MyMocCardProps {
 }
 
 export function MyMocCard({ moc }: MyMocCardProps) {
+  const { t } = useTranslation()
   const cardRef = useRef<HTMLAnchorElement>(null)
   const imgRef = useRef<HTMLImageElement>(null)
   const [showConfirm, setShowConfirm] = useState(false)
@@ -96,13 +98,13 @@ export function MyMocCard({ moc }: MyMocCardProps) {
             {moc.name}
           </h3>
           <div className="flex items-center justify-between text-xs font-mono text-navy/40">
-            <span>{moc.totalPieces} pieces</span>
+            <span>{moc.totalPieces} {t('project.pieces')}</span>
             <div className="flex items-center gap-1">
               <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
                 <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
                 <rect x="8" y="2" width="8" height="4" rx="1" />
               </svg>
-              <span>{moc.cloneCount} clones</span>
+              <span>{moc.cloneCount} {t('community.clones')}</span>
             </div>
           </div>
         </div>
@@ -115,9 +117,9 @@ export function MyMocCard({ moc }: MyMocCardProps) {
           deleteMoc.mutate({ mocId: moc.id, imageUrl: moc.imageUrl })
           setShowConfirm(false)
         }}
-        title="Delete MOC?"
-        message={`"${moc.name}" will be permanently removed from the community.`}
-        confirmLabel="Yes, delete"
+        title={t('moc.deleteTitle')}
+        message={t('moc.deleteConfirm', { name: moc.name })}
+        confirmLabel={t('moc.deleteConfirmBtn')}
         isLoading={deleteMoc.isPending}
       />
     </>

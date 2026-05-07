@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { cn } from '@/utils/cn'
 
 export type SearchTab = 'sets' | 'pieces'
@@ -10,9 +11,10 @@ interface SearchFiltersProps {
 }
 
 export function SearchFilters({ activeTab, onTabChange, setCount, pieceCount }: SearchFiltersProps) {
+  const { t } = useTranslation()
   const tabs: { key: SearchTab; label: string; count?: number }[] = [
-    { key: 'sets', label: 'Sets', count: setCount },
-    { key: 'pieces', label: 'Pieces', count: pieceCount },
+    { key: 'sets', label: t('search.sets'), count: setCount },
+    { key: 'pieces', label: t('search.pieces'), count: pieceCount },
   ]
 
   return (

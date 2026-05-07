@@ -1,55 +1,57 @@
 import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 
 import { CARD_HOVER_VARS, CARD_UNHOVER_VARS, STAGGER, REVEAL_FROM_BOTTOM } from '@/styles/animations'
 
-const FEATURES = [
-  {
-    icon: (
-      <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="11" cy="11" r="8" />
-        <path d="m21 21-4.35-4.35" />
-      </svg>
-    ),
-    title: 'Find any set',
-    description: 'Access over 20,000 sets and 50,000 parts from the complete LEGO catalog via Rebrickable.',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9 11l3 3L22 4" />
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-      </svg>
-    ),
-    title: 'Track your progress',
-    description: 'Check off each piece you find. The progress bar updates in real time with smooth animations.',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-        <circle cx="12" cy="13" r="4" />
-      </svg>
-    ),
-    title: 'Identify with AI',
-    description: 'Take a photo of a loose piece and AI identifies it: type, color, dimensions, and part number.',
-    badge: '3 scans / month',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2" />
-        <path d="M8 21h8M12 17v4" />
-      </svg>
-    ),
-    title: 'Always in sync',
-    description: 'Your collection in the cloud. Access from any device — mobile app coming soon.',
-  },
-]
-
 export function FeatureCards() {
+  const { t } = useTranslation()
   const containerRef = useRef<HTMLDivElement>(null)
+
+  const FEATURES = [
+    {
+      icon: (
+        <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+      ),
+      title: t('home.features.f1.title'),
+      description: t('home.features.f1.desc'),
+    },
+    {
+      icon: (
+        <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M9 11l3 3L22 4" />
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+        </svg>
+      ),
+      title: t('home.features.f2.title'),
+      description: t('home.features.f2.desc'),
+    },
+    {
+      icon: (
+        <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+          <circle cx="12" cy="13" r="4" />
+        </svg>
+      ),
+      title: t('home.features.f3.title'),
+      description: t('home.features.f3.desc'),
+      badge: t('home.features.f3.badge'),
+    },
+    {
+      icon: (
+        <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <path d="M8 21h8M12 17v4" />
+        </svg>
+      ),
+      title: t('home.features.f4.title'),
+      description: t('home.features.f4.desc'),
+    },
+  ]
 
   useGSAP(
     () => {
@@ -88,10 +90,10 @@ export function FeatureCards() {
       {/* Section header */}
       <div className="text-center mb-10">
         <h2 className="font-display text-2xl sm:text-3xl font-semibold text-cream">
-          Everything you need
+          {t('home.features.title')}
         </h2>
         <p className="text-cream/40 font-body text-sm mt-2">
-          To rebuild any set, piece by piece.
+          {t('home.features.subtitle')}
         </p>
       </div>
 

@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/hooks/useAuth'
 import { useProjects } from '@/hooks/queries/useProjects'
 import { useUserMocs } from '@/hooks/queries/useUserMocs'
@@ -14,6 +15,7 @@ type Tab = 'sets' | 'mocs'
 
 export default function DashboardPage() {
   const { user } = useAuth()
+  const { t } = useTranslation()
   const { data: projects } = useProjects(user?.uid)
   const { data: mocs } = useUserMocs(user?.uid)
   const [searchParams] = useSearchParams()
@@ -48,10 +50,10 @@ export default function DashboardPage() {
 
       {/* Header */}
       <div className="text-center">
-        <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy">My projects</h1>
+        <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy">{t('dashboard.title')}</h1>
         {user && (
           <p className="text-sm text-navy/40 font-body mt-1">
-            Welcome, {user.displayName?.split(' ')[0]}
+            {t('dashboard.welcome', { name: user.displayName?.split(' ')[0] })}
           </p>
         )}
       </div>
@@ -68,7 +70,7 @@ export default function DashboardPage() {
                 : 'text-navy/50 hover:text-navy',
             )}
           >
-            My Sets
+            {t('dashboard.tabSets')}
           </button>
           <button
             onClick={() => setTab('mocs')}
@@ -79,7 +81,7 @@ export default function DashboardPage() {
                 : 'text-navy/50 hover:text-navy',
             )}
           >
-            My MOCs
+            {t('dashboard.tabMocs')}
           </button>
         </div>
       </div>
@@ -107,7 +109,7 @@ export default function DashboardPage() {
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
                 <path d="M12 5v14M5 12h14" />
               </svg>
-              Publish new
+              {t('dashboard.publishNew')}
             </Link>
           </div>
 
@@ -124,12 +126,12 @@ export default function DashboardPage() {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-10 gap-3 rounded-brick border border-dashed border-navy/10 bg-navy/[0.02]">
-              <p className="text-sm text-navy/40 font-body">No MOCs published yet.</p>
+              <p className="text-sm text-navy/40 font-body">{t('dashboard.noMocs')}</p>
               <Link
                 to={ROUTES.NEW_MOC}
                 className="text-sm font-display font-semibold text-lego-yellow hover:brightness-90 transition-all"
               >
-                Publish your first MOC →
+                {t('dashboard.firstMoc')}
               </Link>
             </div>
           )}

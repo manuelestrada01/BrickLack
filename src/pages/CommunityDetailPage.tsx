@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { useMoc, useMocPieces } from '@/hooks/queries/useMoc'
 import { useCloneMoc } from '@/hooks/mutations/useCloneMoc'
 import { useReportMoc } from '@/hooks/mutations/useReportMoc'
@@ -14,17 +15,18 @@ import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { Modal } from '@/components/ui/Modal'
 import { buildProjectPath, ROUTES } from '@/router/routePaths'
 
-const REPORT_REASONS = [
-  'Inappropriate content',
-  'Spam or fake MOC',
-  'Copyright violation',
-  'Other',
-]
-
 export default function CommunityDetailPage() {
+  const { t } = useTranslation()
   const { mocId } = useParams<{ mocId: string }>()
   const navigate = useNavigate()
   const { user } = useAuth()
+
+  const REPORT_REASONS = [
+    t('community.reportReasons.inappropriate'),
+    t('community.reportReasons.spam'),
+    t('community.reportReasons.copyright'),
+    t('community.reportReasons.other'),
+  ]
 
   const { data: moc, isLoading, isError } = useMoc(mocId)
   const { data: pieces } = useMocPieces(mocId)
@@ -94,7 +96,7 @@ export default function CommunityDetailPage() {
   if (isError) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16">
-        <ErrorState title="MOC not found" message="This community project doesn't exist or was removed." />
+        <ErrorState title={t('community.notFound')} message={t('community.notFoundMessage')} />
       </div>
     )
   }
@@ -159,7 +161,7 @@ export default function CommunityDetailPage() {
                     }}
                     className="mt-1.5 text-xs font-display font-semibold text-lego-yellow hover:brightness-90 transition-all"
                   >
-                    {descExpanded ? 'Show less' : 'Read more'}
+                    {descExpanded ? t('community.showLess') : t('community.readMore')}
                   </button>
                 )}
               </div>
@@ -187,7 +189,7 @@ export default function CommunityDetailPage() {
           <div className="flex items-center gap-5">
             <div className="flex items-center gap-1.5">
               <span className="font-mono text-sm font-bold text-navy">{moc.totalPieces}</span>
-              <span className="text-xs text-navy/40 font-body">pcs</span>
+              <span className="text-xs text-navy/40 font-body">{t('community.pcs')}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <svg className="w-3.5 h-3.5 text-navy/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
@@ -195,7 +197,7 @@ export default function CommunityDetailPage() {
                 <rect x="8" y="2" width="8" height="4" rx="1" />
               </svg>
               <span className="font-mono text-sm font-bold text-navy">{moc.cloneCount}</span>
-              <span className="text-xs text-navy/40 font-body">clones</span>
+              <span className="text-xs text-navy/40 font-body">{t('community.clones')}</span>
             </div>
             <button
               ref={likeButtonRef}
@@ -237,14 +239,14 @@ export default function CommunityDetailPage() {
                     <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
                     <rect x="8" y="2" width="8" height="4" rx="1" />
                   </svg>
-                  {clone.isPending ? 'Adding…' : 'Build this MOC'}
+                  {clone.isPending ? t('community.adding') : t('community.buildThisMoc')}
                 </button>
                 {user && (
                   <button
                     onClick={() => setShowReportModal(true)}
                     className="text-xs text-navy/25 hover:text-status-error transition-colors font-body"
                   >
-                    Report
+                    {t('community.report')}
                   </button>
                 )}
               </>
@@ -253,7 +255,7 @@ export default function CommunityDetailPage() {
                 <svg className="w-3 h-3 text-lego-yellow" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                Your MOC
+                {t('community.yourMoc')}
               </div>
             )}
           </div>
@@ -264,7 +266,7 @@ export default function CommunityDetailPage() {
           <div ref={piecesRef} className="space-y-4">
             <div className="flex items-center gap-3">
               <h2 className="font-display text-xs font-bold text-navy/40 uppercase tracking-[0.15em]">
-                Pieces required
+                {t('community.piecesRequired')}
               </h2>
               <span className="bg-navy/5 border border-navy/8 text-navy/50 font-mono text-xs px-2 py-0.5 rounded-full">
                 {pieces.length}
@@ -323,17 +325,17 @@ export default function CommunityDetailPage() {
         isOpen={showCloneConfirm}
         onClose={() => setShowCloneConfirm(false)}
         onConfirm={confirmClone}
-        title="Build this MOC?"
-        message={`"${moc.name}" will be added to your projects with all ${moc.totalPieces} pieces to track.`}
-        confirmLabel="Yes, add to my projects"
+        title={t('community.cloneTitle')}
+        message={t('community.cloneConfirm', { name: moc.name, count: moc.totalPieces })}
+        confirmLabel={t('community.cloneConfirmBtn')}
         isLoading={clone.isPending}
       />
 
       {/* Report modal */}
-      <Modal isOpen={showReportModal} onClose={() => setShowReportModal(false)} title="Report MOC">
+      <Modal isOpen={showReportModal} onClose={() => setShowReportModal(false)} title={t('community.reportTitle')}>
         <div className="space-y-4">
           <p className="text-sm text-navy/60 font-body">
-            This MOC will be hidden from the community until reviewed by a moderator.
+            {t('community.reportDesc')}
           </p>
           <div className="space-y-2">
             {REPORT_REASONS.map((reason) => (
@@ -355,14 +357,14 @@ export default function CommunityDetailPage() {
               onClick={() => setShowReportModal(false)}
               className="flex-1 py-2 rounded-brick border border-navy/10 text-sm font-display text-navy/60 hover:bg-navy/5 transition-colors"
             >
-              Cancel
+              {t('community.reportCancel')}
             </button>
             <button
               onClick={confirmReport}
               disabled={report.isPending}
               className="flex-1 py-2 rounded-brick bg-status-error text-white text-sm font-display font-semibold hover:brightness-105 transition-all disabled:opacity-50"
             >
-              {report.isPending ? 'Reporting…' : 'Report'}
+              {report.isPending ? t('community.reportSubmitting') : t('community.reportSubmit')}
             </button>
           </div>
         </div>

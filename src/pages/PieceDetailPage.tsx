@@ -1,17 +1,19 @@
 import { useParams } from 'react-router'
+import { useTranslation } from 'react-i18next'
 import { usePieceDetail } from '@/hooks/queries/usePieceDetail'
 import { Skeleton } from '@/components/ui/Skeleton'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { Badge } from '@/components/ui/Badge'
 
 export default function PieceDetailPage() {
+  const { t } = useTranslation()
   const { partNum } = useParams<{ partNum: string }>()
   const { data: part, isLoading, isError } = usePieceDetail(partNum)
 
   if (isError) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-16">
-        <ErrorState title="Piece not found" message="We couldn't load this piece." />
+        <ErrorState title={t('piece.notFound')} message={t('piece.notFoundMessage')} />
       </div>
     )
   }
@@ -56,14 +58,14 @@ export default function PieceDetailPage() {
 
             {part.print_of && (
               <p className="text-sm text-navy/40 font-body">
-                Print of <span className="font-mono text-navy/60">{part.print_of}</span>
+                {t('piece.printOf')} <span className="font-mono text-navy/60">{part.print_of}</span>
               </p>
             )}
 
             {/* External IDs */}
             {Object.keys(part.external_ids).length > 0 && (
               <div className="space-y-1.5">
-                <p className="text-xs text-navy/30 font-body uppercase tracking-wider">External references</p>
+                <p className="text-xs text-navy/30 font-body uppercase tracking-wider">{t('piece.externalRefs')}</p>
                 <div className="flex flex-wrap gap-2">
                   {Object.entries(part.external_ids).map(([source, ids]) => (
                     <span key={source} className="text-xs font-mono text-navy/40 bg-white border border-navy/8 px-2 py-0.5 rounded">

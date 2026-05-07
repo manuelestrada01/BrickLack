@@ -2,10 +2,12 @@ import { useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/hooks/useAuth'
 import { useUIStore } from '@/stores/uiStore'
 import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
 import { Avatar } from '@/components/ui/Avatar'
+import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
 import { ROUTES } from '@/router/routePaths'
 import { cn } from '@/utils/cn'
 
@@ -58,22 +60,22 @@ function CommunityIcon() {
   )
 }
 
-const NAV_LINKS = [
-  { to: ROUTES.HOME,      label: 'Home',        icon: <HomeIcon /> },
-  { to: ROUTES.SEARCH,    label: 'Search sets', icon: <SearchIcon /> },
-  { to: ROUTES.COMMUNITY, label: 'Community',   icon: <CommunityIcon /> },
-]
-
-
-const AUTH_LINKS = [
-  { to: ROUTES.DASHBOARD,          label: 'Projects',      icon: <GridIcon /> },
-{ to: ROUTES.IDENTIFY,           label: 'Identify piece', icon: <CameraIcon /> },
-]
-
 export function MobileMenu() {
   const { user, signOut } = useAuth()
   const { mobileMenuOpen, closeMobileMenu } = useUIStore()
+  const { t } = useTranslation()
   const location = useLocation()
+
+  const NAV_LINKS = [
+    { to: ROUTES.HOME,      label: t('nav.home'),      icon: <HomeIcon /> },
+    { to: ROUTES.SEARCH,    label: t('nav.search'),    icon: <SearchIcon /> },
+    { to: ROUTES.COMMUNITY, label: t('nav.community'), icon: <CommunityIcon /> },
+  ]
+
+  const AUTH_LINKS = [
+    { to: ROUTES.DASHBOARD, label: t('nav.projects'), icon: <GridIcon /> },
+    { to: ROUTES.IDENTIFY,  label: t('nav.scan'),     icon: <CameraIcon /> },
+  ]
 
   const overlayRef = useRef<HTMLDivElement>(null)
   const panelRef   = useRef<HTMLDivElement>(null)
@@ -172,7 +174,7 @@ export function MobileMenu() {
           {user && (
             <>
               <div className="pt-5 pb-2 px-3">
-                <p className="text-[10px] font-mono text-navy/30 uppercase tracking-widest">My account</p>
+                <p className="text-[10px] font-mono text-navy/30 uppercase tracking-widest">{t('dashboard.title')}</p>
               </div>
               {AUTH_LINKS.map(({ to, label, icon }) => (
                 <Link
@@ -195,6 +197,11 @@ export function MobileMenu() {
           )}
         </div>
 
+        {/* Language */}
+        <div className="flex-shrink-0 border-t border-navy/10 pt-3">
+          <LanguageSwitcher variant="mobile" />
+        </div>
+
         {/* Footer */}
         <div className="flex-shrink-0 p-4 border-t border-navy/10">
           {user ? (
@@ -215,7 +222,7 @@ export function MobileMenu() {
                   <polyline points="16 17 21 12 16 7" />
                   <line x1="21" y1="12" x2="9" y2="12" />
                 </svg>
-                Sign out
+                {t('ui.signOut', 'Sign out')}
               </button>
             </div>
           ) : (

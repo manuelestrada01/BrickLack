@@ -2,10 +2,12 @@ import { useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/hooks/useAuth'
 import { useUIStore } from '@/stores/uiStore'
 import { UserMenu } from '@/components/auth/UserMenu'
 import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
+import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
 import { ROUTES } from '@/router/routePaths'
 import { cn } from '@/utils/cn'
 
@@ -22,6 +24,7 @@ function HamburgerIcon() {
 export function Navbar() {
   const { user, isLoading } = useAuth()
   const { toggleMobileMenu } = useUIStore()
+  const { t } = useTranslation()
   const location = useLocation()
   const navRef = useRef<HTMLElement>(null)
   const lastScrollY = useRef(0)
@@ -83,36 +86,39 @@ export function Navbar() {
             to={ROUTES.HOME}
             className={cn('text-sm font-body font-medium transition-colors', isActive(ROUTES.HOME) ? 'text-navy' : 'text-navy/60 hover:text-navy')}
           >
-            Home
+            {t('nav.home')}
           </Link>
           <Link
             to={ROUTES.DASHBOARD}
             className={cn('text-sm font-body font-medium transition-colors', location.pathname === ROUTES.DASHBOARD ? 'text-navy' : 'text-navy/60 hover:text-navy')}
           >
-            Projects
+            {t('nav.projects')}
           </Link>
           <Link
             to={ROUTES.SEARCH}
             className={cn('text-sm font-body font-medium transition-colors', location.pathname.startsWith('/search') ? 'text-navy' : 'text-navy/60 hover:text-navy')}
           >
-            Search
+            {t('nav.search')}
           </Link>
           <Link
             to={ROUTES.IDENTIFY}
             className={cn('text-sm font-body font-medium transition-colors', isActive(ROUTES.IDENTIFY) ? 'text-navy' : 'text-navy/60 hover:text-navy')}
           >
-            Scan
+            {t('nav.scan')}
           </Link>
           <Link
             to={ROUTES.COMMUNITY}
             className={cn('text-sm font-body font-medium transition-colors', location.pathname.startsWith('/community') ? 'text-navy' : 'text-navy/60 hover:text-navy')}
           >
-            Community
+            {t('nav.community')}
           </Link>
         </div>
 
-        {/* Col 3 — Auth */}
+        {/* Col 3 — Auth + Language */}
         <div className="flex items-center justify-end gap-3">
+          <div className="hidden md:block">
+            <LanguageSwitcher />
+          </div>
 
           <div className="hidden md:block">
             {isLoading ? null : user ? <UserMenu /> : <GoogleSignInButton size="sm" />}

@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useSearchParams } from 'react-router'
+import { useTranslation } from 'react-i18next'
 import { useSetSearch } from '@/hooks/queries/useSetSearch'
 import { usePieceSearch } from '@/hooks/queries/usePieceSearch'
 import { SearchFilters, type SearchTab } from '@/components/search/SearchFilters'
@@ -8,6 +9,7 @@ import { SearchBar } from '@/components/home/SearchBar'
 import { useDebounce } from '@/utils/debounce'
 
 export default function SearchPage() {
+  const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const queryParam = searchParams.get('q') ?? ''
 
@@ -48,16 +50,16 @@ export default function SearchPage() {
         <h1 className="font-display text-2xl font-semibold text-navy text-center">
           {queryParam ? (
             <>
-              Results for{' '}
+              {t('search.resultsFor')}{' '}
               <span className="text-lego-yellow">"{queryParam}"</span>
             </>
           ) : (
-            'Search'
+            t('nav.search')
           )}
         </h1>
         {(setsQuery.data || partsQuery.data) && queryParam && (
           <p className="text-sm text-navy/40 font-body mt-1 text-center">
-            {setsCount.toLocaleString()} sets · {partsCount.toLocaleString()} pieces
+            {setsCount.toLocaleString()} {t('search.sets')} · {partsCount.toLocaleString()} {t('search.pieces')}
           </p>
         )}
       </div>
@@ -94,7 +96,7 @@ export default function SearchPage() {
                 onClick={() => fetchNextPage()}
                 className="px-6 py-2.5 rounded-brick border border-navy/12 text-navy text-sm font-body font-medium bg-white shadow-brick hover:border-lego-yellow hover:text-lego-yellow transition-colors"
               >
-                Load more
+                {t('search.loadMore')}
               </button>
             </div>
           )}

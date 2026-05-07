@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Counter } from '@/components/ui/Counter'
 import type { Project } from '@/types'
 
@@ -6,16 +7,17 @@ interface DashboardStatsProps {
 }
 
 export function DashboardStats({ projects }: DashboardStatsProps) {
+  const { t } = useTranslation()
   const total = projects.length
   const completed = projects.filter((p) => p.status === 'completed').length
   const inProgress = projects.filter((p) => p.status === 'in_progress').length
   const foundPieces = projects.reduce((sum, p) => sum + p.foundPieces, 0)
 
   const stats = [
-    { label: 'Projects', value: total },
-    { label: 'In progress', value: inProgress },
-    { label: 'Completed', value: completed },
-    { label: 'Pieces found', value: foundPieces },
+    { label: t('dashboard.stats.projects'), value: total },
+    { label: t('dashboard.stats.inProgress'), value: inProgress },
+    { label: t('dashboard.stats.completed'), value: completed },
+    { label: t('dashboard.stats.piecesFound'), value: foundPieces },
   ]
 
   if (total === 0) return null

@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/hooks/useAuth'
 import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
 import { SearchBar } from './SearchBar'
@@ -8,6 +9,7 @@ import { STAGGER } from '@/styles/animations'
 
 export function HeroSection() {
   const { user, isLoading } = useAuth()
+  const { t } = useTranslation()
   const containerRef = useRef<HTMLDivElement>(null)
 
   useGSAP(
@@ -43,7 +45,7 @@ export function HeroSection() {
               <span style={{ color: '#00A650' }}>k</span>
         </h1>
         <p className="font-body text-lg sm:text-xl text-navy max-w-lg mx-auto leading-relaxed">
-          Rebuild what's lost.
+          {t('home.subtitle')}
         </p>
       </div>
 
@@ -57,7 +59,7 @@ export function HeroSection() {
         <div data-hero className="hidden items-center justify-center gap-4 flex-wrap">
           <GoogleSignInButton size="md" />
           <p className="text-xs text-navy font-body">
-            Free. Google only.
+            {t('home.ctaFree')}
           </p>
         </div>
       )}

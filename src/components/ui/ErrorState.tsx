@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { cn } from '@/utils/cn'
 import { Button } from './Button'
 
@@ -9,11 +10,13 @@ interface ErrorStateProps {
 }
 
 export function ErrorState({
-  title = 'Something went wrong',
-  message = 'An unexpected error occurred. Please try again.',
+  title,
+  message,
   onRetry,
   className,
 }: ErrorStateProps) {
+  const { t } = useTranslation()
+
   return (
     <div
       className={cn(
@@ -36,12 +39,12 @@ export function ErrorState({
         </svg>
       </div>
       <div className="space-y-1.5 max-w-xs">
-        <h3 className="font-display font-semibold text-navy/80">{title}</h3>
-        <p className="text-sm text-navy/40 font-body leading-relaxed">{message}</p>
+        <h3 className="font-display font-semibold text-navy/80">{title ?? t('ui.errorTitle')}</h3>
+        <p className="text-sm text-navy/40 font-body leading-relaxed">{message ?? t('ui.errorMessage')}</p>
       </div>
       {onRetry && (
         <Button variant="secondary" size="sm" onClick={onRetry} className="mt-2">
-          Retry
+          {t('ui.retry')}
         </Button>
       )}
     </div>

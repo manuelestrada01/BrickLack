@@ -1,0 +1,276 @@
+{
+  "nav": {
+    "home": "Start",
+    "projects": "Projekte",
+    "search": "Suchen",
+    "scan": "Scannen",
+    "community": "Community"
+  },
+  "footer": {
+    "tagline": "Baue deine Sets neu auf, Stein für Stein.",
+    "dataVia": "Daten über",
+    "poweredBy": "Entwickelt von"
+  },
+  "home": {
+    "subtitle": "Rekonstruiere, was verloren ging.",
+    "ctaFree": "Kostenlos. Nur Google.",
+    "searchPlaceholder": "Sets oder Teile suchen…",
+    "story": {
+      "label": "Die Geschichte",
+      "title": "Bricklack entstand aus einer Kiste fehlender Teile.",
+      "p1": "Als Kind wurden Sets auseinandergebaut, Teile verschwanden — meistens im Zimmer eines Geschwisterkinds — und Jahre später, wenn man endlich dieses Schloss oder Raumschiff wieder aufbauen wollte, fehlte die Hälfte des Inventars.",
+      "p2": "Es gab keine Möglichkeit zu wissen, was man hatte, was fehlte oder wo man anfangen sollte.",
+      "p3": "Also bauten wir das Werkzeug, das wir immer gebraucht haben."
+    },
+    "howItWorks": {
+      "label": "So funktioniert es",
+      "title": "Vier Schritte, um alles wieder aufzubauen."
+    },
+    "steps": {
+      "s1": {
+        "title": "Set suchen",
+        "desc": "Finde jedes LEGO-Set nach Name oder Nummer. Über 22.000 Sets im Katalog, automatisch aktualisiert."
+      },
+      "s2": {
+        "title": "Inventar importieren",
+        "desc": "Wir laden die vollständige Teileliste automatisch. Jedes Teil, jede Farbe und Menge — ohne manuelle Eingabe."
+      },
+      "s3": {
+        "title": "Gefundenes markieren",
+        "desc": "Geh Teil für Teil durch deine Kisten. Hake jedes ab, wenn du es findest — der Fortschritt wird in Echtzeit gespeichert."
+      },
+      "s4": {
+        "title": "Set vervollständigen",
+        "desc": "Sieh, wie sich der Fortschrittsbalken Teil für Teil füllt. Wisse genau, was du noch zum Aufbauen brauchst."
+      }
+    },
+    "features": {
+      "title": "Alles, was du brauchst",
+      "subtitle": "Um jedes Set, Teil für Teil, wieder aufzubauen.",
+      "f1": {
+        "title": "Jedes Set finden",
+        "desc": "Greife auf über 20.000 Sets und 50.000 Teile aus dem vollständigen LEGO-Katalog über Rebrickable zu."
+      },
+      "f2": {
+        "title": "Fortschritt verfolgen",
+        "desc": "Hake jedes gefundene Teil ab. Der Fortschrittsbalken aktualisiert sich in Echtzeit mit flüssigen Animationen."
+      },
+      "f3": {
+        "title": "Mit KI identifizieren",
+        "desc": "Mache ein Foto von einem losen Teil und die KI identifiziert es: Typ, Farbe, Maße und Teilenummer.",
+        "badge": "3 Scans / Monat"
+      },
+      "f4": {
+        "title": "Immer synchron",
+        "desc": "Deine Sammlung in der Cloud. Zugriff von jedem Gerät — mobile App kommt bald."
+      }
+    }
+  },
+  "login": {
+    "heading": "Melde dich an, um fortzufahren",
+    "subheading": "Verfolge deine LEGO-Sets und identifiziere fehlende Teile.",
+    "terms": "Mit der Anmeldung stimmst du unseren",
+    "termsLink": "Nutzungsbedingungen zu"
+  },
+  "dashboard": {
+    "title": "Meine Projekte",
+    "welcome": "Willkommen, {{name}}",
+    "tabSets": "Meine Sets",
+    "tabMocs": "Meine MOCs",
+    "publishNew": "Neu veröffentlichen",
+    "noMocs": "Noch keine MOCs veröffentlicht.",
+    "firstMoc": "Veröffentliche deinen ersten MOC →",
+    "stats": {
+      "projects": "Projekte",
+      "inProgress": "In Bearbeitung",
+      "completed": "Abgeschlossen",
+      "piecesFound": "Gefundene Teile"
+    }
+  },
+  "community": {
+    "title": "Community",
+    "subtitle": "Von der Community veröffentlichte MOCs — klone einen, um mit dem Bauen anzufangen",
+    "recent": "Neueste",
+    "hottest": "Beliebteste MOCs",
+    "loadError": "Community-MOCs konnten nicht geladen werden. Versuche, die Seite neu zu laden.",
+    "emptyTitle": "Noch keine Community-MOCs",
+    "emptyDesc": "Sei der Erste — veröffentliche deinen MOC aus Meine Projekte.",
+    "pcs": "Stk.",
+    "clones": "Klone",
+    "buildThisMoc": "Diesen MOC bauen",
+    "adding": "Wird hinzugefügt…",
+    "report": "Melden",
+    "yourMoc": "Dein MOC",
+    "piecesRequired": "Benötigte Teile",
+    "showLess": "Weniger anzeigen",
+    "readMore": "Mehr lesen",
+    "cloneTitle": "Diesen MOC bauen?",
+    "cloneConfirm": "\"{{name}}\" wird deinen Projekten mit allen {{count}} Teilen hinzugefügt.",
+    "cloneConfirmBtn": "Ja, zu meinen Projekten hinzufügen",
+    "reportTitle": "MOC melden",
+    "reportDesc": "Dieser MOC wird aus der Community ausgeblendet, bis er von einem Moderator überprüft wurde.",
+    "reportCancel": "Abbrechen",
+    "reportSubmit": "Melden",
+    "reportSubmitting": "Wird gemeldet…",
+    "reportReasons": {
+      "inappropriate": "Unangemessener Inhalt",
+      "spam": "Spam oder gefälschter MOC",
+      "copyright": "Urheberrechtsverletzung",
+      "other": "Sonstiges"
+    },
+    "notFound": "MOC nicht gefunden",
+    "notFoundMessage": "Dieses Community-Projekt existiert nicht oder wurde entfernt."
+  },
+  "project": {
+    "status": {
+      "inProgress": "In Bearbeitung",
+      "paused": "Pausiert",
+      "completed": "Abgeschlossen"
+    },
+    "buildingInstructions": "Bauanleitungen",
+    "progress": "Fortschritt",
+    "remaining": "verbleibend",
+    "complete": "Fertig!",
+    "pieceList": "Teileliste",
+    "filterPlaceholder": "Nach Name, Nummer oder Farbe filtern…",
+    "filterAll": "Alle",
+    "filterMissing": "Fehlend",
+    "filterFound": "Gefunden",
+    "scanPiece": "Teil scannen",
+    "noMatch": "Keine Teile entsprechen dem Filter.",
+    "deleteTitle": "Projekt löschen",
+    "deleteConfirm": "Bist du sicher, dass du \"{{name}}\" löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "deleteConfirmBtn": "Ja, löschen",
+    "piecesOf": "von",
+    "pieces": "Teile",
+    "piecesLabel": "Teile ·",
+    "thisMayTake": "dies kann einen Moment dauern"
+  },
+  "newProject": {
+    "breadcrumb": "Projekte",
+    "breadcrumbNew": "Neu",
+    "title": "Neues Projekt",
+    "subtitle": "Wähle ein Set, um sein Inventar zu importieren, oder erstelle ein freies Projekt.",
+    "importingPieces": "Teileinventar wird importiert…",
+    "creatingProject": "Projekt wird erstellt…",
+    "setLabel": "LEGO-Set",
+    "optional": "(optional)",
+    "searchSet": "Set nach Name oder Nummer suchen…",
+    "setHelper": "Wenn du ein Set auswählst, importieren wir das vollständige Teileinventar.",
+    "nameLabel": "Projektname",
+    "namePlaceholder": "Meine Sammlung…",
+    "createWithPieces": "Projekt erstellen und Teile importieren",
+    "createSimple": "Projekt erstellen",
+    "createError": "Projekt konnte nicht erstellt werden. Bitte versuche es erneut."
+  },
+  "identify": {
+    "title": "Teil identifizieren",
+    "subtitle": "Lade ein Foto eines losen Teils hoch und wir identifizieren es sofort.",
+    "failedError": "Teil konnte nicht identifiziert werden. Bitte versuche es erneut.",
+    "noResultError": "Teil konnte nicht identifiziert werden. Versuche ein schärferes Foto.",
+    "resultHeading": "Ergebnis",
+    "high": "Hohe Konfidenz",
+    "medium": "Mittlere Konfidenz",
+    "low": "Niedrige Konfidenz",
+    "viewCatalog": "Teil im Katalog ansehen",
+    "scanAnother": "Weiteres Teil scannen",
+    "match": "% Übereinstimmung",
+    "analyzing": "Teil wird analysiert…",
+    "dropzone": "Foto hierher ziehen oder Datei auswählen",
+    "dropzoneFormat": "JPG, PNG, WEBP · max. 10 MB",
+    "changePhoto": "Foto ändern",
+    "takePhoto": "Foto aufnehmen"
+  },
+  "moc": {
+    "title": "Deinen MOC veröffentlichen",
+    "subtitle": "Teile deine LEGO-Kreation mit der Community.",
+    "breadcrumbPublish": "MOC veröffentlichen",
+    "photoLabel": "Foto",
+    "photoHint": "Klicke, um ein Foto deines MOCs hochzuladen",
+    "photoFormat": "JPG, PNG, WebP — max. 5 MB",
+    "nameLabel": "Name",
+    "namePlaceholder": "z.B. Mini-Eiffelturm",
+    "descLabel": "Beschreibung",
+    "descPlaceholder": "Beschreibe deine Kreation, Inspiration, Schwierigkeit…",
+    "piecesLabel": "Teile",
+    "pieceTypes": "Typen ·",
+    "total": "gesamt",
+    "publishBtn": "MOC veröffentlichen",
+    "publishingBtn": "Veröffentlichen…",
+    "disclaimer": "MOCs unterliegen den Community-Richtlinien.",
+    "errorName": "Gib deinem MOC einen Namen.",
+    "errorPhoto": "Ein Foto deines MOCs ist erforderlich.",
+    "errorPieces": "Füge mindestens ein Teil hinzu.",
+    "publishError": "MOC konnte nicht veröffentlicht werden.",
+    "deleteTitle": "MOC löschen?",
+    "deleteConfirm": "\"{{name}}\" wird dauerhaft aus der Community entfernt.",
+    "deleteConfirmBtn": "Ja, löschen",
+    "clones": "Klone",
+    "pcs": "Stk.",
+    "addPiece": "Teil hinzufügen",
+    "searchPiecePlaceholder": "Nach Name oder Teilenummer suchen…",
+    "noResults": "Keine Ergebnisse",
+    "colorGroups": {
+      "solid": "Uni",
+      "transparent": "Transparent",
+      "special": "Perlmutt / Chrom / Spezial"
+    }
+  },
+  "ui": {
+    "errorTitle": "Etwas ist schiefgelaufen",
+    "errorMessage": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
+    "retry": "Erneut versuchen",
+    "signIn": "Mit Google anmelden",
+    "removeOne": "Eines entfernen",
+    "addOne": "Eines hinzufügen",
+    "signOut": "Abmelden",
+    "loading": "Wird geladen…"
+  },
+  "search": {
+    "placeholder": "Sets oder Teile suchen…",
+    "sets": "Sets",
+    "pieces": "Teile",
+    "noResults": "Keine Ergebnisse für",
+    "resultsFor": "Ergebnisse für",
+    "loading": "Suche läuft…",
+    "loadMore": "Mehr laden",
+    "hint": "Suche nach Set-Nummer, Name oder Teilenummer",
+    "noResultsTitle": "Keine Ergebnisse",
+    "noSetsDesc": "Keine Sets für \"{{query}}\" gefunden. Versuche eine Set-Nummer (z.B. 75192) oder einen anderen Namen.",
+    "noPiecesDesc": "Keine Teile für \"{{query}}\" gefunden. Versuche eine Teilenummer (z.B. 3001) oder eine andere Beschreibung."
+  },
+  "set": {
+    "pieces": "Teile",
+    "year": "Jahr",
+    "theme": "Thema",
+    "addToProject": "Zum Projekt hinzufügen",
+    "addingToProject": "Wird hinzugefügt…",
+    "subsets": "Teilsets",
+    "partList": "Teileliste",
+    "set": "Set",
+    "sets": "Sets",
+    "included": "enthalten",
+    "collectionSet": "Bundle-Set",
+    "bundleDesc": "Dies ist ein Bundle aus mehreren Sets. Klicke auf ein Set, um sein Teileinventar zu erkunden.",
+    "includedSets": "Enthaltene Sets",
+    "pieceInventory": "Teileinventar",
+    "filteredOf": "von",
+    "pieceTypes": "Teiletypen",
+    "notFound": "Set nicht gefunden",
+    "notFoundMessage": "Dieses Set konnte nicht geladen werden. Überprüfe die Nummer und versuche es erneut."
+  },
+  "piece": {
+    "partNumber": "Teilenummer",
+    "colors": "Farben",
+    "appearsIn": "Erscheint in Sets",
+    "printOf": "Aufdruck von",
+    "externalRefs": "Externe Referenzen",
+    "notFound": "Teil nicht gefunden",
+    "notFoundMessage": "Dieses Teil konnte nicht geladen werden."
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "desc": "Die gesuchte Seite existiert nicht.",
+    "back": "Zurück zur Startseite"
+  }
+}

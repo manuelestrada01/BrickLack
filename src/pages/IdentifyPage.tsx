@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/hooks/useAuth'
 import { useIdentifyPiece } from '@/hooks/mutations/useIdentifyPiece'
 import { CameraCapture } from '@/components/identify/CameraCapture'
@@ -6,6 +7,7 @@ import { IdentifyResult } from '@/components/identify/IdentifyResult'
 
 export default function IdentifyPage() {
   const { user } = useAuth()
+  const { t } = useTranslation()
   const identifyMutation = useIdentifyPiece(user?.uid)
   const [hasResult, setHasResult] = useState(false)
 
@@ -23,10 +25,10 @@ export default function IdentifyPage() {
     <div className="max-w-lg mx-auto px-4 py-8 space-y-8">
       <div className="text-center">
         <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy">
-          Identify piece
+          {t('identify.title')}
         </h1>
         <p className="text-sm text-navy/40 font-body mt-2">
-          Upload a photo of a loose piece and we'll identify it instantly.
+          {t('identify.subtitle')}
         </p>
       </div>
 
@@ -44,13 +46,13 @@ export default function IdentifyPage() {
 
           {identifyMutation.isError && (
             <p className="text-sm text-status-error font-body text-center">
-              {identifyMutation.error?.message ?? 'Failed to identify the piece. Please try again.'}
+              {identifyMutation.error?.message ?? t('identify.failedError')}
             </p>
           )}
 
           {identifyMutation.data && !identifyMutation.data.success && (
             <p className="text-sm text-status-warning font-body text-center">
-              {identifyMutation.data.error ?? 'Could not identify the piece. Try a clearer photo.'}
+              {identifyMutation.data.error ?? t('identify.noResultError')}
             </p>
           )}
         </div>

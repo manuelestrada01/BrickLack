@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { Link } from 'react-router'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { buildCommunityDetailPath } from '@/router/routePaths'
 import { DURATION, EASE } from '@/styles/animations'
 import type { Moc } from '@/types'
@@ -11,6 +12,7 @@ interface MocCardProps {
 }
 
 export function MocCard({ moc }: MocCardProps) {
+  const { t } = useTranslation()
   const cardRef = useRef<HTMLAnchorElement>(null)
   const imgRef = useRef<HTMLImageElement>(null)
 
@@ -83,7 +85,7 @@ export function MocCard({ moc }: MocCardProps) {
           </div>
 
           <div className="flex items-center gap-3">
-            <span>{moc.totalPieces} pcs</span>
+            <span>{moc.totalPieces} {t('community.pcs')}</span>
             <div className="flex items-center gap-0.5">
               <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
                 <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />

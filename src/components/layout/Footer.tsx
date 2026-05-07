@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next'
+
 export function Footer() {
+  const { t } = useTranslation()
+
   return (
     <footer className="border-t border-navy/10 bg-[#F5F0E8] mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -14,20 +18,20 @@ export function Footer() {
               <span style={{ color: '#00A650' }}>k</span>
             </p>
             <p className="text-xs text-navy/60 font-body mt-0.5">
-              Rebuild your sets, piece by piece.
+              {t('footer.tagline')}
             </p>
           </div>
 
           {/* Credits */}
           <div className="text-center sm:text-right space-y-0.5">
             <p className="text-xs text-navy/50 font-mono">
-              Data via{' '}
+              {t('footer.dataVia')}{' '}
               <span className="text-navy/65">Rebrickable</span>
               {' · '}
               <span className="text-navy/65">LEGO®</span>
             </p>
             <p className="text-xs text-navy/50 font-mono">
-              Powered by{' '}
+              {t('footer.poweredBy')}{' '}
               <a
                 href="https://m-estrada.vercel.app/"
                 target="_blank"

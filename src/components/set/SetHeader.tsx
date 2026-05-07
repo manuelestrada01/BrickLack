@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import type { LegoSet } from '@/types/set'
 import type { RebrickableSubSet } from '@/types/rebrickable'
 
@@ -8,6 +9,7 @@ interface SetHeaderProps {
 }
 
 export function SetHeader({ set, isBundle, subSets }: SetHeaderProps) {
+  const { t } = useTranslation()
   return (
     <div className="flex flex-row gap-4 sm:gap-6 items-start">
       {/* Image */}
@@ -48,7 +50,7 @@ export function SetHeader({ set, isBundle, subSets }: SetHeaderProps) {
               <span className="font-mono text-lego-yellow">
                 {subSets ? subSets.length : '—'}
               </span>
-              <span>{subSets?.length === 1 ? 'set' : 'sets'} included</span>
+              <span>{subSets?.length === 1 ? t('set.set') : t('set.sets')} {t('set.included')}</span>
             </div>
           ) : (
             <div className="flex items-center gap-1.5 text-sm text-navy/50 font-body">
@@ -57,7 +59,7 @@ export function SetHeader({ set, isBundle, subSets }: SetHeaderProps) {
                 <path d="M7 7V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2" />
               </svg>
               <span className="font-mono text-lego-yellow">{set.numParts.toLocaleString()}</span>
-              <span>pieces</span>
+              <span>{t('set.pieces')}</span>
             </div>
           )}
         </div>

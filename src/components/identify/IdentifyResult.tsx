@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/Badge'
 import { buildPiecePath } from '@/router/routePaths'
 import { Link } from 'react-router'
@@ -17,14 +18,15 @@ function scoreToConfidence(score: number): 'high' | 'medium' | 'low' {
   return 'low'
 }
 
-const confidenceLabel = {
-  high: 'High confidence',
-  medium: 'Medium confidence',
-  low: 'Low confidence',
-}
-
 export function IdentifyResult({ result, onReset }: IdentifyResultProps) {
+  const { t } = useTranslation()
   const containerRef = useRef<HTMLDivElement>(null)
+
+  const confidenceLabel: Record<'high' | 'medium' | 'low', string> = {
+    high: t('identify.high'),
+    medium: t('identify.medium'),
+    low: t('identify.low'),
+  }
 
   useGSAP(
     () => {
@@ -51,7 +53,7 @@ export function IdentifyResult({ result, onReset }: IdentifyResultProps) {
     <div ref={containerRef} className="space-y-5">
       {/* Header */}
       <div data-item className="flex items-center justify-between">
-        <h3 className="font-display text-lg font-semibold text-navy">Result</h3>
+        <h3 className="font-display text-lg font-semibold text-navy">{t('identify.resultHeading')}</h3>
         <Badge variant={confidence}>{confidenceLabel[confidence]}</Badge>
       </div>
 
@@ -65,7 +67,7 @@ export function IdentifyResult({ result, onReset }: IdentifyResultProps) {
         <div className="flex-1 min-w-0 space-y-1">
           <p className="font-body font-semibold text-navy text-sm leading-snug">{result.name}</p>
           <p className="font-mono text-xs text-lego-yellow">{result.partNum}</p>
-          <p className="font-mono text-xs text-navy/30">{Math.round(result.score * 100)}% match</p>
+          <p className="font-mono text-xs text-navy/30">{Math.round(result.score * 100)}{t('identify.match')}</p>
         </div>
       </div>
 
@@ -75,7 +77,7 @@ export function IdentifyResult({ result, onReset }: IdentifyResultProps) {
           to={buildPiecePath(result.partNum)}
           className="inline-flex items-center gap-2 text-sm text-lego-yellow hover:text-lego-yellow/80 font-body transition-colors"
         >
-          View piece in catalog
+          {t('identify.viewCatalog')}
           <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
             <path d="m9 18 6-6-6-6" />
           </svg>
@@ -88,7 +90,7 @@ export function IdentifyResult({ result, onReset }: IdentifyResultProps) {
           onClick={onReset}
           className="text-sm text-navy/40 hover:text-navy font-body transition-colors underline underline-offset-2"
         >
-          Scan another piece
+          {t('identify.scanAnother')}
         </button>
       </div>
     </div>

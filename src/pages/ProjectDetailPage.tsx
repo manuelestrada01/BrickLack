@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/hooks/useAuth'
 import { useProject } from '@/hooks/queries/useProject'
 import { useProjectPieces } from '@/hooks/queries/useProjectPieces'
@@ -81,14 +82,14 @@ const GRID = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:g
 export default function ProjectDetailPage() {
   const { projectId } = useParams<{ projectId: string }>()
   const { user } = useAuth()
-const { data: project } = useProject(user?.uid, projectId)
+  const { t } = useTranslation()
+  const { data: project } = useProject(user?.uid, projectId)
   const { data: pieces } = useProjectPieces(user?.uid, projectId)
 
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState<'all' | 'missing' | 'found'>('all')
   const [scanOpen, setScanOpen] = useState(false)
 
-  // Refs for GSAP
   const headerRef = useRef<HTMLDivElement>(null)
   const progressRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
@@ -96,7 +97,6 @@ const { data: project } = useProject(user?.uid, projectId)
   const animatedProject = useRef(false)
   const animatedPieces = useRef(false)
 
-  // Animate header + progress once project loads
   useEffect(() => {
     if (project && !animatedProject.current) {
       animatedProject.current = true
@@ -108,7 +108,6 @@ const { data: project } = useProject(user?.uid, projectId)
     }
   }, [project])
 
-  // Animate piece list + grid once pieces load
   useEffect(() => {
     if (pieces && !animatedPieces.current) {
       animatedPieces.current = true
@@ -139,6 +138,18 @@ const { data: project } = useProject(user?.uid, projectId)
     return match
   })
 
+  const statusLabel = project?.status === 'in_progress'
+    ? t('project.status.inProgress')
+    : project?.status === 'paused'
+    ? t('project.status.paused')
+    : t('project.status.completed')
+
+  const FILTERS = [
+    { key: 'all' as const,     label: t('project.filterAll') },
+    { key: 'missing' as const, label: t('project.filterMissing') },
+    { key: 'found' as const,   label: t('project.filterFound') },
+  ]
+
   return (
     <div className="w-full max-w-[90rem] mx-auto px-4 sm:px-6 py-8 space-y-8">
 
@@ -153,7 +164,7 @@ const { data: project } = useProject(user?.uid, projectId)
           <div className="min-w-0 space-y-1">
             <div className="flex items-center gap-2 justify-center sm:justify-start">
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-navy/85 text-lego-yellow border-transparent font-body">
-                {project.status === 'in_progress' ? 'In progress' : project.status === 'paused' ? 'Paused' : 'Completed'}
+                {statusLabel}
               </span>
               {project.setId && <span className="text-sm text-navy/40 font-mono">{project.setId}</span>}
             </div>
@@ -172,7 +183,7 @@ const { data: project } = useProject(user?.uid, projectId)
                   <line x1="16" y1="17" x2="8" y2="17" />
                   <polyline points="10 9 9 9 8 9" />
                 </svg>
-                Building instructions
+                {t('project.buildingInstructions')}
                 <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                   <polyline points="15 3 21 3 21 9" />
@@ -189,7 +200,7 @@ const { data: project } = useProject(user?.uid, projectId)
         <div ref={progressRef} className="p-5 rounded-xl border border-navy/8 bg-white space-y-4" style={{ opacity: 0 }}>
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-xs text-navy/40 font-body uppercase tracking-wider">Progress</p>
+              <p className="text-xs text-navy/40 font-body uppercase tracking-wider">{t('project.progress')}</p>
               <p className="font-mono text-3xl font-bold text-lego-yellow mt-0.5">{Math.round(progress)}%</p>
             </div>
             <div className="text-right">
@@ -198,7 +209,7 @@ const { data: project } = useProject(user?.uid, projectId)
                 <span className="text-navy/30 font-normal text-sm"> / {project.totalPieces.toLocaleString()}</span>
               </p>
               <p className="text-xs text-navy/40 font-body mt-0.5">
-                {remaining > 0 ? `${remaining.toLocaleString()} remaining` : 'Complete!'}
+                {remaining > 0 ? `${remaining.toLocaleString()} ${t('project.remaining')}` : t('project.complete')}
               </p>
             </div>
           </div>
@@ -206,37 +217,34 @@ const { data: project } = useProject(user?.uid, projectId)
         </div>
       )}
 
-      {/* Width anchor — keeps container full-width while pieces load */}
       {!pieces && <div className="w-full min-h-[40vh]" />}
 
       {/* ── Piece list ── */}
       {pieces && (
         <div ref={listRef} className="space-y-4" style={{ opacity: 0 }}>
           <div className="border-t border-navy/8" />
-          <h2 className="font-display text-lg font-semibold text-navy">Piece list</h2>
+          <h2 className="font-display text-lg font-semibold text-navy">{t('project.pieceList')}</h2>
 
           {/* Controls */}
           <div className="flex flex-col gap-2">
-            {/* Row 1: search */}
             <div className="relative">
               <input
                 type="search"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                placeholder="Filter by name, number, or color…"
+                placeholder={t('project.filterPlaceholder')}
                 className="w-full h-9 pl-9 pr-3 rounded-lg bg-white border border-navy/10 text-sm text-navy placeholder:text-navy/25 outline-none focus:border-lego-yellow/40 transition-colors"
               />
               <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/25 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
                 <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
               </svg>
             </div>
-            {/* Row 2: filters + scan */}
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-1 p-1 rounded-lg bg-white border border-navy/8">
-                {(['all', 'missing', 'found'] as const).map(f => (
-                  <button key={f} onClick={() => setFilter(f)}
-                    className={`px-3 py-1 rounded-md text-xs transition-colors ${filter === f ? 'bg-lego-yellow text-navy font-semibold' : 'text-navy/50 hover:text-navy'}`}>
-                    {f.charAt(0).toUpperCase() + f.slice(1)}
+                {FILTERS.map(f => (
+                  <button key={f.key} onClick={() => setFilter(f.key)}
+                    className={`px-3 py-1 rounded-md text-xs transition-colors ${filter === f.key ? 'bg-lego-yellow text-navy font-semibold' : 'text-navy/50 hover:text-navy'}`}>
+                    {f.label}
                   </button>
                 ))}
               </div>
@@ -248,15 +256,15 @@ const { data: project } = useProject(user?.uid, projectId)
                   <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                   <circle cx="12" cy="13" r="4" />
                 </svg>
-                <span>Scan piece</span>
+                <span>{t('project.scanPiece')}</span>
               </button>
             </div>
           </div>
 
-          <p className="text-xs font-mono text-navy/35">{filtered.length} of {pieces.length} pieces</p>
+          <p className="text-xs font-mono text-navy/35">{filtered.length} {t('project.piecesOf')} {pieces.length} {t('project.pieces')}</p>
 
           {filtered.length === 0
-            ? <p className="py-12 text-center text-sm text-navy/30">No pieces match your filter.</p>
+            ? <p className="py-12 text-center text-sm text-navy/30">{t('project.noMatch')}</p>
             : <div ref={gridRef} className={GRID}>
                 {filtered.map(piece => (
                   <PieceCard key={piece.id} piece={piece} userId={user!.uid} projectId={projectId!} />

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/hooks/useAuth'
 import { useCreateProject } from '@/hooks/mutations/useCreateProject'
 import { useSetSearch } from '@/hooks/queries/useSetSearch'
@@ -13,6 +14,7 @@ import type { LegoSet } from '@/types/set'
 
 export function NewProjectForm() {
   const { user } = useAuth()
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const createProject = useCreateProject()
 
@@ -27,7 +29,6 @@ export function NewProjectForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
 
-  // Animate overlay in/out
   useEffect(() => {
     if (!overlayRef.current) return
     if (createProject.isPending) {
@@ -91,11 +92,11 @@ export function NewProjectForm() {
         <Spinner size="lg" />
         <div className="text-center space-y-1">
           <p className="text-sm font-semibold text-navy font-body">
-            {selectedSet ? 'Importing piece inventory…' : 'Creating project…'}
+            {selectedSet ? t('newProject.importingPieces') : t('newProject.creatingProject')}
           </p>
           {selectedSet && (
             <p className="text-xs text-navy/40 font-body">
-              {selectedSet.numParts.toLocaleString()} pieces · this may take a moment
+              {selectedSet.numParts.toLocaleString()} {t('project.piecesLabel')} {t('project.thisMayTake')}
             </p>
           )}
         </div>
@@ -104,7 +105,7 @@ export function NewProjectForm() {
       {/* Set selection */}
       <div className="space-y-1.5">
         <label className="text-sm font-body text-navy/60">
-          LEGO Set <span className="text-navy/30">(optional)</span>
+          {t('newProject.setLabel')} <span className="text-navy/30">{t('newProject.optional')}</span>
         </label>
 
         {selectedSet ? (
@@ -114,7 +115,7 @@ export function NewProjectForm() {
             )}
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-navy truncate font-body">{selectedSet.name}</p>
-              <p className="text-xs font-mono text-lego-yellow/60">{selectedSet.setNum} · {selectedSet.numParts.toLocaleString()} pieces</p>
+              <p className="text-xs font-mono text-lego-yellow/60">{selectedSet.setNum} · {selectedSet.numParts.toLocaleString()} {t('set.pieces')}</p>
             </div>
             <button
               type="button"
@@ -134,7 +135,7 @@ export function NewProjectForm() {
               onChange={(e) => { setSetQuery(e.target.value); setShowSuggestions(true) }}
               onFocus={() => setQuery.length >= 2 && setShowSuggestions(true)}
               onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
-              placeholder="Search set by name or number…"
+              placeholder={t('newProject.searchSet')}
               className="w-full h-10 pl-9 pr-3 rounded-brick bg-white border border-navy/10 text-sm text-navy placeholder:text-navy/25 font-body outline-none focus:border-lego-yellow/40 transition-colors"
             />
             <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/25 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
@@ -164,20 +165,20 @@ export function NewProjectForm() {
           </div>
         )}
         <p className="text-xs text-navy/30 font-body">
-          If you select a set, we'll import its complete piece inventory.
+          {t('newProject.setHelper')}
         </p>
       </div>
 
       {/* Project name */}
       <div className="space-y-1.5">
         <label className="text-sm font-body text-navy/60">
-          Project name <span className="text-status-error">*</span>
+          {t('newProject.nameLabel')} <span className="text-status-error">*</span>
         </label>
         <input
           type="text"
           value={projectName}
           onChange={(e) => setProjectName(e.target.value)}
-          placeholder="My collection…"
+          placeholder={t('newProject.namePlaceholder')}
           required
           className="w-full h-10 px-3 rounded-brick bg-white border border-navy/10 text-sm text-navy font-body outline-none focus:border-lego-yellow/40 transition-colors"
         />
@@ -193,13 +194,13 @@ export function NewProjectForm() {
           disabled={!projectName.trim()}
           className="w-full sm:w-auto"
         >
-          {selectedSet ? 'Create project and import pieces' : 'Create project'}
+          {selectedSet ? t('newProject.createWithPieces') : t('newProject.createSimple')}
         </Button>
       </div>
 
       {createProject.isError && (
         <p className="text-sm text-status-error font-body">
-          Failed to create the project. Please try again.
+          {t('newProject.createError')}
         </p>
       )}
     </form>

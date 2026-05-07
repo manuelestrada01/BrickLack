@@ -1,6 +1,7 @@
 import { useRef, useState, useMemo } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { useCommunityMocs } from '@/hooks/queries/useCommunityMocs'
 import { MocCard } from '@/components/community/MocCard'
 import { EmptyState } from '@/components/ui/EmptyState'
@@ -10,6 +11,7 @@ type Filter = 'recent' | 'hottest'
 
 export default function CommunityPage() {
   const { data: mocs, isLoading, isError } = useCommunityMocs()
+  const { t } = useTranslation()
   const [filter, setFilter] = useState<Filter>('recent')
   const headerRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
@@ -19,7 +21,7 @@ export default function CommunityPage() {
     if (filter === 'hottest') {
       return [...mocs].sort((a, b) => (b.likeCount + b.cloneCount) - (a.likeCount + a.cloneCount))
     }
-    return mocs // already ordered by createdAt desc from Firestore
+    return mocs
   }, [mocs, filter])
 
   useGSAP(() => {
@@ -47,9 +49,9 @@ export default function CommunityPage() {
     <div className="w-full max-w-[90rem] mx-auto px-4 py-8 space-y-8">
       {/* Header */}
       <div ref={headerRef} style={{ opacity: 0 }} className="text-center">
-        <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy">Community</h1>
+        <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy">{t('community.title')}</h1>
         <p className="text-sm text-navy/40 font-body mt-1">
-          MOCs published by the community — clone any to start building
+          {t('community.subtitle')}
         </p>
 
         {/* Filters */}
@@ -64,7 +66,7 @@ export default function CommunityPage() {
                   : 'bg-navy/5 text-navy/50 hover:bg-navy/10 hover:text-navy'
               }`}
             >
-              {f === 'recent' ? 'Most Recent' : 'Hottest MOCs'}
+              {f === 'recent' ? t('community.recent') : t('community.hottest')}
             </button>
           ))}
         </div>
@@ -86,7 +88,7 @@ export default function CommunityPage() {
         </div>
       ) : isError ? (
         <div className="text-center py-16 text-sm text-navy/40 font-body">
-          Failed to load community MOCs. Try refreshing the page.
+          {t('community.loadError')}
         </div>
       ) : sortedMocs.length > 0 ? (
         <div
@@ -101,8 +103,8 @@ export default function CommunityPage() {
         </div>
       ) : (
         <EmptyState
-          title="No community MOCs yet"
-          description="Be the first — publish your MOC from My Projects."
+          title={t('community.emptyTitle')}
+          description={t('community.emptyDesc')}
         />
       )}
     </div>

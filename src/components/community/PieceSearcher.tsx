@@ -1,21 +1,22 @@
 import { useState, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { usePieceSearch } from '@/hooks/queries/usePieceSearch'
 import { debounce } from '@/utils/debounce'
 import { SOLID_COLORS, TRANS_COLORS, SPECIAL_COLORS } from '@/data/legoColors'
 import type { MocPieceDoc } from '@/types'
 import type { LegoColor } from '@/data/legoColors'
 
-const COLOR_GROUPS = [
-  { label: 'Solid', colors: SOLID_COLORS },
-  { label: 'Transparent', colors: TRANS_COLORS },
-  { label: 'Pearl / Chrome / Special', colors: SPECIAL_COLORS },
-]
-
 interface PieceSearcherProps {
   onAdd: (piece: Omit<MocPieceDoc, 'id'>) => void
 }
 
 export function PieceSearcher({ onAdd }: PieceSearcherProps) {
+  const { t } = useTranslation()
+  const colorGroups = [
+    { label: t('moc.colorGroups.solid'), colors: SOLID_COLORS },
+    { label: t('moc.colorGroups.transparent'), colors: TRANS_COLORS },
+    { label: t('moc.colorGroups.special'), colors: SPECIAL_COLORS },
+  ]
   const [query, setQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
   const [selectedColor, setSelectedColor] = useState<LegoColor>(SOLID_COLORS[14]) // White
@@ -54,7 +55,7 @@ export function PieceSearcher({ onAdd }: PieceSearcherProps) {
   return (
     <div className="space-y-3 p-4 rounded-brick border border-navy/8 bg-navy/[0.02] overflow-hidden">
       <p className="text-xs font-display font-semibold text-navy/50 uppercase tracking-wider">
-        Add piece
+        {t('moc.addPiece')}
       </p>
 
       <div className="flex gap-2">
@@ -64,7 +65,7 @@ export function PieceSearcher({ onAdd }: PieceSearcherProps) {
             value={query}
             onChange={handleQueryChange}
             onFocus={() => setShowDropdown(true)}
-            placeholder="Search by name or part number…"
+            placeholder={t('moc.searchPiecePlaceholder')}
             className="h-9 w-full rounded-brick px-3 bg-white border border-navy/10 text-navy text-sm font-body placeholder:text-navy/30 outline-none focus:border-lego-yellow/60 transition-colors"
           />
 
@@ -72,10 +73,10 @@ export function PieceSearcher({ onAdd }: PieceSearcherProps) {
           {showDropdown && (query.length >= 2) && (
             <div className="absolute z-20 top-full mt-1 left-0 right-0 bg-white border border-navy/8 rounded-brick shadow-brick max-h-56 overflow-y-auto overflow-x-hidden">
               {isFetching && (
-                <p className="text-xs text-navy/40 font-body px-3 py-2">Searching…</p>
+                <p className="text-xs text-navy/40 font-body px-3 py-2">{t('search.loading')}</p>
               )}
               {!isFetching && (!data?.pages[0]?.results?.length) && (
-                <p className="text-xs text-navy/40 font-body px-3 py-2">No results</p>
+                <p className="text-xs text-navy/40 font-body px-3 py-2">{t('moc.noResults')}</p>
               )}
               {data?.pages.flatMap((p) => p.results).map((part) => (
                 <button
@@ -128,7 +129,7 @@ export function PieceSearcher({ onAdd }: PieceSearcherProps) {
 
         {/* Color swatches grouped */}
         <div className="max-h-36 overflow-y-auto overflow-x-hidden space-y-2 w-full">
-          {COLOR_GROUPS.map((group) => {
+          {colorGroups.map((group) => {
             const filtered = colorSearch
               ? group.colors.filter((c) => c.name.toLowerCase().includes(colorSearch.toLowerCase()))
               : group.colors

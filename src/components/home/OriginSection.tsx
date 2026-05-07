@@ -2,59 +2,14 @@ import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useTranslation } from 'react-i18next'
 
 gsap.registerPlugin(ScrollTrigger)
-
-
-const STEPS = [
-  {
-    num: '01',
-    title: 'Search your set',
-    description: 'Find any LEGO set by name or number. Over 22,000 sets in the catalog, updated automatically.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
-      </svg>
-    ),
-  },
-  {
-    num: '02',
-    title: 'Import the inventory',
-    description: 'We pull the complete piece list automatically. Every part, color and quantity — no manual entry.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-        <polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
-      </svg>
-    ),
-  },
-  {
-    num: '03',
-    title: 'Mark what you find',
-    description: 'Go piece by piece through your bins. Check off each one as you find it — progress saves in real time.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9 11l3 3L22 4" />
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-      </svg>
-    ),
-  },
-  {
-    num: '04',
-    title: 'Complete the set',
-    description: 'Watch the progress bar fill up piece by piece. Know exactly what you still need to rebuild.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
-        <line x1="4" y1="22" x2="4" y2="15" />
-      </svg>
-    ),
-  },
-]
 
 // ── Story section ──────────────────────────────────────────────────────────────
 
 function StoryBlock() {
+  const { t } = useTranslation()
   const ref = useRef<HTMLDivElement>(null)
 
   useGSAP(
@@ -74,22 +29,22 @@ function StoryBlock() {
   return (
     <div ref={ref} className="max-w-2xl">
       <p data-line className="font-mono text-xs text-navy tracking-widest uppercase mb-6">
-        The story
+        {t('home.story.label')}
       </p>
       <div className="flex gap-5">
         <div data-accent-bar className="w-1 rounded-full bg-lego-yellow flex-shrink-0 self-stretch" />
         <div className="space-y-4">
           <p data-line className="font-display text-2xl sm:text-3xl font-bold text-navy leading-snug">
-            Bricklack was born in a box of missing pieces.
+            {t('home.story.title')}
           </p>
           <p data-line className="font-body text-base sm:text-lg text-navy/60 leading-relaxed">
-            Growing up, sets would get taken apart, pieces would wander off — usually into a sibling's room — and years later, when you finally wanted to rebuild that castle or spaceship, half the inventory was gone.
+            {t('home.story.p1')}
           </p>
           <p data-line className="font-body text-base sm:text-lg text-navy/60 leading-relaxed">
-            There was no way to know what you had, what you were missing, or where to even start.
+            {t('home.story.p2')}
           </p>
           <p data-line className="font-body text-base sm:text-lg text-navy/60 leading-relaxed">
-            So we built the tool we always needed.
+            {t('home.story.p3')}
           </p>
         </div>
       </div>
@@ -100,9 +55,17 @@ function StoryBlock() {
 // ── Desktop zigzag roadmap ─────────────────────────────────────────────────────
 
 function ZigzagRoadmap() {
+  const { t } = useTranslation()
   const containerRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
   const pathRef = useRef<SVGPathElement>(null)
+
+  const STEPS = [
+    { num: '01', title: t('home.steps.s1.title'), description: t('home.steps.s1.desc'), icon: (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>) },
+    { num: '02', title: t('home.steps.s2.title'), description: t('home.steps.s2.desc'), icon: (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>) },
+    { num: '03', title: t('home.steps.s3.title'), description: t('home.steps.s3.desc'), icon: (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>) },
+    { num: '04', title: t('home.steps.s4.title'), description: t('home.steps.s4.desc'), icon: (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><line x1="4" y1="22" x2="4" y2="15" /></svg>) },
+  ]
 
   useGSAP(
     () => {
@@ -111,7 +74,6 @@ function ZigzagRoadmap() {
       const containerEl = containerRef.current
       const containerRect = containerEl.getBoundingClientRect()
 
-      // Measure node centers
       const nodeDots = containerEl.querySelectorAll('[data-node-dot]')
       const positions = Array.from(nodeDots).map((el) => {
         const r = el.getBoundingClientRect()
@@ -123,7 +85,6 @@ function ZigzagRoadmap() {
 
       if (positions.length < 2) return
 
-      // S-curve through all node centers
       let d = `M ${positions[0].x} ${positions[0].y}`
       for (let i = 1; i < positions.length; i++) {
         const p = positions[i - 1]
@@ -138,7 +99,6 @@ function ZigzagRoadmap() {
       const len = pathRef.current.getTotalLength()
       gsap.set(pathRef.current, { strokeDasharray: len, strokeDashoffset: len })
 
-      // Draw the path on scroll — reverses when scrolling back up
       gsap.fromTo(pathRef.current,
         { strokeDashoffset: len },
         {
@@ -153,7 +113,6 @@ function ZigzagRoadmap() {
         },
       )
 
-      // Animate each step
       containerEl.querySelectorAll('[data-step]').forEach((step, i) => {
         const dot = step.querySelector('[data-node-dot]')
         const card = step.querySelector('[data-card]')
@@ -184,7 +143,6 @@ function ZigzagRoadmap() {
 
   return (
     <div ref={containerRef} className="relative">
-      {/* SVG connecting line */}
       <svg
         ref={svgRef}
         className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
@@ -201,7 +159,6 @@ function ZigzagRoadmap() {
         />
       </svg>
 
-      {/* Steps */}
       <div className="space-y-0">
         {STEPS.map((step, i) => {
           const isLeft = i % 2 === 0
@@ -214,24 +171,18 @@ function ZigzagRoadmap() {
             >
               {isLeft ? (
                 <>
-                  {/* Spacer */}
                   <div className="w-1/4 flex-shrink-0" />
-                  {/* Node */}
                   <Node step={step} />
-                  {/* Card */}
                   <div data-card className="flex-1">
                     <StepCard step={step} />
                   </div>
                 </>
               ) : (
                 <>
-                  {/* Card */}
                   <div data-card className="flex-1">
                     <StepCard step={step} />
                   </div>
-                  {/* Node */}
                   <Node step={step} />
-                  {/* Spacer */}
                   <div className="w-1/4 flex-shrink-0" />
                 </>
               )}
@@ -246,8 +197,16 @@ function ZigzagRoadmap() {
 // ── Mobile vertical timeline ───────────────────────────────────────────────────
 
 function VerticalTimeline() {
+  const { t } = useTranslation()
   const timelineRef = useRef<HTMLDivElement>(null)
   const progressLineRef = useRef<HTMLDivElement>(null)
+
+  const STEPS = [
+    { num: '01', title: t('home.steps.s1.title'), description: t('home.steps.s1.desc'), icon: (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>) },
+    { num: '02', title: t('home.steps.s2.title'), description: t('home.steps.s2.desc'), icon: (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>) },
+    { num: '03', title: t('home.steps.s3.title'), description: t('home.steps.s3.desc'), icon: (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>) },
+    { num: '04', title: t('home.steps.s4.title'), description: t('home.steps.s4.desc'), icon: (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><line x1="4" y1="22" x2="4" y2="15" /></svg>) },
+  ]
 
   useGSAP(
     () => {
@@ -309,6 +268,8 @@ function VerticalTimeline() {
 
 // ── Shared sub-components ──────────────────────────────────────────────────────
 
+type StepType = { num: string; title: string; description: string; icon: React.ReactNode }
+
 function NodeDot({ icon }: { icon: React.ReactNode }) {
   return (
     <div
@@ -320,7 +281,7 @@ function NodeDot({ icon }: { icon: React.ReactNode }) {
   )
 }
 
-function Node({ step }: { step: typeof STEPS[number] }) {
+function Node({ step }: { step: StepType }) {
   return (
     <div className="relative z-10 flex-shrink-0">
       <NodeDot icon={step.icon} />
@@ -328,7 +289,7 @@ function Node({ step }: { step: typeof STEPS[number] }) {
   )
 }
 
-function StepCard({ step }: { step: typeof STEPS[number] }) {
+function StepCard({ step }: { step: StepType }) {
   return (
     <div className="bg-white rounded-full border border-navy/8 shadow-brick px-6 py-5 text-center">
       <h3 className="font-display text-base font-semibold text-navy mb-1">{step.title}</h3>
@@ -340,6 +301,8 @@ function StepCard({ step }: { step: typeof STEPS[number] }) {
 // ── Main export ────────────────────────────────────────────────────────────────
 
 export function OriginSection() {
+  const { t } = useTranslation()
+
   return (
     <section className="bg-[#F5F0E8] border-t border-navy/6">
       <div className="max-w-3xl mx-auto px-6 py-20 sm:py-28 space-y-20 sm:space-y-28">
@@ -348,10 +311,10 @@ export function OriginSection() {
 
         <div>
           <p className="font-mono text-xs text-navy tracking-widest uppercase mb-2">
-            How it works
+            {t('home.howItWorks.label')}
           </p>
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy mb-12">
-            Four steps to rebuild anything.
+            {t('home.howItWorks.title')}
           </h2>
 
           {/* Desktop zigzag */}

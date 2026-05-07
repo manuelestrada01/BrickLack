@@ -1,0 +1,276 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "search": "Search",
+    "scan": "Scan",
+    "community": "Community"
+  },
+  "footer": {
+    "tagline": "Rebuild your sets, piece by piece.",
+    "dataVia": "Data via",
+    "poweredBy": "Powered by"
+  },
+  "home": {
+    "subtitle": "Rebuild what's lost.",
+    "ctaFree": "Free. Google only.",
+    "searchPlaceholder": "Search sets or pieces…",
+    "story": {
+      "label": "The story",
+      "title": "Bricklack was born in a box of missing pieces.",
+      "p1": "Growing up, sets would get taken apart, pieces would wander off — usually into a sibling's room — and years later, when you finally wanted to rebuild that castle or spaceship, half the inventory was gone.",
+      "p2": "There was no way to know what you had, what you were missing, or where to even start.",
+      "p3": "So we built the tool we always needed."
+    },
+    "howItWorks": {
+      "label": "How it works",
+      "title": "Four steps to rebuild anything."
+    },
+    "steps": {
+      "s1": {
+        "title": "Search your set",
+        "desc": "Find any LEGO set by name or number. Over 22,000 sets in the catalog, updated automatically."
+      },
+      "s2": {
+        "title": "Import the inventory",
+        "desc": "We pull the complete piece list automatically. Every part, color and quantity — no manual entry."
+      },
+      "s3": {
+        "title": "Mark what you find",
+        "desc": "Go piece by piece through your bins. Check off each one as you find it — progress saves in real time."
+      },
+      "s4": {
+        "title": "Complete the set",
+        "desc": "Watch the progress bar fill up piece by piece. Know exactly what you still need to rebuild."
+      }
+    },
+    "features": {
+      "title": "Everything you need",
+      "subtitle": "To rebuild any set, piece by piece.",
+      "f1": {
+        "title": "Find any set",
+        "desc": "Access over 20,000 sets and 50,000 parts from the complete LEGO catalog via Rebrickable."
+      },
+      "f2": {
+        "title": "Track your progress",
+        "desc": "Check off each piece you find. The progress bar updates in real time with smooth animations."
+      },
+      "f3": {
+        "title": "Identify with AI",
+        "desc": "Take a photo of a loose piece and AI identifies it: type, color, dimensions, and part number.",
+        "badge": "3 scans / month"
+      },
+      "f4": {
+        "title": "Always in sync",
+        "desc": "Your collection in the cloud. Access from any device — mobile app coming soon."
+      }
+    }
+  },
+  "login": {
+    "heading": "Sign in to continue",
+    "subheading": "Track your LEGO sets and identify missing pieces.",
+    "terms": "By signing in you agree to our",
+    "termsLink": "Terms of Service"
+  },
+  "dashboard": {
+    "title": "My projects",
+    "welcome": "Welcome, {{name}}",
+    "tabSets": "My Sets",
+    "tabMocs": "My MOCs",
+    "publishNew": "Publish new",
+    "noMocs": "No MOCs published yet.",
+    "firstMoc": "Publish your first MOC →",
+    "stats": {
+      "projects": "Projects",
+      "inProgress": "In progress",
+      "completed": "Completed",
+      "piecesFound": "Pieces found"
+    }
+  },
+  "community": {
+    "title": "Community",
+    "subtitle": "MOCs published by the community — clone any to start building",
+    "recent": "Most Recent",
+    "hottest": "Hottest MOCs",
+    "loadError": "Failed to load community MOCs. Try refreshing the page.",
+    "emptyTitle": "No community MOCs yet",
+    "emptyDesc": "Be the first — publish your MOC from My Projects.",
+    "pcs": "pcs",
+    "clones": "clones",
+    "buildThisMoc": "Build this MOC",
+    "adding": "Adding…",
+    "report": "Report",
+    "yourMoc": "Your MOC",
+    "piecesRequired": "Pieces required",
+    "showLess": "Show less",
+    "readMore": "Read more",
+    "cloneTitle": "Build this MOC?",
+    "cloneConfirm": "\"{{name}}\" will be added to your projects with all {{count}} pieces to track.",
+    "cloneConfirmBtn": "Yes, add to my projects",
+    "reportTitle": "Report MOC",
+    "reportDesc": "This MOC will be hidden from the community until reviewed by a moderator.",
+    "reportCancel": "Cancel",
+    "reportSubmit": "Report",
+    "reportSubmitting": "Reporting…",
+    "reportReasons": {
+      "inappropriate": "Inappropriate content",
+      "spam": "Spam or fake MOC",
+      "copyright": "Copyright violation",
+      "other": "Other"
+    },
+    "notFound": "MOC not found",
+    "notFoundMessage": "This community project doesn't exist or was removed."
+  },
+  "project": {
+    "status": {
+      "inProgress": "In progress",
+      "paused": "Paused",
+      "completed": "Completed"
+    },
+    "buildingInstructions": "Building instructions",
+    "progress": "Progress",
+    "remaining": "remaining",
+    "complete": "Complete!",
+    "pieceList": "Piece list",
+    "filterPlaceholder": "Filter by name, number, or color…",
+    "filterAll": "All",
+    "filterMissing": "Missing",
+    "filterFound": "Found",
+    "scanPiece": "Scan piece",
+    "noMatch": "No pieces match your filter.",
+    "deleteTitle": "Delete project",
+    "deleteConfirm": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+    "deleteConfirmBtn": "Yes, delete",
+    "piecesOf": "of",
+    "pieces": "pieces",
+    "piecesLabel": "pieces ·",
+    "thisMayTake": "this may take a moment"
+  },
+  "newProject": {
+    "breadcrumb": "Projects",
+    "breadcrumbNew": "New",
+    "title": "New project",
+    "subtitle": "Choose a set to import its inventory, or create a free project.",
+    "importingPieces": "Importing piece inventory…",
+    "creatingProject": "Creating project…",
+    "setLabel": "LEGO Set",
+    "optional": "(optional)",
+    "searchSet": "Search set by name or number…",
+    "setHelper": "If you select a set, we'll import its complete piece inventory.",
+    "nameLabel": "Project name",
+    "namePlaceholder": "My collection…",
+    "createWithPieces": "Create project and import pieces",
+    "createSimple": "Create project",
+    "createError": "Failed to create the project. Please try again."
+  },
+  "identify": {
+    "title": "Identify piece",
+    "subtitle": "Upload a photo of a loose piece and we'll identify it instantly.",
+    "failedError": "Failed to identify the piece. Please try again.",
+    "noResultError": "Could not identify the piece. Try a clearer photo.",
+    "resultHeading": "Result",
+    "high": "High confidence",
+    "medium": "Medium confidence",
+    "low": "Low confidence",
+    "viewCatalog": "View piece in catalog",
+    "scanAnother": "Scan another piece",
+    "match": "% match",
+    "analyzing": "Analyzing piece…",
+    "dropzone": "Drag a photo or choose a file",
+    "dropzoneFormat": "JPG, PNG, WEBP · max. 10MB",
+    "changePhoto": "Change photo",
+    "takePhoto": "Take photo"
+  },
+  "moc": {
+    "title": "Publish your MOC",
+    "subtitle": "Share your LEGO creation with the community.",
+    "breadcrumbPublish": "Publish MOC",
+    "photoLabel": "Photo",
+    "photoHint": "Click to upload a photo of your MOC",
+    "photoFormat": "JPG, PNG, WebP — max 5MB",
+    "nameLabel": "Name",
+    "namePlaceholder": "e.g. Mini Eiffel Tower",
+    "descLabel": "Description",
+    "descPlaceholder": "Describe your creation, inspiration, difficulty…",
+    "piecesLabel": "Pieces",
+    "pieceTypes": "types ·",
+    "total": "total",
+    "publishBtn": "Publish MOC",
+    "publishingBtn": "Publishing…",
+    "disclaimer": "MOCs are subject to community guidelines.",
+    "errorName": "Give your MOC a name.",
+    "errorPhoto": "A photo of your MOC is required.",
+    "errorPieces": "Add at least one piece.",
+    "publishError": "Failed to publish MOC.",
+    "deleteTitle": "Delete MOC?",
+    "deleteConfirm": "\"{{name}}\" will be permanently removed from the community.",
+    "deleteConfirmBtn": "Yes, delete",
+    "clones": "clones",
+    "pcs": "pcs",
+    "addPiece": "Add piece",
+    "searchPiecePlaceholder": "Search by name or part number…",
+    "noResults": "No results",
+    "colorGroups": {
+      "solid": "Solid",
+      "transparent": "Transparent",
+      "special": "Pearl / Chrome / Special"
+    }
+  },
+  "ui": {
+    "errorTitle": "Something went wrong",
+    "errorMessage": "An unexpected error occurred. Please try again.",
+    "retry": "Retry",
+    "signIn": "Sign in with Google",
+    "removeOne": "Remove one",
+    "addOne": "Add one",
+    "signOut": "Sign out",
+    "loading": "Loading…"
+  },
+  "search": {
+    "placeholder": "Search sets or pieces…",
+    "sets": "Sets",
+    "pieces": "Pieces",
+    "noResults": "No results found for",
+    "resultsFor": "Results for",
+    "loading": "Searching…",
+    "loadMore": "Load more",
+    "hint": "Search by set number, name, or part number",
+    "noResultsTitle": "No results",
+    "noSetsDesc": "No sets found for \"{{query}}\". Try a set number (e.g. 75192) or a different name.",
+    "noPiecesDesc": "No parts found for \"{{query}}\". Try a part number (e.g. 3001) or a different description."
+  },
+  "set": {
+    "pieces": "pieces",
+    "year": "Year",
+    "theme": "Theme",
+    "addToProject": "Add to project",
+    "addingToProject": "Adding…",
+    "subsets": "Sub-sets",
+    "partList": "Part list",
+    "set": "set",
+    "sets": "sets",
+    "included": "included",
+    "collectionSet": "Collection set",
+    "bundleDesc": "This is a bundle of multiple sets. Click any set below to explore its piece inventory.",
+    "includedSets": "Included sets",
+    "pieceInventory": "Piece inventory",
+    "filteredOf": "of",
+    "pieceTypes": "piece types",
+    "notFound": "Set not found",
+    "notFoundMessage": "We couldn't load this set. Check the number and try again."
+  },
+  "piece": {
+    "partNumber": "Part number",
+    "colors": "Colors",
+    "appearsIn": "Appears in sets",
+    "printOf": "Print of",
+    "externalRefs": "External references",
+    "notFound": "Piece not found",
+    "notFoundMessage": "We couldn't load this piece."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "desc": "The page you're looking for doesn't exist.",
+    "back": "Go back home"
+  }
+}

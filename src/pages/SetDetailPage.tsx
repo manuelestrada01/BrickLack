@@ -1,4 +1,5 @@
 import { useParams } from 'react-router'
+import { useTranslation } from 'react-i18next'
 import { useSetDetail } from '@/hooks/queries/useSetDetail'
 import { useSetParts } from '@/hooks/queries/useSetParts'
 import { useSetSubSets } from '@/hooks/queries/useSetSubSets'
@@ -10,6 +11,7 @@ import { Skeleton } from '@/components/ui/Skeleton'
 import { ErrorState } from '@/components/ui/ErrorState'
 
 export default function SetDetailPage() {
+  const { t } = useTranslation()
   const { setId } = useParams<{ setId: string }>()
 
   const { data: set, isLoading: setLoading, isError: setError } = useSetDetail(setId)
@@ -24,8 +26,8 @@ export default function SetDetailPage() {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16">
         <ErrorState
-          title="Set not found"
-          message="We couldn't load this set. Check the number and try again."
+          title={t('set.notFound')}
+          message={t('set.notFoundMessage')}
         />
       </div>
     )
@@ -69,22 +71,22 @@ export default function SetDetailPage() {
                 <line x1="12" y1="22" x2="12" y2="12" />
               </svg>
               <div>
-                <p className="text-sm font-body font-medium text-navy">Collection set</p>
+                <p className="text-sm font-body font-medium text-navy">{t('set.collectionSet')}</p>
                 <p className="text-xs font-body text-navy/50 mt-0.5">
-                  This is a bundle of multiple sets. Click any set below to explore its piece inventory.
+                  {t('set.bundleDesc')}
                 </p>
               </div>
             </div>
 
             <h2 className="font-display text-lg font-semibold text-navy mb-4">
-              Included sets
+              {t('set.includedSets')}
             </h2>
             <SetSubSetsList subSets={subSets ?? []} isLoading={subSetsLoading} />
           </>
         ) : (
           <>
             <h2 className="font-display text-lg font-semibold text-navy mb-4">
-              Piece inventory
+              {t('set.pieceInventory')}
             </h2>
             <SetPartsList
               parts={parts ?? []}

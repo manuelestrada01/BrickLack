@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { useNavigate, Link } from 'react-router'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/hooks/useAuth'
 import { useCreateMoc } from '@/hooks/mutations/useCreateMoc'
 import { PieceSearcher } from '@/components/community/PieceSearcher'
@@ -42,6 +43,7 @@ async function resizeImageToFile(file: File, maxDimension = 1200): Promise<File>
 
 export default function NewMocPage() {
   const { user } = useAuth()
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const createMoc = useCreateMoc()
 
@@ -75,9 +77,9 @@ export default function NewMocPage() {
     e.preventDefault()
     setError(null)
 
-    if (!name.trim()) return setError('Give your MOC a name.')
-    if (!coverFile) return setError('A photo of your MOC is required.')
-    if (pieces.length === 0) return setError('Add at least one piece.')
+    if (!name.trim()) return setError(t('moc.errorName'))
+    if (!coverFile) return setError(t('moc.errorPhoto'))
+    if (pieces.length === 0) return setError(t('moc.errorPieces'))
 
     try {
       const mocId = await createMoc.mutateAsync({
@@ -92,7 +94,7 @@ export default function NewMocPage() {
 
       navigate(buildCommunityDetailPath(mocId))
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to publish MOC.')
+      setError(err instanceof Error ? err.message : t('moc.publishError'))
     }
   }
 
@@ -101,19 +103,19 @@ export default function NewMocPage() {
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm font-body">
         <Link to={ROUTES.COMMUNITY} className="text-navy/40 hover:text-navy transition-colors">
-          Community
+          {t('nav.community')}
         </Link>
         <svg className="w-3.5 h-3.5 text-navy/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
           <path d="m9 18 6-6-6-6" />
         </svg>
-        <span className="text-navy/70">Publish MOC</span>
+        <span className="text-navy/70">{t('moc.breadcrumbPublish')}</span>
       </nav>
 
       {/* Header */}
       <div className="text-center">
-        <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy">Publish your MOC</h1>
+        <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy">{t('moc.title')}</h1>
         <p className="text-sm text-navy/40 font-body mt-2">
-          Share your LEGO creation with the community.
+          {t('moc.subtitle')}
         </p>
       </div>
 
@@ -121,7 +123,7 @@ export default function NewMocPage() {
         {/* Cover image */}
         <div className="space-y-2">
           <label className="text-xs font-display font-semibold text-navy/50 uppercase tracking-wider block">
-            Photo <span className="text-status-error">*</span>
+            {t('moc.photoLabel')} <span className="text-status-error">*</span>
           </label>
           <button
             type="button"
@@ -137,8 +139,8 @@ export default function NewMocPage() {
                   <circle cx="8.5" cy="8.5" r="1.5" />
                   <path d="m21 15-5-5L5 21" />
                 </svg>
-                <p className="text-sm font-body">Click to upload a photo of your MOC</p>
-                <p className="text-xs">JPG, PNG, WebP — max 5MB</p>
+                <p className="text-sm font-body">{t('moc.photoHint')}</p>
+                <p className="text-xs">{t('moc.photoFormat')}</p>
               </div>
             )}
           </button>
@@ -154,12 +156,12 @@ export default function NewMocPage() {
         {/* Name */}
         <div className="space-y-1.5">
           <label className="text-xs font-display font-semibold text-navy/50 uppercase tracking-wider block">
-            Name <span className="text-status-error">*</span>
+            {t('moc.nameLabel')} <span className="text-status-error">*</span>
           </label>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="e.g. Mini Eiffel Tower"
+            placeholder={t('moc.namePlaceholder')}
             maxLength={80}
             className="h-10 w-full rounded-brick px-3 bg-white border border-navy/10 text-navy text-sm font-body placeholder:text-navy/30 outline-none focus:border-lego-yellow/60 transition-colors"
           />
@@ -168,12 +170,12 @@ export default function NewMocPage() {
         {/* Description */}
         <div className="space-y-1.5">
           <label className="text-xs font-display font-semibold text-navy/50 uppercase tracking-wider block">
-            Description
+            {t('moc.descLabel')}
           </label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Describe your creation, inspiration, difficulty…"
+            placeholder={t('moc.descPlaceholder')}
             rows={3}
             maxLength={500}
             className="w-full rounded-brick px-3 py-2.5 bg-white border border-navy/10 text-navy text-sm font-body placeholder:text-navy/30 outline-none focus:border-lego-yellow/60 transition-colors resize-none"
@@ -184,18 +186,17 @@ export default function NewMocPage() {
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <label className="text-xs font-display font-semibold text-navy/50 uppercase tracking-wider">
-              Pieces <span className="text-status-error">*</span>
+              {t('moc.piecesLabel')} <span className="text-status-error">*</span>
             </label>
             {pieces.length > 0 && (
               <span className="font-mono text-xs text-navy/40">
-                {pieces.length} types · {totalPieces} total
+                {pieces.length} {t('moc.pieceTypes')} {totalPieces} {t('moc.total')}
               </span>
             )}
           </div>
 
           <PieceSearcher onAdd={handleAddPiece} />
 
-          {/* Pieces list */}
           {pieces.length > 0 && (
             <div className="divide-y divide-navy/5 rounded-brick border border-navy/8 bg-white overflow-hidden">
               {pieces.map((piece, i) => (
@@ -248,11 +249,11 @@ export default function NewMocPage() {
           disabled={createMoc.isPending}
           className="w-full h-11 bg-lego-yellow text-navy font-display font-semibold rounded-brick shadow-brick hover:brightness-105 transition-all disabled:opacity-50"
         >
-          {createMoc.isPending ? 'Publishing…' : 'Publish MOC'}
+          {createMoc.isPending ? t('moc.publishingBtn') : t('moc.publishBtn')}
         </button>
 
         <p className="text-center text-xs text-navy/30 font-body">
-          MOCs are subject to community guidelines.
+          {t('moc.disclaimer')}
         </p>
       </form>
     </div>

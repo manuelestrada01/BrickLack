@@ -6,6 +6,7 @@ import { AuthProvider } from '@/hooks/useAuth'
 import { App } from '@/App'
 import '@/styles/index.css'
 import '@/config/gsap'
+import '@/i18n/index'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

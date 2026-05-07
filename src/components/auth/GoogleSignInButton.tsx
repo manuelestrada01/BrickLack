@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/hooks/useAuth'
 import { cn } from '@/utils/cn'
 
@@ -8,6 +9,7 @@ interface GoogleSignInButtonProps {
 }
 
 export function GoogleSignInButton({ className, size = 'md' }: GoogleSignInButtonProps) {
+  const { t } = useTranslation()
   const { signIn } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -55,7 +57,7 @@ export function GoogleSignInButton({ className, size = 'md' }: GoogleSignInButto
           fill="#EA4335"
         />
       </svg>
-      {isLoading ? 'Loading...' : 'Continue with Google'}
+      {isLoading ? t('ui.loading') : t('ui.signIn')}
     </button>
   )
 }

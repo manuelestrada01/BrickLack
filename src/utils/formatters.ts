@@ -1,5 +1,19 @@
+import i18next from 'i18next'
+
+const LOCALE_MAP: Record<string, string> = {
+  en: 'en-US',
+  es: 'es-AR',
+  pt: 'pt-BR',
+  de: 'de-DE',
+  fr: 'fr-FR',
+}
+
+function getLocale(): string {
+  return LOCALE_MAP[i18next.language] ?? 'en-US'
+}
+
 export function formatPieceCount(count: number): string {
-  return count.toLocaleString('es-AR')
+  return count.toLocaleString(getLocale())
 }
 
 export function formatProgress(found: number, total: number): string {
@@ -12,7 +26,7 @@ export function formatProgressFraction(found: number, total: number): string {
 }
 
 export function formatDate(date: Date): string {
-  return date.toLocaleDateString('es-AR', {
+  return date.toLocaleDateString(getLocale(), {
     day: '2-digit',
     month: 'short',
     year: 'numeric',
@@ -22,7 +36,7 @@ export function formatDate(date: Date): string {
 export function formatScanResetDate(scanResetDate: Date): string {
   const nextReset = new Date(scanResetDate)
   nextReset.setMonth(nextReset.getMonth() + 1)
-  return nextReset.toLocaleDateString('es-AR', { day: '2-digit', month: 'long' })
+  return nextReset.toLocaleDateString(getLocale(), { day: '2-digit', month: 'long' })
 }
 
 export function formatPartNum(partNum: string): string {

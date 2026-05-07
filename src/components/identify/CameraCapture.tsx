@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/Button'
 import { Spinner } from '@/components/ui/Spinner'
 import { compressImage } from '@/utils/imageCompression'
@@ -12,6 +13,7 @@ interface CameraCaptureProps {
 }
 
 export function CameraCapture({ onCapture, isLoading }: CameraCaptureProps) {
+  const { t } = useTranslation()
   const [preview, setPreview] = useState<string | null>(null)
   const [dragOver, setDragOver] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -99,7 +101,7 @@ export function CameraCapture({ onCapture, isLoading }: CameraCaptureProps) {
         {isLoading && (
           <div className="absolute inset-0 bg-[#F5F0E8]/80 flex flex-col items-center justify-center gap-3 z-10">
             <Spinner size="lg" />
-            <p className="text-sm font-body text-navy/60">Analyzing piece…</p>
+            <p className="text-sm font-body text-navy/60">{t('identify.analyzing')}</p>
           </div>
         )}
 
@@ -114,9 +116,9 @@ export function CameraCapture({ onCapture, isLoading }: CameraCaptureProps) {
             </div>
             <div className="text-center px-4">
               <p className="text-sm font-body text-navy/50">
-                Drag a photo or <span className="text-navy underline">choose a file</span>
+                {t('identify.dropzone')}
               </p>
-              <p className="text-xs text-navy/25 font-body mt-1">JPG, PNG, WEBP · max. 10MB</p>
+              <p className="text-xs text-navy/25 font-body mt-1">{t('identify.dropzoneFormat')}</p>
             </div>
           </>
         )}
@@ -142,7 +144,7 @@ export function CameraCapture({ onCapture, isLoading }: CameraCaptureProps) {
           <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
           <circle cx="12" cy="13" r="4" />
         </svg>
-        {preview ? 'Change photo' : 'Take photo'}
+        {preview ? t('identify.changePhoto') : t('identify.takePhoto')}
       </Button>
     </div>
   )

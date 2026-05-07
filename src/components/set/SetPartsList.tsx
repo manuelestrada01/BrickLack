@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { SetPartItem } from './SetPartItem'
 import { Skeleton } from '@/components/ui/Skeleton'
 import { REVEAL_FROM_BOTTOM } from '@/styles/animations'
@@ -15,6 +16,7 @@ interface SetPartsListProps {
 const GSAP_ANIMATE_THRESHOLD = 60
 
 export function SetPartsList({ parts, isLoading }: SetPartsListProps) {
+  const { t } = useTranslation()
   const [search, setSearch] = useState('')
   const listRef = useRef<HTMLDivElement>(null)
 
@@ -63,7 +65,7 @@ export function SetPartsList({ parts, isLoading }: SetPartsListProps) {
           type="search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Filter by name, number, or color…"
+          placeholder={t('project.filterPlaceholder')}
           className="w-full h-9 pl-9 pr-3 rounded-brick bg-white border border-navy/10 text-sm text-navy placeholder:text-navy/25 font-body outline-none focus:border-lego-yellow/40 transition-colors"
         />
         <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/25 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
@@ -74,7 +76,7 @@ export function SetPartsList({ parts, isLoading }: SetPartsListProps) {
       {/* Filtered count — only show when search is active */}
       {search && (
         <p className="text-xs font-mono text-navy/30">
-          {filtered.length.toLocaleString()} of {parts.length.toLocaleString()} piece types
+          {filtered.length.toLocaleString()} {t('set.filteredOf')} {parts.length.toLocaleString()} {t('set.pieceTypes')}
         </p>
       )}
 

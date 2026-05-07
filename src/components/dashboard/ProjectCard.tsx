@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useTranslation } from 'react-i18next'
 import { StatusBadge } from '@/components/ui/Badge'
 import { ProgressBar } from '@/components/ui/ProgressBar'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
@@ -20,6 +21,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const imgRef = useRef<HTMLImageElement>(null)
   const [showConfirm, setShowConfirm] = useState(false)
   const { user } = useAuth()
+  const { t } = useTranslation()
   const deleteProject = useDeleteProject()
 
   const progress = project.totalPieces > 0
@@ -141,7 +143,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="space-y-1.5 pb-1">
           <div className="flex items-center justify-between text-xs font-mono">
             <span className="text-navy/60">
-              {project.foundPieces} / {project.totalPieces} pieces
+              {project.foundPieces} / {project.totalPieces} {t('project.pieces')}
             </span>
             <span className={progress === 100 ? 'text-status-success font-semibold' : 'text-navy font-semibold'}>
               {progress}%
@@ -159,9 +161,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
         deleteProject.mutate({ userId: user!.uid, projectId: project.id })
         setShowConfirm(false)
       }}
-      title="Delete project"
-      message={`Are you sure you want to delete "${project.name}"? This action cannot be undone.`}
-      confirmLabel="Yes, delete"
+      title={t('project.deleteTitle')}
+      message={t('project.deleteConfirm', { name: project.name })}
+      confirmLabel={t('project.deleteConfirmBtn')}
       isLoading={deleteProject.isPending}
     />
     </>
