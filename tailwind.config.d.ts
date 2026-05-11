@@ -2,32 +2,10 @@ declare const _default: {
     content: string[];
     theme: {
         extend: {
-            colors: {
-                navy: {
-                    DEFAULT: string;
-                    50: string;
-                    100: string;
-                    200: string;
-                    300: string;
-                    400: string;
-                };
-                cream: {
-                    DEFAULT: string;
-                    50: string;
-                    100: string;
-                    200: string;
-                    300: string;
-                };
-                lego: {
-                    yellow: string;
-                    red: string;
-                };
-                status: {
-                    success: string;
-                    warning: string;
-                    error: string;
-                };
-            };
+            colors: any;
+            spacing: any;
+            borderRadius: any;
+            boxShadow: any;
             fontFamily: {
                 display: [string, string, string];
                 body: [string, string, string];
@@ -44,21 +22,6 @@ declare const _default: {
                     letterSpacing: string;
                     fontWeight: string;
                 }];
-            };
-            boxShadow: {
-                brick: string;
-                'brick-hover': string;
-                'glow-yellow': string;
-                'glow-yellow-sm': string;
-                sidebar: string;
-            };
-            borderRadius: {
-                brick: string;
-            };
-            spacing: {
-                '18': string;
-                '88': string;
-                '128': string;
             };
         };
     };
