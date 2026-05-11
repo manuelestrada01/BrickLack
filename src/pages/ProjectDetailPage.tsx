@@ -470,12 +470,13 @@ function TeamBottomSheet({
   )
 }
 
-/** Desktop dropdown panel anchored below the trigger */
+/** Desktop dropdown panel anchored below the trigger, scroll-aware */
 function TeamDropdown({
-  isOpen, members, ownerId, currentUserId, projectId, pieces, pendingIds, isOwner,
-  containerRef,
+  isOpen, onClose, members, ownerId, currentUserId, projectId, pieces, pendingIds, isOwner,
+  containerRef, onInvite, onDistribute, isDistributing,
 }: {
   isOpen: boolean
+  onClose: () => void
   members: ProjectMember[]
   ownerId: string
   currentUserId: string
@@ -484,46 +485,116 @@ function TeamDropdown({
   pendingIds: string[]
   isOwner: boolean
   containerRef: React.RefObject<HTMLDivElement | null>
+  onInvite: () => void
+  onDistribute?: () => void
+  isDistributing?: boolean
 }) {
+  const [mounted, setMounted] = useState(false)
   const panelRef = useRef<HTMLDivElement>(null)
 
+  const reposition = () => {
+    if (!panelRef.current || !containerRef.current) return
+    const rect = containerRef.current.getBoundingClientRect()
+    const left = Math.min(rect.right - 300, window.innerWidth - 300 - 16)
+    gsap.set(panelRef.current, { top: rect.bottom + 8, left: Math.max(16, left) })
+  }
+
   useEffect(() => {
-    if (!panelRef.current) return
-    if (isOpen && containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect()
-      gsap.set(panelRef.current, {
-        display: 'block',
-        top: rect.bottom + 8,
-        left: Math.min(rect.left, window.innerWidth - 280 - 16),
-      })
+    if (isOpen) setMounted(true)
+  }, [isOpen])
+
+  useEffect(() => {
+    if (!mounted) return
+    if (isOpen) {
+      reposition()
       gsap.fromTo(panelRef.current,
-        { opacity: 0, y: -6, scale: 0.97 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.2, ease: 'back.out(1.5)' },
+        { opacity: 0, y: -8, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.22, ease: 'back.out(1.6)' },
       )
+      // Keep panel anchored to trigger while scrolling
+      window.addEventListener('scroll', reposition, { capture: true, passive: true })
     } else {
+      window.removeEventListener('scroll', reposition, { capture: true })
       gsap.to(panelRef.current, {
-        opacity: 0, y: -4, scale: 0.97, duration: 0.12, ease: 'power2.in',
-        onComplete: () => gsap.set(panelRef.current, { display: 'none' }),
+        opacity: 0, y: -6, scale: 0.96, duration: 0.15, ease: 'power2.in',
+        onComplete: () => setMounted(false),
       })
     }
-  }, [isOpen, containerRef])
+    return () => window.removeEventListener('scroll', reposition, { capture: true })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, mounted])
+
+  if (!mounted) return null
 
   return createPortal(
-    <div
-      ref={panelRef}
-      style={{ display: 'none', position: 'fixed', zIndex: 40 }}
-      className="bg-white rounded-2xl border border-navy/10 shadow-2xl p-4 w-[280px]"
-    >
-      <MemberList
-        members={members}
-        ownerId={ownerId}
-        currentUserId={currentUserId}
-        projectId={projectId}
-        pieces={pieces}
-        pendingIds={pendingIds}
-        isOwner={isOwner}
-      />
-    </div>,
+    <>
+      {/* Invisible backdrop to close on outside click */}
+      <div className="fixed inset-0 z-[39]" onClick={onClose} />
+      <div
+        ref={panelRef}
+        style={{ position: 'fixed', zIndex: 40 }}
+        className="bg-white rounded-2xl border border-navy/10 shadow-2xl overflow-hidden w-[300px]"
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-navy/8">
+          <div className="flex items-center gap-2">
+            <svg className="w-3.5 h-3.5 text-navy/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            <span className="font-display text-sm font-semibold text-navy">Team</span>
+            <span className="font-mono text-[11px] text-navy/40 bg-navy/6 px-1.5 py-0.5 rounded-full">
+              {members.length + pendingIds.length}
+            </span>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-6 h-6 flex items-center justify-center rounded-lg text-navy/30 hover:text-navy hover:bg-navy/6 transition-colors"
+          >
+            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+          </button>
+        </div>
+
+        {/* Members */}
+        <div className="px-3 py-2 max-h-[320px] overflow-y-auto">
+          <MemberList
+            members={members}
+            ownerId={ownerId}
+            currentUserId={currentUserId}
+            projectId={projectId}
+            pieces={pieces}
+            pendingIds={pendingIds}
+            isOwner={isOwner}
+          />
+        </div>
+
+        {/* Action buttons */}
+        <div className="px-3 pb-3 pt-2 flex gap-2 border-t border-navy/8">
+          {onDistribute && (
+            <button
+              onClick={() => { onDistribute(); onClose() }}
+              disabled={isDistributing}
+              className="flex-1 flex items-center justify-center gap-1.5 h-8 rounded-xl border border-navy/10 text-navy/50 text-xs font-body font-medium hover:border-navy/20 hover:text-navy hover:bg-navy/[0.03] disabled:opacity-30 transition-all"
+            >
+              {isDistributing ? <Spinner size="sm" /> : (
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+                  <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                  <path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/>
+                </svg>
+              )}
+              Distribute
+            </button>
+          )}
+          <button
+            onClick={() => { onClose(); onInvite() }}
+            className="flex-1 flex items-center justify-center gap-1.5 h-8 rounded-xl bg-lego-yellow text-navy text-xs font-body font-semibold hover:bg-lego-yellow/85 transition-all"
+          >
+            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
+            Invite
+          </button>
+        </div>
+      </div>
+    </>,
     document.body,
   )
 }
@@ -552,15 +623,7 @@ function MembersBar({
   const pendingIds = pendingInvites.map(i => i.toUserId)
   const totalCount = members.length + pendingIds.length
 
-  // Close dropdown on outside click (desktop only)
-  useEffect(() => {
-    if (!expanded || isMobile) return
-    const handle = (e: MouseEvent) => {
-      if (!containerRef.current?.contains(e.target as Node)) setExpanded(false)
-    }
-    document.addEventListener('mousedown', handle)
-    return () => document.removeEventListener('mousedown', handle)
-  }, [expanded, isMobile])
+  // Desktop outside-click handled by TeamDropdown's own backdrop overlay
 
   const MAX_VISIBLE = 4
   const visibleMembers = members.slice(0, MAX_VISIBLE)
@@ -617,32 +680,35 @@ function MembersBar({
         </div>
       </button>
 
-      {/* ── Action buttons (visible on desktop; hidden on mobile — actions live in bottom sheet) ── */}
-      <div className="hidden sm:flex px-3 pb-3 gap-1.5">
-        {onDistribute && (
+      {/* ── Action buttons — desktop only, always rendered to keep card height stable ── */}
+      {!isMobile && (
+        <div className="flex px-3 pb-3 gap-1.5">
+          {onDistribute && (
+            <button
+              onClick={onDistribute}
+              disabled={isDistributing || expanded}
+              title="Distribute pieces evenly among all members"
+              className="flex-1 flex items-center justify-center gap-1.5 h-8 rounded-lg border border-navy/10 text-navy/40 text-[11px] font-body font-medium hover:border-navy/20 hover:text-navy/70 hover:bg-navy/[0.04] disabled:opacity-30 disabled:pointer-events-none transition-all duration-200"
+            >
+              {isDistributing ? <Spinner size="sm" /> : (
+                <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+                  <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                  <path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/>
+                </svg>
+              )}
+              Distribute
+            </button>
+          )}
           <button
-            onClick={onDistribute}
-            disabled={isDistributing}
-            title="Distribute pieces evenly among all members"
-            className="flex-1 flex items-center justify-center gap-1.5 h-8 rounded-lg border border-navy/10 text-navy/40 text-[11px] font-body font-medium hover:border-navy/20 hover:text-navy/70 hover:bg-navy/[0.04] disabled:opacity-30 transition-all duration-200"
+            onClick={() => setInviteOpen(true)}
+            disabled={expanded}
+            className="flex-1 flex items-center justify-center gap-1.5 h-8 rounded-lg border border-dashed border-navy/15 text-navy/35 text-[11px] font-body font-medium hover:border-lego-yellow/50 hover:text-navy/70 hover:bg-lego-yellow/[0.06] disabled:opacity-30 disabled:pointer-events-none transition-all duration-200 group"
           >
-            {isDistributing ? <Spinner size="sm" /> : (
-              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
-                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-                <path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/>
-              </svg>
-            )}
-            Distribute
+            <svg className="w-3 h-3 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
+            Invite
           </button>
-        )}
-        <button
-          onClick={() => setInviteOpen(true)}
-          className="flex-1 flex items-center justify-center gap-1.5 h-8 rounded-lg border border-dashed border-navy/15 text-navy/35 text-[11px] font-body font-medium hover:border-lego-yellow/50 hover:text-navy/70 hover:bg-lego-yellow/[0.06] transition-all duration-200 group"
-        >
-          <svg className="w-3 h-3 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
-          Invite
-        </button>
-      </div>
+        </div>
+      )}
 
       {/* Mobile: bottom sheet */}
       {isMobile && (
@@ -662,10 +728,11 @@ function MembersBar({
         />
       )}
 
-      {/* Desktop: positioned dropdown */}
+      {/* Desktop: scroll-aware positioned dropdown */}
       {!isMobile && (
         <TeamDropdown
           isOpen={expanded}
+          onClose={() => setExpanded(false)}
           members={members}
           ownerId={ownerId}
           currentUserId={currentUserId}
@@ -674,6 +741,9 @@ function MembersBar({
           pendingIds={pendingIds}
           isOwner={isOwner}
           containerRef={containerRef}
+          onInvite={() => setInviteOpen(true)}
+          onDistribute={isOwner ? onDistribute : undefined}
+          isDistributing={isDistributing}
         />
       )}
 
