@@ -69,7 +69,7 @@ export function LanguageSwitcher({ variant = 'navbar' }: LanguageSwitcherProps) 
 
   if (variant === 'mobile') {
     return (
-      <div className="flex items-center gap-1 flex-wrap px-3 py-2">
+      <div className="flex items-center justify-center gap-1 flex-wrap px-3 py-2">
         {LANGUAGES.map((lang) => (
           <button
             key={lang.code}
