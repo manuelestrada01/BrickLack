@@ -16,6 +16,7 @@ import { ProgressBar } from '@/components/ui/ProgressBar'
 import { ProjectScanModal } from '@/components/project/ProjectScanModal'
 import { Avatar } from '@/components/ui/Avatar'
 import { Spinner } from '@/components/ui/Spinner'
+import { useIsMobile } from '@/hooks/useMediaQuery'
 import type { ProjectPiece, ProjectMember, Friend } from '@/types'
 
 // ─── Piece Card ───────────────────────────────────────────────────────────────
@@ -245,6 +246,284 @@ function InviteModal({
 
 // ─── Members bar ──────────────────────────────────────────────────────────────
 
+/** Shared member list content used in both the bottom sheet and the desktop dropdown */
+function MemberList({
+  members, ownerId, currentUserId, projectId, pieces,
+  pendingIds, isOwner,
+}: {
+  members: ProjectMember[]
+  ownerId: string
+  currentUserId: string
+  projectId: string
+  pieces: ProjectPiece[]
+  pendingIds: string[]
+  isOwner: boolean
+}) {
+  const cancelInvite = useCancelProjectInvitation()
+  const removeMember = useRemoveProjectMember()
+  const isCollaborative = members.length > 1
+
+  return (
+    <div className="space-y-1">
+      {members.map(member => {
+        const assigned = pieces.filter(p => p.assignedTo === member.userId)
+        const found = assigned.filter(p => p.isComplete).length
+        const assignedCount = assigned.length
+        const pct = assignedCount > 0 ? (found / assignedCount) * 100 : 0
+
+        return (
+          <div key={member.userId} className="py-2 px-1">
+            <div className="flex items-center gap-3">
+              <div className="relative flex-shrink-0">
+                <Avatar src={member.photoURL} name={member.displayName} size="md" />
+                {member.userId === ownerId && (
+                  <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-lego-yellow rounded-full border-2 border-white flex items-center justify-center shadow-sm">
+                    <svg className="w-2 h-2 text-navy" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+                  </span>
+                )}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline justify-between gap-2">
+                  <p className="text-sm font-semibold text-navy font-body truncate">{member.displayName}</p>
+                  {isCollaborative && assignedCount > 0 && (
+                    <span className="font-mono text-xs text-navy/50 flex-shrink-0">
+                      {found}<span className="text-navy/25">/{assignedCount}</span>
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs text-navy/40 font-body capitalize">{member.role}</p>
+              </div>
+              {isOwner && member.userId !== ownerId && (
+                <button
+                  onClick={() => removeMember.mutate({ projectId, memberIdToRemove: member.userId, currentUserId })}
+                  disabled={removeMember.isPending}
+                  title="Remove from project"
+                  className="w-8 h-8 flex items-center justify-center rounded-xl text-navy/25 hover:text-status-error hover:bg-status-error/10 transition-colors flex-shrink-0"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+                </button>
+              )}
+            </div>
+            {isCollaborative && assignedCount > 0 && (
+              <div className="mt-2 ml-[46px] mr-1">
+                <div className="h-1 rounded-full bg-navy/8 overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-lego-yellow transition-all duration-500"
+                    style={{ width: `${pct}%` }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        )
+      })}
+
+      {isOwner && pendingIds.map(toUserId => (
+        <div key={toUserId} className="flex items-center gap-3 py-2 px-1 opacity-50">
+          <div className="w-9 h-9 rounded-full border border-dashed border-navy/25 bg-navy/5 flex items-center justify-center flex-shrink-0">
+            <svg className="w-3.5 h-3.5 text-navy/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm text-navy/50 font-body">Pending invite</p>
+          </div>
+          <button
+            onClick={() => cancelInvite.mutate({ projectId, toUserId })}
+            disabled={cancelInvite.isPending}
+            className="text-xs text-navy/35 hover:text-status-error transition-colors font-body flex-shrink-0 px-2 py-1 rounded-lg hover:bg-status-error/8"
+          >
+            Cancel
+          </button>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/** Bottom sheet (mobile) — slides up from bottom via GSAP */
+function TeamBottomSheet({
+  isOpen, onClose,
+  members, ownerId, currentUserId, projectId, pieces, pendingIds, isOwner,
+  onInvite, onDistribute, isDistributing,
+}: {
+  isOpen: boolean
+  onClose: () => void
+  members: ProjectMember[]
+  ownerId: string
+  currentUserId: string
+  projectId: string
+  pieces: ProjectPiece[]
+  pendingIds: string[]
+  isOwner: boolean
+  onInvite: () => void
+  onDistribute?: () => void
+  isDistributing?: boolean
+}) {
+  const [mounted, setMounted] = useState(false)
+  const backdropRef = useRef<HTMLDivElement>(null)
+  const sheetRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (isOpen) setMounted(true)
+  }, [isOpen])
+
+  useEffect(() => {
+    if (!mounted) return
+    if (isOpen) {
+      gsap.fromTo(backdropRef.current, { opacity: 0 }, { opacity: 1, duration: 0.22 })
+      gsap.fromTo(sheetRef.current, { y: '100%' }, { y: '0%', duration: 0.3, ease: 'power3.out' })
+    } else {
+      gsap.to(backdropRef.current, { opacity: 0, duration: 0.18 })
+      gsap.to(sheetRef.current, {
+        y: '100%', duration: 0.22, ease: 'power2.in',
+        onComplete: () => setMounted(false),
+      })
+    }
+  }, [isOpen, mounted])
+
+  if (!mounted) return null
+
+  return createPortal(
+    <div className="fixed inset-0 z-50 flex flex-col justify-end">
+      {/* Backdrop */}
+      <div
+        ref={backdropRef}
+        className="absolute inset-0 bg-navy/40 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      {/* Sheet */}
+      <div
+        ref={sheetRef}
+        className="relative bg-white rounded-t-3xl shadow-2xl overflow-hidden"
+        style={{ maxHeight: '85dvh' }}
+      >
+        {/* Drag handle */}
+        <div className="flex justify-center pt-3 pb-1">
+          <div className="w-10 h-1 rounded-full bg-navy/15" />
+        </div>
+
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-3 border-b border-navy/8">
+          <div className="flex items-center gap-2">
+            <svg className="w-4 h-4 text-navy/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            <h2 className="font-display text-base font-semibold text-navy">Team</h2>
+            <span className="font-mono text-xs text-navy/40 bg-navy/6 px-2 py-0.5 rounded-full">
+              {members.length + pendingIds.length}
+            </span>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 flex items-center justify-center rounded-xl text-navy/35 hover:text-navy hover:bg-navy/6 transition-colors"
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+          </button>
+        </div>
+
+        {/* Members list */}
+        <div className="px-4 py-2 overflow-y-auto" style={{ maxHeight: 'calc(85dvh - 180px)' }}>
+          <MemberList
+            members={members}
+            ownerId={ownerId}
+            currentUserId={currentUserId}
+            projectId={projectId}
+            pieces={pieces}
+            pendingIds={pendingIds}
+            isOwner={isOwner}
+          />
+        </div>
+
+        {/* Action buttons */}
+        <div className="px-4 pt-3 pb-6 flex gap-2 border-t border-navy/8 bg-white">
+          {onDistribute && (
+            <button
+              onClick={() => { onDistribute(); onClose() }}
+              disabled={isDistributing}
+              className="flex-1 flex items-center justify-center gap-2 h-11 rounded-2xl border border-navy/12 text-navy/60 text-sm font-body font-medium hover:border-navy/25 hover:text-navy hover:bg-navy/[0.03] disabled:opacity-30 transition-all"
+            >
+              {isDistributing
+                ? <Spinner size="sm" />
+                : <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+                    <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                    <path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/>
+                  </svg>
+              }
+              Distribute
+            </button>
+          )}
+          <button
+            onClick={() => { onClose(); onInvite() }}
+            className="flex-1 flex items-center justify-center gap-2 h-11 rounded-2xl bg-lego-yellow text-navy text-sm font-body font-semibold hover:bg-lego-yellow/85 transition-all"
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
+            Invite
+          </button>
+        </div>
+      </div>
+    </div>,
+    document.body,
+  )
+}
+
+/** Desktop dropdown panel anchored below the trigger */
+function TeamDropdown({
+  isOpen, members, ownerId, currentUserId, projectId, pieces, pendingIds, isOwner,
+  containerRef,
+}: {
+  isOpen: boolean
+  members: ProjectMember[]
+  ownerId: string
+  currentUserId: string
+  projectId: string
+  pieces: ProjectPiece[]
+  pendingIds: string[]
+  isOwner: boolean
+  containerRef: React.RefObject<HTMLDivElement | null>
+}) {
+  const panelRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!panelRef.current) return
+    if (isOpen && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect()
+      gsap.set(panelRef.current, {
+        display: 'block',
+        top: rect.bottom + 8,
+        left: Math.min(rect.left, window.innerWidth - 280 - 16),
+      })
+      gsap.fromTo(panelRef.current,
+        { opacity: 0, y: -6, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.2, ease: 'back.out(1.5)' },
+      )
+    } else {
+      gsap.to(panelRef.current, {
+        opacity: 0, y: -4, scale: 0.97, duration: 0.12, ease: 'power2.in',
+        onComplete: () => gsap.set(panelRef.current, { display: 'none' }),
+      })
+    }
+  }, [isOpen, containerRef])
+
+  return createPortal(
+    <div
+      ref={panelRef}
+      style={{ display: 'none', position: 'fixed', zIndex: 40 }}
+      className="bg-white rounded-2xl border border-navy/10 shadow-2xl p-4 w-[280px]"
+    >
+      <MemberList
+        members={members}
+        ownerId={ownerId}
+        currentUserId={currentUserId}
+        projectId={projectId}
+        pieces={pieces}
+        pendingIds={pendingIds}
+        isOwner={isOwner}
+      />
+    </div>,
+    document.body,
+  )
+}
+
 function MembersBar({
   members, ownerId, currentUserId, projectId,
   project, pieces,
@@ -260,48 +539,24 @@ function MembersBar({
   isDistributing?: boolean
 }) {
   const { data: pendingInvites = [] } = useProjectSentInvitations(projectId)
-  const cancelInvite = useCancelProjectInvitation()
-  const removeMember = useRemoveProjectMember()
   const [inviteOpen, setInviteOpen] = useState(false)
   const [expanded, setExpanded] = useState(false)
-  const panelRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const isOwner = currentUserId === ownerId
+  const isMobile = useIsMobile()
 
   const pendingIds = pendingInvites.map(i => i.toUserId)
   const totalCount = members.length + pendingIds.length
 
-  // Close on outside click
+  // Close dropdown on outside click (desktop only)
   useEffect(() => {
-    if (!expanded) return
+    if (!expanded || isMobile) return
     const handle = (e: MouseEvent) => {
       if (!containerRef.current?.contains(e.target as Node)) setExpanded(false)
     }
     document.addEventListener('mousedown', handle)
     return () => document.removeEventListener('mousedown', handle)
-  }, [expanded])
-
-  // Position + animate panel
-  useEffect(() => {
-    if (!panelRef.current) return
-    if (expanded && containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect()
-      gsap.set(panelRef.current, {
-        display: 'block',
-        top: rect.bottom + 8,
-        left: rect.left,
-      })
-      gsap.fromTo(panelRef.current,
-        { opacity: 0, y: -6, scale: 0.97 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.2, ease: 'back.out(1.5)' },
-      )
-    } else {
-      gsap.to(panelRef.current, {
-        opacity: 0, y: -4, scale: 0.97, duration: 0.12, ease: 'power2.in',
-        onComplete: () => gsap.set(panelRef.current, { display: 'none' }),
-      })
-    }
-  }, [expanded])
+  }, [expanded, isMobile])
 
   const MAX_VISIBLE = 4
   const visibleMembers = members.slice(0, MAX_VISIBLE)
@@ -310,29 +565,21 @@ function MembersBar({
   return (
     <div ref={containerRef} className="relative flex flex-col h-full">
 
-      {/* ── Clickable area: header + avatars ── */}
+      {/* ── Clickable trigger: header + avatars ── */}
       <button
         onClick={() => setExpanded(v => !v)}
         className="flex flex-col items-center w-full flex-1 pt-4 pb-3 px-4 cursor-pointer"
       >
-        {/* Header */}
         <div className="flex items-center justify-center gap-2 pb-2 w-full">
           <span className="text-[10px] font-semibold text-navy/35 font-body tracking-[0.12em] uppercase">Team</span>
-          <div
-            className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold transition-colors ${
-              expanded
-                ? 'bg-navy text-white'
-                : 'bg-navy/6 text-navy/50'
-            }`}
-          >
+          <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold transition-colors ${expanded && !isMobile ? 'bg-navy text-white' : 'bg-navy/6 text-navy/50'}`}>
             {totalCount}
-            <svg className={`w-2.5 h-2.5 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round"><path d="m6 9 6 6 6-6" /></svg>
+            <svg className={`w-2.5 h-2.5 transition-transform duration-200 ${expanded && !isMobile ? 'rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round"><path d="m6 9 6 6 6-6" /></svg>
           </div>
         </div>
 
         {/* Avatar stack */}
         <div className="flex items-center">
-
           {visibleMembers.map((member, i) => (
             <div
               key={member.userId}
@@ -349,18 +596,14 @@ function MembersBar({
             </div>
           ))}
           {overflow > 0 && (
-            <div
-              className="w-9 h-9 rounded-full ring-2 ring-white bg-navy/8 flex items-center justify-center"
-              style={{ marginLeft: -10 }}
-            >
+            <div className="w-9 h-9 rounded-full ring-2 ring-white bg-navy/8 flex items-center justify-center" style={{ marginLeft: -10 }}>
               <span className="text-[10px] font-mono font-bold text-navy/50">+{overflow}</span>
             </div>
           )}
-          {/* Pending invite ghosts */}
           {pendingIds.slice(0, 2).map((_, i) => (
             <div
               key={`pending-${i}`}
-              className="w-9 h-9 rounded-full ring-2 ring-white ring-dashed border border-dashed border-navy/20 bg-navy/[0.03] flex items-center justify-center opacity-50"
+              className="w-9 h-9 rounded-full ring-2 ring-white border border-dashed border-navy/20 bg-navy/[0.03] flex items-center justify-center opacity-50"
               style={{ marginLeft: -10, zIndex: 0 }}
               title="Invite pending"
             >
@@ -370,8 +613,8 @@ function MembersBar({
         </div>
       </button>
 
-      {/* ── Action buttons ── */}
-      <div className={`px-3 pb-3 flex gap-1.5`}>
+      {/* ── Action buttons (visible on desktop; hidden on mobile — actions live in bottom sheet) ── */}
+      <div className="hidden sm:flex px-3 pb-3 gap-1.5">
         {onDistribute && (
           <button
             onClick={onDistribute}
@@ -379,13 +622,12 @@ function MembersBar({
             title="Distribute pieces evenly among all members"
             className="flex-1 flex items-center justify-center gap-1.5 h-8 rounded-lg border border-navy/10 text-navy/40 text-[11px] font-body font-medium hover:border-navy/20 hover:text-navy/70 hover:bg-navy/[0.04] disabled:opacity-30 transition-all duration-200"
           >
-            {isDistributing
-              ? <Spinner size="sm" />
-              : <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
-                  <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-                  <path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/>
-                </svg>
-            }
+            {isDistributing ? <Spinner size="sm" /> : (
+              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                <path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/>
+              </svg>
+            )}
             Distribute
           </button>
         )}
@@ -398,86 +640,37 @@ function MembersBar({
         </button>
       </div>
 
-      {/* Expanded panel — portal to escape any ancestor transform/stacking context */}
-      {createPortal(
-        <div
-          ref={panelRef}
-          style={{ display: 'none', position: 'fixed', zIndex: 40 }}
-          className="bg-white rounded-xl border border-navy/10 shadow-xl p-3 min-w-[260px] space-y-0.5"
-        >
-          {members.map(member => {
-            const assigned = pieces.filter(p => p.assignedTo === member.userId)
-            const found = assigned.filter(p => p.isComplete).length
-            const assignedCount = assigned.length
-            const isCollaborative = members.length > 1
-            const pct = assignedCount > 0 ? (found / assignedCount) * 100 : 0
+      {/* Mobile: bottom sheet */}
+      {isMobile && (
+        <TeamBottomSheet
+          isOpen={expanded}
+          onClose={() => setExpanded(false)}
+          members={members}
+          ownerId={ownerId}
+          currentUserId={currentUserId}
+          projectId={projectId}
+          pieces={pieces}
+          pendingIds={pendingIds}
+          isOwner={isOwner}
+          onInvite={() => setInviteOpen(true)}
+          onDistribute={isOwner ? onDistribute : undefined}
+          isDistributing={isDistributing}
+        />
+      )}
 
-            return (
-              <div key={member.userId} className="py-1.5">
-                <div className="flex items-center gap-2.5">
-                  <div className="relative flex-shrink-0">
-                    <Avatar src={member.photoURL} name={member.displayName} size="sm" />
-                    {member.userId === ownerId && (
-                      <span className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-lego-yellow rounded-full border border-white flex items-center justify-center">
-                        <svg className="w-2 h-2 text-navy" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
-                      </span>
-                    )}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-baseline justify-between gap-2">
-                      <p className="text-xs font-semibold text-navy font-body truncate">{member.displayName}</p>
-                      {isCollaborative && assignedCount > 0 && (
-                        <span className="font-mono text-[10px] text-navy/40 flex-shrink-0">
-                          {found}<span className="text-navy/20">/{assignedCount}</span>
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-[10px] text-navy/35 font-body capitalize">{member.role}</p>
-                  </div>
-                  {isOwner && member.userId !== ownerId && (
-                    <button
-                      onClick={() => removeMember.mutate({ projectId, memberIdToRemove: member.userId, currentUserId })}
-                      disabled={removeMember.isPending}
-                      title="Remove from project"
-                      className="w-6 h-6 flex items-center justify-center rounded-lg text-navy/25 hover:text-status-error hover:bg-status-error/10 transition-colors flex-shrink-0"
-                    >
-                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
-                    </button>
-                  )}
-                </div>
-                {/* Per-member mini progress bar — only in collaborative + assigned mode */}
-                {isCollaborative && assignedCount > 0 && (
-                  <div className="mt-1.5 ml-[38px] mr-0.5">
-                    <div className="h-[3px] rounded-full bg-navy/8 overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-lego-yellow transition-all duration-500"
-                        style={{ width: `${pct}%` }}
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-            )
-          })}
-          {isOwner && pendingIds.map(toUserId => (
-            <div key={toUserId} className="flex items-center gap-2.5 py-1 opacity-55">
-              <div className="w-7 h-7 rounded-full border border-dashed border-navy/20 bg-navy/5 flex items-center justify-center flex-shrink-0">
-                <svg className="w-3 h-3 text-navy/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-[10px] text-navy/40 font-body">Invite pending</p>
-              </div>
-              <button
-                onClick={() => cancelInvite.mutate({ projectId, toUserId })}
-                disabled={cancelInvite.isPending}
-                className="text-[10px] text-navy/30 hover:text-status-error transition-colors font-body flex-shrink-0"
-              >
-                Cancel
-              </button>
-            </div>
-          ))}
-        </div>,
-        document.body,
+      {/* Desktop: positioned dropdown */}
+      {!isMobile && (
+        <TeamDropdown
+          isOpen={expanded}
+          members={members}
+          ownerId={ownerId}
+          currentUserId={currentUserId}
+          projectId={projectId}
+          pieces={pieces}
+          pendingIds={pendingIds}
+          isOwner={isOwner}
+          containerRef={containerRef}
+        />
       )}
 
       <InviteModal
