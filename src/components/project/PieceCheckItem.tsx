@@ -6,11 +6,10 @@ import type { ProjectPiece } from '@/types'
 
 interface PieceCheckItemProps {
   piece: ProjectPiece
-  userId: string
   projectId: string
 }
 
-export function PieceCheckItem({ piece, userId, projectId }: PieceCheckItemProps) {
+export function PieceCheckItem({ piece, projectId }: PieceCheckItemProps) {
   const togglePiece = useTogglePiece()
   const checkRef = useRef<HTMLDivElement>(null)
   const cardRef = useRef<HTMLDivElement>(null)
@@ -24,7 +23,6 @@ export function PieceCheckItem({ piece, userId, projectId }: PieceCheckItemProps
 
   const mutate = (newQty: number) => {
     togglePiece.mutate({
-      userId,
       projectId,
       pieceId: piece.id,
       quantityFound: newQty,

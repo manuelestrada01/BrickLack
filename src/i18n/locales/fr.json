@@ -18,9 +18,12 @@
     "story": {
       "label": "L'histoire",
       "title": "Bricklack est né d'une boîte de pièces manquantes.",
-      "p1": "Enfant, les sets étaient démontés, les pièces s'égaraient — généralement dans la chambre d'un frère ou d'une sœur — et des années plus tard, quand on voulait enfin reconstruire ce château ou ce vaisseau spatial, la moitié de l'inventaire avait disparu.",
+      "p1": "Enfant, les sets étaient démontés, les pièces s'égaraient, généralement dans la chambre d'un frère ou d'une sœur, et des années plus tard, quand on voulait enfin reconstruire ce château ou ce vaisseau spatial, la moitié de l'inventaire avait disparu.",
       "p2": "Il n'y avait aucun moyen de savoir ce qu'on avait, ce qu'il manquait, ou même par où commencer.",
-      "p3": "Alors nous avons créé l'outil dont nous avions toujours eu besoin."
+      "p3": "Alors nous avons créé l'outil dont nous avions toujours eu besoin.",
+      "p4": "Et maintenant, Bricklack fait de la reconstruction quelque chose que vous pouvez partager.",
+      "p5": "Invitez des amis dans vos projets, partagez la recherche des pièces manquantes, suivez la progression de chacun et regardez le set se reconstituer en temps réel.",
+      "p6": "Parce que trouver chaque pièce est encore plus satisfaisant quand on le fait ensemble."
     },
     "howItWorks": {
       "label": "Comment ça marche",
@@ -36,8 +39,8 @@
         "desc": "Nous récupérons la liste complète des pièces automatiquement. Chaque partie, couleur et quantité — sans saisie manuelle."
       },
       "s3": {
-        "title": "Marquez ce que vous trouvez",
-        "desc": "Passez pièce par pièce dans vos boîtes. Cochez chacune au fur et à mesure — la progression est sauvegardée en temps réel."
+        "title": "Reconstruisez seul ou avec des amis",
+        "desc": "Avancez pièce par pièce, attribuez des parties aux membres de l'équipe et suivez la progression de chacun en temps réel."
       },
       "s4": {
         "title": "Complétez le set",

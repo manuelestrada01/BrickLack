@@ -7,7 +7,6 @@ import type { ProjectPiece } from '@/types'
 interface PieceChecklistProps {
   pieces: ProjectPiece[]
   isLoading: boolean
-  userId: string
   projectId: string
 }
 
@@ -52,7 +51,7 @@ function PieceCardSkeleton() {
 
 const GRID = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3'
 
-export function PieceChecklist({ pieces, isLoading, userId, projectId }: PieceChecklistProps) {
+export function PieceChecklist({ pieces, isLoading, projectId }: PieceChecklistProps) {
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState<FilterMode>('all')
   const listRef = useRef<HTMLDivElement>(null)
@@ -152,7 +151,7 @@ export function PieceChecklist({ pieces, isLoading, userId, projectId }: PieceCh
       ) : (
         <div ref={listRef} className={GRID}>
           {filtered.map((piece) => (
-            <PieceCheckItem key={piece.id} piece={piece} userId={userId} projectId={projectId} />
+            <PieceCheckItem key={piece.id} piece={piece} projectId={projectId} />
           ))}
         </div>
       )}

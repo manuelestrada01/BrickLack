@@ -13,11 +13,11 @@ export function useUpdateProject() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ userId, projectId, data }: UpdateProjectInput) =>
-      updateProject(userId, projectId, data),
+    mutationFn: ({ projectId, data }: UpdateProjectInput) =>
+      updateProject(projectId, data),
     onSuccess: (_data, { userId, projectId }) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.projects.all(userId) })
-      queryClient.invalidateQueries({ queryKey: queryKeys.projects.detail(userId, projectId) })
+      queryClient.invalidateQueries({ queryKey: queryKeys.projects.detail(projectId) })
     },
   })
 }

@@ -11,6 +11,7 @@ export const ROUTES = {
   COMMUNITY: '/community',
   COMMUNITY_DETAIL: '/community/:mocId',
   NEW_MOC: '/moc/new',
+  FRIENDS: '/friends',
 } as const
 
 export const buildSetPath = (setId: string) => `/set/${setId}`

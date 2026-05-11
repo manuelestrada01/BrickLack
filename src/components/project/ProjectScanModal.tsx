@@ -193,11 +193,10 @@ interface ProjectScanModalProps {
   isOpen: boolean
   onClose: () => void
   pieces: ProjectPiece[]
-  userId: string
   projectId: string
 }
 
-export function ProjectScanModal({ isOpen, onClose, pieces, userId, projectId }: ProjectScanModalProps) {
+export function ProjectScanModal({ isOpen, onClose, pieces, projectId }: ProjectScanModalProps) {
   const [shouldRender, setShouldRender] = useState(isOpen)
   const [scanState, setScanState] = useState<ScanPhase>({ phase: 'idle' })
   const backdropRef = useRef<HTMLDivElement>(null)
@@ -262,7 +261,6 @@ export function ProjectScanModal({ isOpen, onClose, pieces, userId, projectId }:
     if (scanState.phase !== 'confirm') return
     const { piece, qty } = scanState
     await toggle.mutateAsync({
-      userId,
       projectId,
       pieceId: piece.id,
       quantityFound: piece.quantityFound + qty,

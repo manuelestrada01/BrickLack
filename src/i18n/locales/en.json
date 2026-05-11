@@ -18,9 +18,12 @@
     "story": {
       "label": "The story",
       "title": "Bricklack was born in a box of missing pieces.",
-      "p1": "Growing up, sets would get taken apart, pieces would wander off — usually into a sibling's room — and years later, when you finally wanted to rebuild that castle or spaceship, half the inventory was gone.",
+      "p1": "Growing up, sets would get taken apart, pieces would wander off, usually into a sibling's room, and years later, when you finally wanted to rebuild that castle or spaceship, half the inventory was gone.",
       "p2": "There was no way to know what you had, what you were missing, or where to even start.",
-      "p3": "So we built the tool we always needed."
+      "p3": "So we built the tool we always needed.",
+      "p4": "And now, Bricklack makes rebuilding something you can share.",
+      "p5": "Invite friends into your projects, split the search for missing pieces, track each person's progress, and watch the set come back together in real time.",
+      "p6": "Because finding every piece feels even better when you do it together."
     },
     "howItWorks": {
       "label": "How it works",
@@ -36,8 +39,8 @@
         "desc": "We pull the complete piece list automatically. Every part, color and quantity — no manual entry."
       },
       "s3": {
-        "title": "Mark what you find",
-        "desc": "Go piece by piece through your bins. Check off each one as you find it — progress saves in real time."
+        "title": "Rebuild solo or with friends",
+        "desc": "Go piece by piece, assign parts to team members, and track everyone's progress in real time."
       },
       "s4": {
         "title": "Complete the set",

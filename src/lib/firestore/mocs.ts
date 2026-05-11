@@ -78,7 +78,8 @@ export async function createMoc(
 export async function cloneMocToProject(
   mocId: string,
   userId: string,
-  _userName: string,
+  userName: string,
+  userPhotoURL: string = '',
 ): Promise<string> {
   const [moc, pieces] = await Promise.all([getMoc(mocId), getMocPieces(mocId)])
 
@@ -92,10 +93,23 @@ export async function cloneMocToProject(
     if (!mocSnap.exists()) throw new Error('MOC not found')
 
     const now = Timestamp.now()
-    const projectRef = doc(collection(db, 'users', userId, 'projects'))
+    const projectRef = doc(collection(db, 'projects'))
     projectId = projectRef.id
 
+    const ownerMember = {
+      userId,
+      displayName: userName,
+      photoURL: userPhotoURL,
+      role: 'owner',
+      joinedAt: now,
+      assignedPieces: 0,
+      foundPieces: 0,
+    }
+
     transaction.set(projectRef, {
+      ownerId: userId,
+      members: [ownerMember],
+      memberIds: [userId],
       name: moc.name,
       setId: null,
       setName: null,
@@ -116,7 +130,7 @@ export async function cloneMocToProject(
   // Add pieces to the new project
   await Promise.all(
     pieces.map((piece) =>
-      addDoc(collection(db, 'users', userId, 'projects', projectId!, 'pieces'), {
+      addDoc(collection(db, 'projects', projectId!, 'pieces'), {
         partNum: piece.partNum,
         name: piece.name,
         color: piece.color,
@@ -125,6 +139,7 @@ export async function cloneMocToProject(
         quantityRequired: piece.quantityRequired,
         quantityFound: 0,
         isComplete: false,
+        assignedTo: null,
       }),
     ),
   )

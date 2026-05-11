@@ -7,7 +7,7 @@ import {
 } from 'firebase/auth'
 import { auth } from '@/config/firebase'
 import type { User } from '@/types'
-import { getUserDoc, createUserDoc } from './firestore/users'
+import { getUserDoc, createUserDoc, ensureFriendCode } from './firestore/users'
 
 const googleProvider = new GoogleAuthProvider()
 
@@ -30,6 +30,10 @@ export function onAuthChanged(callback: (user: User | null) => void): () => void
       let userDoc = await getUserDoc(firebaseUser.uid)
       if (!userDoc) {
         userDoc = await createUserDoc(firebaseUser)
+      } else if (!userDoc.friendCode) {
+        // Lazy migration: assign friendCode to existing users
+        const code = await ensureFriendCode(firebaseUser.uid)
+        userDoc = { ...userDoc, friendCode: code }
       }
       callback(userDoc)
     } catch (error) {
@@ -44,6 +48,7 @@ export function onAuthChanged(callback: (user: User | null) => void): () => void
         createdAt: new Date(),
         scanResetDate: new Date(),
         scanCount: 0,
+        friendCode: '',
       })
     }
   })

@@ -7,6 +7,7 @@ export interface UserDoc {
   createdAt: Timestamp
   scanCount: number
   scanResetDate: Timestamp
+  friendCode: string          // 6-digit unique code, e.g. "143872"
 }
 
 export interface User {
@@ -17,4 +18,5 @@ export interface User {
   createdAt: Date
   scanCount: number
   scanResetDate: Date
+  friendCode: string
 }

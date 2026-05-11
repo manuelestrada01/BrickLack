@@ -67,6 +67,8 @@ export function NewProjectForm() {
 
     const projectId = await createProject.mutateAsync({
       userId: user.uid,
+      displayName: user.displayName ?? '',
+      photoURL: user.photoURL ?? '',
       name: projectName.trim(),
       setId: selectedSet?.setNum ?? null,
       setName: selectedSet?.name ?? null,

@@ -18,9 +18,12 @@
     "story": {
       "label": "A história",
       "title": "O Bricklack nasceu em uma caixa de peças perdidas.",
-      "p1": "Na infância, os sets eram desmontados, as peças sumiam — geralmente no quarto de um irmão — e anos depois, quando você finalmente queria reconstruir aquele castelo ou nave espacial, metade do inventário havia desaparecido.",
+      "p1": "Na infância, os sets eram desmontados, as peças sumiam, geralmente no quarto de um irmão, e anos depois, quando você finalmente queria reconstruir aquele castelo ou nave espacial, metade do inventário havia desaparecido.",
       "p2": "Não havia como saber o que você tinha, o que estava faltando ou por onde começar.",
-      "p3": "Então criamos a ferramenta que sempre precisamos."
+      "p3": "Então criamos a ferramenta que sempre precisamos.",
+      "p4": "E agora, o Bricklack torna a reconstrução algo que você pode compartilhar.",
+      "p5": "Convide amigos para seus projetos, divida a busca por peças faltantes, acompanhe o progresso de cada um e veja o set se montar novamente em tempo real.",
+      "p6": "Porque encontrar cada peça é ainda melhor quando você faz isso junto."
     },
     "howItWorks": {
       "label": "Como funciona",
@@ -36,8 +39,8 @@
         "desc": "Carregamos a lista completa de peças automaticamente. Cada parte, cor e quantidade — sem entrada manual."
       },
       "s3": {
-        "title": "Marque o que encontrar",
-        "desc": "Vá peça por peça nas suas caixas. Marque cada uma conforme encontrar — o progresso é salvo em tempo real."
+        "title": "Reconstrua sozinho ou com amigos",
+        "desc": "Vá peça por peça, atribua partes aos membros da equipe e acompanhe o progresso de todos em tempo real."
       },
       "s4": {
         "title": "Complete o set",

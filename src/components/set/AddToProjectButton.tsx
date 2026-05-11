@@ -24,6 +24,8 @@ export function AddToProjectButton({ set }: AddToProjectButtonProps) {
 
     const projectId = await createProject.mutateAsync({
       userId: user.uid,
+      displayName: user.displayName ?? '',
+      photoURL: user.photoURL ?? '',
       name: projectName.trim(),
       setId: set.setNum,
       setName: set.name,

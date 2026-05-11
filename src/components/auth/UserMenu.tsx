@@ -80,6 +80,11 @@ export function UserMenu() {
             {user.displayName}
           </p>
           <p className="text-xs text-navy/45 font-body mt-0.5 break-all">{user.email}</p>
+          {user.friendCode && (
+            <p className="font-mono text-xs font-bold text-lego-yellow/80 mt-1 tracking-wider">
+              #{user.friendCode}
+            </p>
+          )}
         </div>
 
         <div className="py-1">

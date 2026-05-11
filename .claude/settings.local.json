@@ -23,7 +23,14 @@
       "Bash(git add:*)",
       "Bash(git commit -m ':*)",
       "Bash(git push:*)",
-      "Bash(npm list:*)"
+      "Bash(npm list:*)",
+      "Bash(magick --version)",
+      "Bash(convert --version)",
+      "Bash(node -e \"require\\('sharp'\\)\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const {createCanvas,loadImage}=require\\('canvas'\\); console.log\\('canvas ok'\\)\")",
+      "Bash(node -e \"require\\('canvas'\\)\")",
+      "Bash(npm uninstall:*)",
+      "Bash(npm_package_config_libvips=\"\" node -e \"require\\('sharp'\\); console.log\\('ok'\\)\")"
     ]
   }
 }

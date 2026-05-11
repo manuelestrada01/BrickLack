@@ -4,7 +4,7 @@ import {
   type QueryDocumentSnapshot,
   Timestamp,
 } from 'firebase/firestore'
-import type { User, UserDoc, Project, ProjectDoc, ProjectPiece, PieceDoc, Moc, MocDoc, MocPiece, MocPieceDoc } from '@/types'
+import type { User, UserDoc, Project, ProjectDoc, ProjectMember, ProjectMemberDoc, ProjectPiece, PieceDoc, Moc, MocDoc, MocPiece, MocPieceDoc } from '@/types'
 
 export const userConverter: FirestoreDataConverter<User> = {
   toFirestore(user: User): DocumentData {
@@ -25,15 +25,41 @@ export const userConverter: FirestoreDataConverter<User> = {
       scanCount: data.scanCount,
       createdAt: data.createdAt.toDate(),
       scanResetDate: data.scanResetDate.toDate(),
+      friendCode: data.friendCode ?? '',
     }
   },
 }
 
+function memberFromDoc(m: ProjectMemberDoc): ProjectMember {
+  return {
+    userId: m.userId,
+    displayName: m.displayName,
+    photoURL: m.photoURL,
+    role: m.role,
+    joinedAt: m.joinedAt.toDate(),
+    assignedPieces: m.assignedPieces,
+    foundPieces: m.foundPieces,
+  }
+}
+
+function memberToDoc(m: ProjectMember): ProjectMemberDoc {
+  return {
+    userId: m.userId,
+    displayName: m.displayName,
+    photoURL: m.photoURL,
+    role: m.role,
+    joinedAt: Timestamp.fromDate(m.joinedAt),
+    assignedPieces: m.assignedPieces,
+    foundPieces: m.foundPieces,
+  }
+}
+
 export const projectConverter: FirestoreDataConverter<Project> = {
   toFirestore(project: Project): DocumentData {
-    const { id: _id, createdAt, updatedAt, ...rest } = project
+    const { id: _id, createdAt, updatedAt, members, ...rest } = project
     return {
       ...rest,
+      members: members.map(memberToDoc),
       createdAt: Timestamp.fromDate(createdAt),
       updatedAt: Timestamp.fromDate(updatedAt),
     }
@@ -42,6 +68,9 @@ export const projectConverter: FirestoreDataConverter<Project> = {
     const data = snapshot.data() as ProjectDoc
     return {
       id: snapshot.id,
+      ownerId: data.ownerId,
+      members: (data.members ?? []).map(memberFromDoc),
+      memberIds: data.memberIds ?? [],
       name: data.name,
       setId: data.setId,
       setName: data.setName,
@@ -51,6 +80,7 @@ export const projectConverter: FirestoreDataConverter<Project> = {
       foundPieces: data.foundPieces,
       createdAt: data.createdAt.toDate(),
       updatedAt: data.updatedAt.toDate(),
+      ...(data.clonedFrom ? { clonedFrom: data.clonedFrom } : {}),
     }
   },
 }
@@ -72,6 +102,7 @@ export const pieceConverter: FirestoreDataConverter<ProjectPiece> = {
       quantityRequired: data.quantityRequired,
       quantityFound: data.quantityFound,
       isComplete: data.isComplete,
+      assignedTo: data.assignedTo ?? null,
     }
   },
 }

@@ -5,6 +5,8 @@ import gsap from 'gsap'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/hooks/useAuth'
 import { useUIStore } from '@/stores/uiStore'
+import { useReceivedFriendRequests } from '@/hooks/queries/useFriends'
+import { useReceivedProjectInvitations } from '@/hooks/queries/useProjectInvitations'
 import { UserMenu } from '@/components/auth/UserMenu'
 import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
@@ -23,6 +25,9 @@ function HamburgerIcon() {
 
 export function Navbar() {
   const { user, isLoading } = useAuth()
+  const { data: pendingRequests } = useReceivedFriendRequests(user?.uid)
+  const { data: pendingProjectInvites } = useReceivedProjectInvitations(user?.uid)
+  const pendingCount = (pendingRequests?.length ?? 0) + (pendingProjectInvites?.length ?? 0)
   const { toggleMobileMenu } = useUIStore()
   const { t } = useTranslation()
   const location = useLocation()
@@ -112,6 +117,19 @@ export function Navbar() {
           >
             {t('nav.community')}
           </Link>
+          {user && (
+            <Link
+              to={ROUTES.FRIENDS}
+              className={cn('relative text-sm font-body font-medium transition-colors', isActive(ROUTES.FRIENDS) ? 'text-navy' : 'text-navy/60 hover:text-navy')}
+            >
+              Friends
+              {pendingCount > 0 && (
+                <span className="absolute -top-1.5 -right-3 h-4 min-w-4 px-1 rounded-full bg-lego-yellow text-navy text-[9px] font-mono font-bold flex items-center justify-center leading-none">
+                  {pendingCount}
+                </span>
+              )}
+            </Link>
+          )}
         </div>
 
         {/* Col 3 — Auth + Language */}

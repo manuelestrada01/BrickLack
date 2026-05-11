@@ -46,6 +46,16 @@ function StoryBlock() {
           <p data-line className="font-body text-base sm:text-lg text-navy/60 leading-relaxed">
             {t('home.story.p3')}
           </p>
+          <div data-line className="w-8 h-px bg-navy/15 my-1" />
+          <p data-line className="font-display text-base sm:text-lg font-bold text-navy leading-snug">
+            {t('home.story.p4')}
+          </p>
+          <p data-line className="font-body text-base sm:text-lg text-navy/60 leading-relaxed">
+            {t('home.story.p5')}
+          </p>
+          <p data-line className="font-body text-base sm:text-lg text-navy/60 leading-relaxed">
+            {t('home.story.p6')}
+          </p>
         </div>
       </div>
     </div>

@@ -18,9 +18,12 @@
     "story": {
       "label": "Die Geschichte",
       "title": "Bricklack entstand aus einer Kiste fehlender Teile.",
-      "p1": "Als Kind wurden Sets auseinandergebaut, Teile verschwanden — meistens im Zimmer eines Geschwisterkinds — und Jahre später, wenn man endlich dieses Schloss oder Raumschiff wieder aufbauen wollte, fehlte die Hälfte des Inventars.",
+      "p1": "Als Kind wurden Sets auseinandergebaut, Teile verschwanden, meistens im Zimmer eines Geschwisterkinds, und Jahre später, wenn man endlich dieses Schloss oder Raumschiff wieder aufbauen wollte, fehlte die Hälfte des Inventars.",
       "p2": "Es gab keine Möglichkeit zu wissen, was man hatte, was fehlte oder wo man anfangen sollte.",
-      "p3": "Also bauten wir das Werkzeug, das wir immer gebraucht haben."
+      "p3": "Also bauten wir das Werkzeug, das wir immer gebraucht haben.",
+      "p4": "Und jetzt macht Bricklack das Wiederaufbauen zu etwas, das du teilen kannst.",
+      "p5": "Lade Freunde in deine Projekte ein, teile die Suche nach fehlenden Teilen auf, verfolge den Fortschritt jedes Einzelnen und sieh zu, wie das Set in Echtzeit wieder zusammenkommt.",
+      "p6": "Denn jedes Teil zu finden fühlt sich noch besser an, wenn man es gemeinsam macht."
     },
     "howItWorks": {
       "label": "So funktioniert es",
@@ -36,8 +39,8 @@
         "desc": "Wir laden die vollständige Teileliste automatisch. Jedes Teil, jede Farbe und Menge — ohne manuelle Eingabe."
       },
       "s3": {
-        "title": "Gefundenes markieren",
-        "desc": "Geh Teil für Teil durch deine Kisten. Hake jedes ab, wenn du es findest — der Fortschritt wird in Echtzeit gespeichert."
+        "title": "Alleine oder mit Freunden aufbauen",
+        "desc": "Geh Teil für Teil vor, weise Teile den Teammitgliedern zu und verfolge den Fortschritt aller in Echtzeit."
       },
       "s4": {
         "title": "Set vervollständigen",

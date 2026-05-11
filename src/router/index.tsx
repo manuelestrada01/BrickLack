@@ -14,6 +14,7 @@ import IdentifyPage from '@/pages/IdentifyPage'
 import CommunityPage from '@/pages/CommunityPage'
 import CommunityDetailPage from '@/pages/CommunityDetailPage'
 import NewMocPage from '@/pages/NewMocPage'
+import FriendsPage from '@/pages/FriendsPage'
 import NotFoundPage from '@/pages/NotFoundPage'
 
 export const router = createBrowserRouter([
@@ -35,6 +36,7 @@ export const router = createBrowserRouter([
           { path: ROUTES.PROJECT_DETAIL, element: <ProjectDetailPage /> },
           { path: ROUTES.IDENTIFY, element: <IdentifyPage /> },
           { path: ROUTES.NEW_MOC, element: <NewMocPage /> },
+          { path: ROUTES.FRIENDS, element: <FriendsPage /> },
         ],
       },
       { path: '*', element: <NotFoundPage /> },

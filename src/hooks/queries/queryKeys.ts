@@ -11,12 +11,20 @@ export const queryKeys = {
   },
   projects: {
     all: (userId: string) => ['projects', userId] as const,
-    detail: (userId: string, projectId: string) => ['projects', userId, projectId] as const,
-    pieces: (userId: string, projectId: string) =>
-      ['projects', userId, projectId, 'pieces'] as const,
+    detail: (projectId: string) => ['projects', 'detail', projectId] as const,
+    pieces: (projectId: string) => ['projects', 'detail', projectId, 'pieces'] as const,
   },
   users: {
     profile: (userId: string) => ['users', userId] as const,
+  },
+  friends: {
+    list: (userId: string) => ['friends', userId, 'list'] as const,
+    received: (userId: string) => ['friends', userId, 'received'] as const,
+    sent: (userId: string) => ['friends', userId, 'sent'] as const,
+  },
+  invitations: {
+    received: (userId: string) => ['invitations', userId, 'received'] as const,
+    project: (projectId: string) => ['invitations', 'project', projectId] as const,
   },
   community: {
     all: () => ['community'] as const,

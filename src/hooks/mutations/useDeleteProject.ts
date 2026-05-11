@@ -11,11 +11,10 @@ export function useDeleteProject() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ userId, projectId }: DeleteProjectInput) =>
-      deleteProject(userId, projectId),
+    mutationFn: ({ projectId }: DeleteProjectInput) => deleteProject(projectId),
     onSuccess: (_data, { userId, projectId }) => {
-      queryClient.removeQueries({ queryKey: queryKeys.projects.detail(userId, projectId) })
-      queryClient.removeQueries({ queryKey: queryKeys.projects.pieces(userId, projectId) })
+      queryClient.removeQueries({ queryKey: queryKeys.projects.detail(projectId) })
+      queryClient.removeQueries({ queryKey: queryKeys.projects.pieces(projectId) })
       queryClient.invalidateQueries({ queryKey: queryKeys.projects.all(userId) })
     },
   })

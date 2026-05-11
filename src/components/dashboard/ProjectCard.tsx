@@ -114,8 +114,18 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </svg>
         </button>
 
-        {/* Status badge — flotando sobre la imagen */}
-        <div className="absolute top-3 right-3">
+        {/* Status badge + team badge — flotando sobre la imagen */}
+        <div className="absolute top-3 right-3 flex items-center gap-1.5">
+          {project.members.length > 1 && (
+            <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-navy/85 text-[10px] font-semibold font-body text-white/70">
+              <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              {project.members.length}
+            </span>
+          )}
           <StatusBadge status={project.status} />
         </div>
 

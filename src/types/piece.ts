@@ -7,6 +7,7 @@ export interface PieceDoc {
   quantityRequired: number
   quantityFound: number
   isComplete: boolean
+  assignedTo: string | null    // userId of assigned collaborator, null = unassigned
 }
 
 export interface ProjectPiece extends PieceDoc {

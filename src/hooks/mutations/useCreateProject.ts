@@ -8,6 +8,8 @@ import type { PieceDoc, SetCachePiece } from '@/types'
 
 interface CreateProjectInput {
   userId: string
+  displayName: string
+  photoURL: string
   name: string
   setId: string | null
   setName: string | null
@@ -19,13 +21,12 @@ export function useCreateProject() {
 
   return useMutation({
     mutationFn: async (input: CreateProjectInput) => {
-      const { userId, name, setId, setName, setImageUrl } = input
+      const { userId, displayName, photoURL, name, setId, setName, setImageUrl } = input
 
       let totalPieces = 0
       let pieceDocs: PieceDoc[] = []
 
       if (setId) {
-        // Verificar caché antes de llamar a Rebrickable
         const cached = await isCached(setId)
         let cachePieces: SetCachePiece[]
 
@@ -53,12 +54,13 @@ export function useCreateProject() {
           quantityRequired: piece.quantity,
           quantityFound: 0,
           isComplete: false,
+          assignedTo: null,
         }))
 
         totalPieces = pieceDocs.reduce((sum, p) => sum + p.quantityRequired, 0)
       }
 
-      const projectId = await createProject(userId, {
+      const projectId = await createProject(userId, displayName, photoURL, {
         name,
         setId,
         setName,
@@ -69,7 +71,7 @@ export function useCreateProject() {
       })
 
       if (pieceDocs.length > 0) {
-        await batchAddPieces(userId, projectId, pieceDocs)
+        await batchAddPieces(projectId, pieceDocs)
       }
 
       return projectId

@@ -1,4 +1,5 @@
 export type * from './user'
+export type * from './friend'
 export type * from './project'
 export type * from './piece'
 export type * from './set'
