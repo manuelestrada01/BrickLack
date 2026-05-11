@@ -50,6 +50,7 @@ declare const _default: {
                 'brick-hover': string;
                 'glow-yellow': string;
                 'glow-yellow-sm': string;
+                sidebar: string;
             };
             borderRadius: {
                 brick: string;
