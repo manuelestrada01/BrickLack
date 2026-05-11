@@ -124,7 +124,7 @@ export function Navbar() {
             >
               Friends
               {pendingCount > 0 && (
-                <span className="absolute -top-1.5 -right-3 h-4 min-w-4 px-1 rounded-full bg-lego-yellow text-navy text-[9px] font-mono font-bold flex items-center justify-center leading-none">
+                <span className="absolute -top-1.5 -right-3 h-4 min-w-4 px-1 rounded-full bg-lego-yellow text-navy text-[10px] font-mono font-bold flex items-center justify-center tabular-nums">
                   {pendingCount}
                 </span>
               )}

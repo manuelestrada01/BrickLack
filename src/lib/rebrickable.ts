@@ -66,7 +66,9 @@ export async function getSet(setId: string): Promise<LegoSet> {
   return mapSet(data)
 }
 
-// Fetches all parts, handling Rebrickable's pagination automatically
+// Fetches all parts, handling Rebrickable's pagination automatically.
+// Deduplicates by part_num + color.id, summing quantities.
+// Rebrickable can return the same piece multiple times (mold variants, spare part entries).
 export async function getAllSetParts(setId: string): Promise<RebrickablePart[]> {
   const allParts: RebrickablePart[] = []
   let nextUrl: string | null =
@@ -79,7 +81,20 @@ export async function getAllSetParts(setId: string): Promise<RebrickablePart[]> 
     nextUrl = page.next
   }
 
-  return allParts
+  // Explicit spare filter + dedup: API doesn't always honor inc_spare_parts=0
+  const map = new Map<string, RebrickablePart>()
+  for (const part of allParts) {
+    if (part.is_spare) continue
+    const key = `${part.part.part_num}-${part.color.id}`
+    const existing = map.get(key)
+    if (existing) {
+      existing.quantity += part.quantity
+    } else {
+      map.set(key, { ...part })
+    }
+  }
+
+  return Array.from(map.values())
 }
 
 export async function getSetSubSets(setId: string): Promise<RebrickableSubSet[]> {
