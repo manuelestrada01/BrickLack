@@ -283,26 +283,30 @@ function MemberList({
                 )}
               </div>
               <div className="min-w-0 flex-1">
-                <div className="flex items-baseline justify-between gap-2">
-                  <p className="text-sm font-semibold text-navy font-body truncate">{member.displayName}</p>
-                  {isCollaborative && assignedCount > 0 && (
-                    <span className="font-mono text-xs text-navy/50 flex-shrink-0">
-                      {found}<span className="text-navy/25">/{assignedCount}</span>
-                    </span>
-                  )}
-                </div>
+                <p className="text-sm font-semibold text-navy font-body truncate">{member.displayName}</p>
                 <p className="text-xs text-navy/40 font-body capitalize">{member.role}</p>
               </div>
-              {isOwner && member.userId !== ownerId && (
-                <button
-                  onClick={() => removeMember.mutate({ projectId, memberIdToRemove: member.userId, currentUserId })}
-                  disabled={removeMember.isPending}
-                  title="Remove from project"
-                  className="w-8 h-8 flex items-center justify-center rounded-xl text-navy/25 hover:text-status-error hover:bg-status-error/10 transition-colors flex-shrink-0"
-                >
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
-                </button>
-              )}
+              {/* Fixed-width right slot: counter always takes same space, X never displaces it */}
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                {isCollaborative && assignedCount > 0 && (
+                  <span className="font-mono text-xs text-navy/50 w-10 text-right tabular-nums">
+                    {found}<span className="text-navy/25">/{assignedCount}</span>
+                  </span>
+                )}
+                {isOwner && member.userId !== ownerId ? (
+                  <button
+                    onClick={() => removeMember.mutate({ projectId, memberIdToRemove: member.userId, currentUserId })}
+                    disabled={removeMember.isPending}
+                    title="Remove from project"
+                    className="w-7 h-7 flex items-center justify-center rounded-lg text-navy/20 hover:text-status-error hover:bg-status-error/10 transition-colors"
+                  >
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+                  </button>
+                ) : (
+                  /* Spacer keeps counter column stable when X isn't shown */
+                  <div className="w-7" />
+                )}
+              </div>
             </div>
             {isCollaborative && assignedCount > 0 && (
               <div className="mt-2 ml-[46px] mr-1">
