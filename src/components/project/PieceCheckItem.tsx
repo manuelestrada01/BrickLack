@@ -27,6 +27,7 @@ export function PieceCheckItem({ piece, projectId }: PieceCheckItemProps) {
       pieceId: piece.id,
       quantityFound: newQty,
       quantityRequired: required,
+      prevQuantityFound: found,
     })
   }
 
