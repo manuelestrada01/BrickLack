@@ -265,6 +265,7 @@ export function ProjectScanModal({ isOpen, onClose, pieces, projectId }: Project
       pieceId: piece.id,
       quantityFound: piece.quantityFound + qty,
       quantityRequired: piece.quantityRequired,
+      prevQuantityFound: piece.quantityFound,
     })
     setScanState({ phase: 'done', piece })
   }
