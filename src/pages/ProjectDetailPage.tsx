@@ -51,7 +51,7 @@ function PieceCard({
   }, [justUpdated])
 
   const mutate = (qty: number) =>
-    toggle.mutate({ projectId, pieceId: piece.id, quantityFound: qty, quantityRequired: required })
+    toggle.mutate({ projectId, pieceId: piece.id, quantityFound: qty, quantityRequired: required, prevQuantityFound: found })
 
   // Cycle through members on click: unassigned → m[0] → m[1] → ... → unassigned
   const cycleAssignee = () => {

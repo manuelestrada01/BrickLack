@@ -36,7 +36,7 @@ function memberFromDoc(m: ProjectMemberDoc): ProjectMember {
     displayName: m.displayName,
     photoURL: m.photoURL,
     role: m.role,
-    joinedAt: m.joinedAt.toDate(),
+    joinedAt: m.joinedAt?.toDate() ?? new Date(),
     assignedPieces: m.assignedPieces,
     foundPieces: m.foundPieces,
   }
@@ -78,8 +78,8 @@ export const projectConverter: FirestoreDataConverter<Project> = {
       status: data.status,
       totalPieces: data.totalPieces,
       foundPieces: data.foundPieces,
-      createdAt: data.createdAt.toDate(),
-      updatedAt: data.updatedAt.toDate(),
+      createdAt: data.createdAt?.toDate() ?? new Date(),
+      updatedAt: data.updatedAt?.toDate() ?? new Date(),
       ...(data.clonedFrom ? { clonedFrom: data.clonedFrom } : {}),
     }
   },

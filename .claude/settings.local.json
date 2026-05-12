@@ -30,7 +30,25 @@
       "Bash(node -e \"const fs=require\\('fs'\\); const {createCanvas,loadImage}=require\\('canvas'\\); console.log\\('canvas ok'\\)\")",
       "Bash(node -e \"require\\('canvas'\\)\")",
       "Bash(npm uninstall:*)",
-      "Bash(npm_package_config_libvips=\"\" node -e \"require\\('sharp'\\); console.log\\('ok'\\)\")"
+      "Bash(npm_package_config_libvips=\"\" node -e \"require\\('sharp'\\); console.log\\('ok'\\)\")",
+      "Bash(git checkout:*)",
+      "Bash(mkdir -p /c/Users/jetsa/BrickLack/bricklack-tokens/tokens/src)",
+      "Bash(mkdir -p /c/Users/jetsa/BrickLack/bricklack-tokens/build/web)",
+      "Bash(mkdir -p /c/Users/jetsa/BrickLack/bricklack-tokens/build/flutter)",
+      "Bash(git init:*)",
+      "Bash(git commit -m 'feat: initial design tokens setup \\(Style Dictionary\\):*)",
+      "Bash(flutter --version)",
+      "Read(//c/Users/jetsa/BrickLack/**)",
+      "Bash(flutter create:*)",
+      "Bash(flutter pub:*)",
+      "Bash(mkdir -p /c/Users/jetsa/BrickLack/bricklack-mobile/lib/core/theme)",
+      "Bash(mkdir -p /c/Users/jetsa/BrickLack/bricklack-mobile/lib/core/services)",
+      "Bash(mkdir -p /c/Users/jetsa/BrickLack/bricklack-mobile/lib/features/auth)",
+      "Bash(mkdir -p /c/Users/jetsa/BrickLack/bricklack-mobile/lib/features/home)",
+      "Bash(mkdir -p /c/Users/jetsa/BrickLack/bricklack-mobile/lib/features/dashboard)",
+      "Bash(git commit -m 'feat: connect tailwind config to bricklack-tokens package:*)",
+      "Read(//c/Users/jetsa/.claude/plugins//**)",
+      "Read(//c/Users/jetsa/.claude//**)"
     ]
   }
 }

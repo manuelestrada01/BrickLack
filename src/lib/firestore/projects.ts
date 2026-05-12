@@ -7,6 +7,7 @@ import {
   updateDoc,
   deleteDoc,
   serverTimestamp,
+  increment,
   Timestamp,
   query,
   orderBy,
@@ -99,6 +100,17 @@ export async function removeProjectMember(
   await updateDoc(doc(db, 'projects', projectId), {
     members,
     memberIds,
+    updatedAt: serverTimestamp(),
+  })
+}
+
+export async function incrementProjectFoundPieces(
+  projectId: string,
+  delta: number,
+): Promise<void> {
+  if (delta === 0) return
+  await updateDoc(doc(db, 'projects', projectId), {
+    foundPieces: increment(delta),
     updatedAt: serverTimestamp(),
   })
 }
