@@ -48,7 +48,11 @@
       "Bash(mkdir -p /c/Users/jetsa/BrickLack/bricklack-mobile/lib/features/dashboard)",
       "Bash(git commit -m 'feat: connect tailwind config to bricklack-tokens package:*)",
       "Read(//c/Users/jetsa/.claude/plugins//**)",
-      "Read(//c/Users/jetsa/.claude//**)"
+      "Read(//c/Users/jetsa/.claude//**)",
+      "Bash(python3 -c ':*)",
+      "Bash(npx sharp-cli:*)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(rm public/favicon-32.png public/favicon-opt.png)"
     ]
   }
 }
